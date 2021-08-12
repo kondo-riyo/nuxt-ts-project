@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <h1>Header</h1>
-        <button><router-link to="/">Home</router-link></button>
-        <button><router-link to="/Cart">カート</router-link></button>
-        <button><router-link to="/OrderLog">購入履歴</router-link></button>
+    <div class="space-x-10 space-y-10 flex-col">
+        <div>Header</div>
+        <div><router-link to="/">Home</router-link></div>
+        <div><router-link to="/Cart">カート</router-link></div>
+        <div><router-link to="/OrderLog">購入履歴</router-link></div>
     </div>
 </template>
