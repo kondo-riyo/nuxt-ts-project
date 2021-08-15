@@ -50,5 +50,6 @@ export default {
         options.loose = true
       },
     },
-  }
+  },
+  vuex: false 
 }
