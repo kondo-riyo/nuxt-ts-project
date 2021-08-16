@@ -167,6 +167,7 @@ export default Vue.extend({
           // 該当結果あり
           if (searchItemName.indexOf(this.keyWord) >= 0) {
             this.searchedItems.push(item);
+            console.log(item);
           }
         });
         // 該当結果なし
