@@ -1,5 +1,8 @@
-import  firebase from "firebase";
-console.log("pluginだよ/firebae.ts")
+import  firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/firestore";
+import "firebase/storage";
+
 const config = {
     apiKey: "AIzaSyAF5xl83mUha8oZRrdjqmm1E_z8OAZlrU8",
     authDomain: "nuxt-ts-coffee-app.firebaseapp.com",
@@ -12,10 +15,11 @@ const config = {
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config);
-
 }
+
 const googleProvider = new firebase.auth.GoogleAuthProvider()
 export { googleProvider }
+export const auth = firebase.auth();
 export const db = firebase.firestore()
-export const storage = firebase.storage()
+export const Storage = firebase.storage()
 export default firebase;
