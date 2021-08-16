@@ -21,7 +21,7 @@
         @click="search"
       />
     </div>
-    <div class = "w-3/6 p-2 m-2 text-red-400 font-bold">
+    <div class="w-3/6 p-2 m-2 text-red-400 font-bold">
       <p v-show="resultNullFlg">※該当する商品がありません</p>
       <p v-show="keywordNullFlg">※検索ワードを入力してください</p>
     </div>
@@ -155,6 +155,7 @@ export default Vue.extend({
       this.searchedItems = [];
       // 検索ワードなし
       if (this.keyWord === '') {
+        console.log(this.keyWord);
         this.keywordNullFlg = true;
         this.resultNullFlg = false;
       } else {
@@ -166,10 +167,11 @@ export default Vue.extend({
           // 該当結果あり
           if (searchItemName.indexOf(this.keyWord) >= 0) {
             this.searchedItems.push(item);
+            console.log(item);
           }
         });
-          // 該当結果なし
-          if (this.searchedItems.length === 0) {
+        // 該当結果なし
+        if (this.searchedItems.length === 0) {
           this.resultNullFlg = true;
         }
       }
