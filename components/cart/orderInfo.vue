@@ -8,7 +8,12 @@
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                     名前
                 </label>
+                <!-- <validation-provider v-slot="{ errors }" name="user_name" rules="required"> -->
                 <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="text" placeholder="田中太郎">
+                    <!-- <span>
+                        {{errors[0]}}
+                    </span> -->
+                <!-- </validation-provider> -->
                 <!-- <p class="text-red-500 text-xs italic"></p> -->
                 </div>
                 <div class="w-full md:w-1/2 px-3">
@@ -17,7 +22,10 @@
                 </label>
                 <validation-provider v-slot="{ errors }" name="email" rules="required|email">
                     <input v-model="value" name="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-mail" type="text" placeholder="sample@gmail.com">
-                    <span>{{errors[0]}}</span>
+                    <!-- <span v-show="errors.length" v-for="(error, i) in errors" :key="`errors${i}`"> -->
+                    <span>
+                        {{errors[0]}}
+                    </span>
                 </validation-provider>
                 </div>
             </div>
@@ -95,16 +103,26 @@
 import Vue from 'vue';
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 // import { Field } from 'vee-validate';
-import { required, email } from 'vee-validate/dist/rules';
-extend('email', email);
+import { required, email,max } from 'vee-validate/dist/rules';
+// extend('email', email);
+// extend('required', {
+//   ...required,
+//   message: '{_field_}は必須項目です。'
+// });
+
 extend('required', {
-  ...required,
-  message: '必須項目です。'
-});
+     ...required,
+     message:'必須項目です' });
+extend('max', { 
+    ...max,
+    message:'文字数の上限を超えています' });
+extend('email', { 
+    ...email,
+    message: 'xxx@xxx の形式で入力してください' });
 
 export default Vue.extend({
     data(){
-        return {pay:false,value:''}
+        return {pay:false,value: ''}
     },
     components: {
         // Field,

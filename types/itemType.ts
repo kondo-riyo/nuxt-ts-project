@@ -1,6 +1,7 @@
-export default interface items {
+export interface itemType {
     id?:number;
     name?:string;
     price?:number;
-    discription?:string
+    discription?:string;
+    img?:string;
 }
