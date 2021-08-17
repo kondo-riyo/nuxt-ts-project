@@ -1,6 +1,5 @@
 <template>
     <div>
-        <HomeSearch/>
         <HomeItems/>
     </div>
 </template>

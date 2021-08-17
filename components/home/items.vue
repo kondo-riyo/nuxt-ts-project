@@ -30,15 +30,15 @@
         class="
           container
           mx-auto
-          p-9
-          max-w-sm
+          p-8
+          max-w-xs
           rounded
           overflow-hidden
           shadow
           hover:shadow-xl
           transition
           duration-300
-          m-2
+          m-3
         "
         v-for="item in searchedItems"
         :key="item.id"
@@ -46,7 +46,7 @@
         <img class="rounded-xl" :src="item.img" alt="" />
         <div class="flex justify-between items-center">
           <div>
-            <h1 class="mt-5 text-2xl font-semibold">{{ item.name }}</h1>
+            <h1 class="mt-5 text-xl font-semibold">{{ item.name }}</h1>
             <p class="mt-2">{{ item.price }}円(税込)</p>
           </div>
           <div>
@@ -80,16 +80,15 @@
       <div
         class="
           container
-          mx-auto
-          p-9
-          max-w-sm
+          p-8
+          max-w-xs
           rounded
           overflow-hidden
           shadow
           hover:shadow-xl
           transition
           duration-300
-          m-2
+          m-3
         "
         v-for="item in itemsFromStore"
         :key="item.id"
@@ -97,7 +96,7 @@
         <img class="rounded-xl" :src="item.img" alt="" />
         <div class="flex justify-between items-center">
           <div>
-            <h1 class="mt-5 text-2xl font-semibold">{{ item.name }}</h1>
+            <h1 class="mt-5 text-xl font-semibold">{{ item.name }}</h1>
             <p class="mt-2">{{ item.price }}円(税込)</p>
           </div>
           <div>
@@ -110,7 +109,7 @@
                   font-semibold
                   bg-green-500
                   py-2
-                  px-4
+                  px-3
                   rounded-lg
                   shadow-md
                   transition
