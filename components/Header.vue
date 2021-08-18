@@ -11,6 +11,12 @@
       <li class="block mb-3 text-center">
         <router-link to="/OrderLog">注文履歴</router-link>
       </li>
+      <li class="block mb-3 text-center">
+        <router-link to="/signup">会員登録</router-link>
+      </li>
+      <li class="block mb-3 text-center">
+        <router-link to="/signin">ログイン</router-link>
+      </li>
     </ul>
   </nav>
 </template>
