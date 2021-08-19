@@ -14,12 +14,12 @@
         flex flex-col
       "
     >
-      <div><h1>会員登録</h1></div>
+      <div><h1 class="font-bold text-xl text-gray-700">会員登録</h1></div>
       <div>
         <label for="email">メール</label
         ><input
           type="text"
-          v-model="userImfo.email"
+          v-model="userInfo.email"
           class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
         />
       </div>
@@ -27,7 +27,7 @@
         <label for="password">パスワード</label
         ><input
           type="text"
-          v-model="userImfo.password"
+          v-model="userInfo.password"
           class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
         />
       </div>
@@ -35,7 +35,7 @@
         <label for="name">名前</label
         ><input
           type="text"
-          v-model="userImfo.name"
+          v-model="userInfo.name"
           class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
         />
       </div>
@@ -43,7 +43,7 @@
         <label for="tel">電話番号</label
         ><input
           type="text"
-          v-model="userImfo.tel"
+          v-model="userInfo.tel"
           class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
         />
       </div>
@@ -51,7 +51,7 @@
         <label for="postalcode">郵便番号</label
         ><input
           type="text"
-          v-model="userImfo.postalcode"
+          v-model="userInfo.postalcode"
           class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
         />
       </div>
@@ -60,7 +60,7 @@
         <label for="address">住所</label
         ><input
           type="text"
-          v-model="userImfo.address"
+          v-model="userInfo.address"
           class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
         />
       </div>
@@ -84,33 +84,66 @@
           登録
         </button>
       </div>
+      <div>
+        <nuxt-link to="/signin" class="text-blue-700 underline"
+          >Already a user? Sign-in</nuxt-link
+        >
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { userImfoType } from '../types/userImfoType';
+import firebase, { auth, db } from '~/plugins/firebase';
+import { userInfoType } from '../types/userInfoType';
 type DataType = {
-  userImfo: userImfoType;
+  userInfo: userInfoType;
 };
 
 export default Vue.extend({
   data(): DataType {
     return {
-      userImfo: {
+      userInfo: {
         email: '',
         password: '',
         name: '',
         tel: '',
         postalcode: '',
         address: '',
+        uid: '',
       },
     };
   },
   methods: {
-    signup() {
-      console.log(this.userImfo);
+    async signup(): Promise<void> {
+      try {
+        // メールとパスワードで会員登録
+        const authUser =
+          await auth.createUserWithEmailAndPassword(
+            this.userInfo.email,
+            this.userInfo.password
+          );
+        // dbに会員情報を保存
+        if (typeof authUser !== null) {
+          await this.addAuthUserToDb(authUser.user.uid);
+        }
+        //会員登録後、ログイン画面に遷移
+        this.$router.push('/signin');
+      } catch (error) {
+        console.log(error.message + 'サインインエラー');
+      }
+    },
+    addAuthUserToDb(uid: string) {
+      return db.collection(`users/${uid}/userInfo`).add({
+        email: this.userInfo.email,
+        password: this.userInfo.password,
+        name: this.userInfo.name,
+        tel: this.userInfo.tel,
+        postalcode: this.userInfo.postalcode,
+        address: this.userInfo.address,
+        uid: uid,
+      });
     },
   },
 });

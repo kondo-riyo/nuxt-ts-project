@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bg-transparent p-5 flex">
-      <img :src="itemDetail.img" alt="" class="m-2" />
+      <img :src="itemDetail.img" class="m-2 rounded-xl" />
       <div>
         <div class="m-2">
           <p class="text-gray-700 text-4xl">{{ itemDetail.name }}</p>
@@ -27,7 +27,7 @@
             bg-green-500
             py-2
             px-4
-            shadow-md
+            rounded
             transition
             duration-200
             transform-gpu

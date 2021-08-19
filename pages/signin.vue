@@ -19,7 +19,7 @@
         <label for="email">メール</label
         ><input
           type="text"
-          v-model="userImfo.email"
+          v-model="userInfo.email"
           class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
         />
       </div>
@@ -27,13 +27,13 @@
         <label for="password">パスワード</label
         ><input
           type="text"
-           v-model="userImfo.password"
+          v-model="userInfo.password"
           class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
         />
       </div>
       <div>
         <button
-        @click="signin"
+          @click="login"
           class="
             text-white
             font-semibold
@@ -51,30 +51,52 @@
           ログイン
         </button>
       </div>
+      <div>
+        <nuxt-link to="/signup" class="text-blue-700 underline"
+          >Not a user? Sign-up</nuxt-link
+        >
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { userLoginType } from '../types/userImfoType';
+import { userLoginType } from '../types/userInfoType';
+import { UserStore } from '../store';
+import { auth } from '~/plugins/firebase';
+
 type DataType = {
-  userImfo: userLoginType,
+  userInfo: userLoginType;
 };
 
 export default Vue.extend({
-  data() :DataType{
+   middleware: 'authenticated',
+  data(): DataType {
     return {
-      userImfo: {
+      userInfo: {
         email: '',
         password: '',
       },
     };
   },
-  methods:{
-    signin(){
-      console.log(this.userImfo)
-    }
-  }
+  methods: {
+    login(): void {
+      if (typeof(this.userInfo) !== undefined) {
+        console.log(typeof(this.userInfo))
+        auth
+          .signInWithEmailAndPassword(
+            this.userInfo.email,
+            this.userInfo.password
+          )
+          .then((authUser) => {
+            console.log(authUser.user)
+            UserStore.loginAct(authUser.user);
+          });
+      }else{
+        console.log("undefined")
+      }
+    },
+  },
 });
 </script>
