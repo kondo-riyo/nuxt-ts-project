@@ -80,7 +80,8 @@
       <div
         class="
           container
-          p-8
+          p-10
+          w-2/5
           max-w-xs
           rounded
           overflow-hidden
@@ -93,7 +94,7 @@
         v-for="item in itemsFromStore"
         :key="item.id"
       >
-        <img class="rounded-xl" :src="item.img" alt="" />
+        <img class="rounded-xl" :src="item.img" />
         <div class="flex justify-between items-center">
           <div>
             <h1 class="mt-5 text-xl font-semibold">{{ item.name }}</h1>
@@ -101,7 +102,7 @@
           </div>
           <div>
             <router-link
-              :to="{ name: 'ItemDetail', params: { itemid: item.id } }"
+              :to="{ name: 'ItemDetail-itemId', params: { itemId: item.id } }"
             >
               <button
                 class="
