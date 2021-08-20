@@ -119,22 +119,30 @@ export default Vue.extend({
     async signup(): Promise<void> {
       try {
         // メールとパスワードで会員登録
-        const authUser =
+        if (
+          this.userInfo.email === undefined ||
+          this.userInfo.password === undefined
+        )
+          return;
+        const authUser: firebase.auth.UserCredential =
           await auth.createUserWithEmailAndPassword(
             this.userInfo.email,
             this.userInfo.password
           );
         // dbに会員情報を保存
-        if (typeof authUser !== null) {
-          await this.addAuthUserToDb(authUser.user.uid);
-        }
+        if (authUser.user === null) return;
+        await this.addAuthUserToDb(authUser.user.uid);
         //会員登録後、ログイン画面に遷移
         this.$router.push('/signin');
       } catch (error) {
         console.log(error.message + 'サインインエラー');
       }
     },
-    addAuthUserToDb(uid: string) {
+    addAuthUserToDb(
+      uid: string
+    ): Promise<
+      firebase.firestore.DocumentReference<firebase.firestore.DocumentData>
+    > {
       return db.collection(`users/${uid}/userInfo`).add({
         email: this.userInfo.email,
         password: this.userInfo.password,

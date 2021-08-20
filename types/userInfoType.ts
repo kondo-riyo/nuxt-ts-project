@@ -1,11 +1,11 @@
 export interface userInfoType {
-    email:string;
-    password:string;
-    name:string;
-    tel:string;
-    postalcode:string;
-    address:string;
-    uid:string
+    email?:string;
+    password?:string;
+    name?:string;
+    tel?:string;
+    postalcode?:string;
+    address?:string;
+    uid?:string
 }
 
 

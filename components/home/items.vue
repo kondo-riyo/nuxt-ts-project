@@ -102,7 +102,7 @@
           </div>
           <div>
             <router-link
-              :to="{ name: 'ItemDetail', params: { itemid: item.id } }"
+              :to="{ name: 'ItemDetail-itemId', params: { itemId: item.id } }"
             >
               <button
                 class="

@@ -71,7 +71,7 @@ type DataType = {
 };
 
 export default Vue.extend({
-   middleware: 'authenticated',
+  middleware: 'authenticated',
   data(): DataType {
     return {
       userInfo: {
@@ -82,19 +82,21 @@ export default Vue.extend({
   },
   methods: {
     login(): void {
-      if (typeof(this.userInfo) !== undefined) {
-        console.log(typeof(this.userInfo))
+      if (typeof this.userInfo !== undefined) {
+        console.log(typeof this.userInfo);
         auth
           .signInWithEmailAndPassword(
             this.userInfo.email,
             this.userInfo.password
           )
           .then((authUser) => {
-            console.log(authUser.user)
-            UserStore.loginAct(authUser.user);
+            console.log(authUser.user);
+            UserStore.loginAct(authUser.user).then(() =>
+              this.$router.push('/')
+            );
           });
-      }else{
-        console.log("undefined")
+      } else {
+        console.log('undefined');
       }
     },
   },

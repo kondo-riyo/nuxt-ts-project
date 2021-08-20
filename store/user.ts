@@ -38,6 +38,7 @@ export default class UserStore extends VuexModule {
     //Action---------------------------
     @Action({rawError: true})
     public async loginAct(authUser:any): Promise<void>{
+        if (auth.currentUser===null) return;
         const token = await auth.currentUser.getIdToken(true);
         console.log("トークン"+token);
         const userInfo = {
@@ -56,15 +57,10 @@ export default class UserStore extends VuexModule {
 
     @Action({rawError: true})
     public async logout():Promise<void>{
-        console.log("ログアウト")
         await auth.signOut();
         Cookies.remove('access_token');
         await this.setUserNullMut(null);
-        console.log(this.userInfo)
     }
-
-
-
 }
 
 

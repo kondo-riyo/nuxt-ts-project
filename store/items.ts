@@ -27,7 +27,6 @@ import { itemType } from '../types/itemType'
     // 商品詳細画面の商品情報を抽出
     public get getItemDetail() {
         return (detailParamsId:number) => {
-            console.log("検索中"+ detailParamsId)
             return this.items.find(item => item.id === detailParamsId)
         }
     }

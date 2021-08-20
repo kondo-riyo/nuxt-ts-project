@@ -12,7 +12,7 @@ export function getUserFromCookie(req) {
     const parsed = cookieparser.parse(req.headers.cookie);
     const accessTokenCookie = parsed.access_token;
     if (!accessTokenCookie) return;
-    console.log('JWTをデコード(別の形式に変換されたデータを戻す)。');
+    console.log('cookieがあるのでJWTをデコード(別の形式に変換されたデータを戻す)。');
     console.log('アクセストークンクッキー' + accessTokenCookie);
     const decodedToken = jwtDecode(accessTokenCookie); // ③
     console.log('デコードしたトークン' + JSON.stringify(decodedToken));

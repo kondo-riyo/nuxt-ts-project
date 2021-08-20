@@ -1,3 +1,3 @@
-import Cookies from 'js-cookie'
-export { Cookies }
+import Cookies from 'js-cookie';
+export { Cookies };
 
