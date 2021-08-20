@@ -2,10 +2,6 @@ import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators"
 import { db } from "~/plugins/firebase";
 import { itemType } from '../types/itemType'
 
-interface ConfirmedItemType extends itemType {
-    id: number
-}
-
 @Module({ name: 'items', namespaced: true ,stateFactory: true})
 
  export default class ItemsStore extends VuexModule {
@@ -31,7 +27,6 @@ interface ConfirmedItemType extends itemType {
     // 商品詳細画面の商品情報を抽出
     public get getItemDetail() {
         return (detailParamsId:number) => {
-            console.log("検索中"+ detailParamsId)
             return this.items.find(item => item.id === detailParamsId)
         }
     }
