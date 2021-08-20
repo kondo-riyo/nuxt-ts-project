@@ -1,49 +1,64 @@
 <template>
     <div>
-        <h2>cart / orderInfo.vue</h2>
         <div>
-            <form class="w-full max-w-lg">
+            <form @submit.prevent class="grid justify-items-center w-full max-w-lg">
+            <ValidationObserver v-slot="{ handleSubmit }">
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                     名前
                 </label>
-                <!-- <validation-provider v-slot="{ errors }" name="user_name" rules="required"> -->
-                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="text" placeholder="田中太郎">
-                    <!-- <span>
+                <validation-provider v-slot="{ errors }" name="名前" rules="required|max:10">
+                <input v-model="name" name="名前" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="text" placeholder="例)田中太郎">
+                    <span class="text-xs text-red-700">
                         {{errors[0]}}
-                    </span> -->
-                <!-- </validation-provider> -->
+                    </span>
+                </validation-provider>
                 <!-- <p class="text-red-500 text-xs italic"></p> -->
                 </div>
                 <div class="w-full md:w-1/2 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                     メールアドレス
                 </label>
-                <validation-provider v-slot="{ errors }" name="email" rules="required|email">
-                    <input v-model="value" name="email" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-mail" type="text" placeholder="sample@gmail.com">
+                <validation-provider v-slot="{ errors }" name="メールアドレス" rules="required|email">
+                    <input v-model="email" name="メールアドレス" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-mail" type="text" placeholder="例)sample@gmail.com">
                     <!-- <span v-show="errors.length" v-for="(error, i) in errors" :key="`errors${i}`"> -->
-                    <span>
+                    <span class="text-xs text-red-700">
                         {{errors[0]}}
                     </span>
                 </validation-provider>
                 </div>
             </div>
-            <div class="flex flex-wrap items-end -mx-3 mb-6">
-                <div class="w-full md:w-1/4 px-3">
+            <div class="flex flex-wrap items-start -mx-3 mb-6">
+                <div class="w-full md:w-2/6 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                     郵便番号
                 </label>
-                    <input class="w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ad-number" type="text" placeholder="1230000">
-                </div>
-                <div class="w-full md:w-1/4 px-3">
+                <validation-provider v-slot="{ errors }" name="郵便番号" rules="required|yubin">
+                    <input v-model="zipcode" name="zip1" class="w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ad-number" type="text" placeholder="例)1234567">
+                    <!-- <input v-model="zipcode" name="zip2" class=" bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ad-number" type="text" placeholder=""> -->
+                    <span class="text-xs text-red-700">
+                        {{errors[0]}}
+                    </span>
+                </validation-provider>
+                <!-- <span class="w-full md:w-1/4 px-3">
                     <button class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">検索</button>
+                </span>-->
                 </div>
-                <div class="w-full md:w-1/2 px-3">
+                <div class="w-full md:w-1/6 pt-6 px-3">
+                    <!-- <div class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name"></div> -->
+                    <button onclick='zipToAddress("[name=zip1]", "", "#address")' class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">検索</button>
+                </div>
+                <div class="w-full md:w-3/6 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                     住所
                 </label>
-                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-address" type="text" placeholder="東京都新宿区マルマルモリモリ">
+                <validation-provider v-slot="{ errors }" name="住所" rules="required|max:7">
+                <input v-model="address" name="住所" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" iid="address" type="text" placeholder="例)東京都新宿区〇〇">
+                    <span class="text-xs text-red-700">
+                        {{errors[0]}}
+                    </span>
+                </validation-provider>
                 </div>
             </div>
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -51,78 +66,123 @@
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
                     電話番号
                 </label>
-                <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="text" placeholder="XXX-XXXX-XXXX">
-                <!-- <p class="text-red-500 text-xs italic"></p> -->
+                <validation-provider v-slot="{ errors }" name="電話番号" rules="required|min:10|max:11">
+                <input v-model="tel" name="電話番号" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="text" placeholder="例)00000000000">
+                    <span class="text-xs text-red-700">
+                        {{errors[0]}}
+                    </span>
+                </validation-provider>
                 </div>
                 <div class="w-full md:w-1/3 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                     配達日
                 </label>
-                    <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="date" placeholder="">
+                <validation-provider v-slot="{ errors }" name="配達日" rules="required">
+                    <input v-model="deliveryDate" name="配達日" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="date" placeholder="">
+                    <span class="text-xs text-red-700">
+                        {{errors[0]}}
+                    </span>
+                </validation-provider>
                 </div>
                 <div class="w-full md:w-1/3 px-3">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                     配達時間
                 </label>
-                    <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state">
-                    <option>10~12時</option>
-                    <option>13~15時</option>
-                    <option>16~19時</option>
+                <validation-provider v-slot="{ errors }" name="配達時間" rules="required|delivary_validation:@配達日">
+                    <select v-model="deliveryTime" name="配達時間" class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-state" >
+                    <option value="10">10時</option>
+                    <option value="11">11時</option>
+                    <option value="12">12時</option>
+                    <option value="13">13時</option>
+                    <option value="14">14時</option>
+                    <option value="15">15時</option>
+                    <option value="16">16時</option>
+                    <option value="17">17時</option>
                     </select>
+                    <span class="text-xs text-red-700">
+                        {{errors[0]}}
+                    </span>
+                </validation-provider>
                 </div>
             </div>
-            <div class="flex flex-wrap items-end -mx-3 mb-2">
-                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            <div class="flex flex-wrap items-start -mx-3 mb-2">
+                <div class="w-full md:w-1/2 pt-6 px-3 mb-6 md:mb-0">
                 <div>
                 <label>
-                    <input type="radio" name="pay" value="1" @click="notcreditPay()">代金引換
+                <!-- <validation-provider v-slot="{ errors }" name="代引き" rules="required|max:7"> -->
+                    <input v-model="payment" type="radio" name="代引き" value="1" @click="notcreditPay()">代金引換
+                    <!-- <span>
+                        {{errors[0]}}
+                    </span>
+                </validation-provider> -->
                 </label>
                 </div>
                 <div>
                 <label>
-                    <input type="radio" name="pay" value="2" @click="creditPay()">クレジットカード
+                <!-- <validation-provider v-slot="{ errors }" name="クレジットカード払い" rules="required|max:7"> -->
+                    <input v-model="payment" type="radio" name="クレジットカード払い" value="2" @click="creditPay()">クレジットカード
+                    <!-- <span>
+                        {{errors[0]}}
+                    </span>
+                </validation-provider> -->
                 </label>
                 </div>
                 </div>
-                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0" v-if="this.pay==true">
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0" v-show="selectPayment==true">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
-                    クレジット番号
+                    クレジットカード番号
                 </label>
-                    <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="text" placeholder="">
+                <validation-provider v-slot="{ errors }" name="クレジットカード番号" rules="required|creditNum">
+                    <input v-model="creditCardNum" name="クレジットカード番号" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="text" placeholder="例)0000000000000000">
+                    <span class="text-xs text-red-700">
+                        {{errors[0]}}
+                    </span>
+                </validation-provider>
                 </div>
             </div>
+            <div class="flex flex-wrap justify-center items-start -mx-3 mb-2">
+              <button @click="handleSubmit()" class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">注文を確定する</button>
+            </div>
+            </ValidationObserver>
             </form>
         </div>
+        <!-- <script src="https://mao2009.github.io/zipToAddress/zipToAddress.js"></script> -->
     </div>
 </template>
 <script lang="ts">
-// import Vue from 'vue';
-// import VeeValidate from 'vee-validate';
-// Vue.use(VeeValidate);
-
 import Vue from 'vue';
-import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
-// import { Field } from 'vee-validate';
-import { required, email,max } from 'vee-validate/dist/rules';
-// extend('email', email);
-// extend('required', {
-//   ...required,
-//   message: '{_field_}は必須項目です。'
-// });
+import { ValidationProvider, ValidationObserver} from 'vee-validate';
+// import { Core as YubinBangoCore } from 'yubinbango-core';
 
-extend('required', {
-     ...required,
-     message:'必須項目です' });
-extend('max', { 
-    ...max,
-    message:'文字数の上限を超えています' });
-extend('email', { 
-    ...email,
-    message: 'xxx@xxx の形式で入力してください' });
+type userInfoType = {
+            name: string,
+            email: string,
+            zipcode: string,
+            address: string,
+            tel: string,
+            deliveryDate: string,
+            deliveryTime: string,
+            payment: string,
+            creditCardNum: string,
+            selectPayment: boolean
+}
 
 export default Vue.extend({
-    data(){
-        return {pay:false,value: ''}
+    data() :userInfoType{
+        return {
+            // userInfo:{
+            name: '',
+            email: '',
+            zipcode: '',
+            address:'',
+            tel: '',
+            deliveryDate: '',
+            deliveryTime: '',
+            payment:'',
+            creditCardNum: '',
+            selectPayment: false
+            // }
+        }
     },
     components: {
         // Field,
@@ -131,11 +191,14 @@ export default Vue.extend({
     },
     methods:{
         creditPay(){
-            this.pay=true
-            console.log('creditpay 発動！')
+            this.selectPayment=true
+            // console.log('creditpay 発動！')
         },
         notcreditPay(){
-            this.pay=false
+            this.selectPayment=false
+        },
+        handleSubmit(){
+            alert('ご注文ありがとうございます！')
         }
 
     }
