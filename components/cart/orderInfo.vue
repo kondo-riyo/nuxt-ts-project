@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div>
+        <div class="">お届け先情報</div>
+        <div class="p-3 bg-white">
             <form @submit.prevent class="grid justify-items-center w-full max-w-lg">
             <ValidationObserver v-slot="{ handleSubmit }">
             <div class="flex flex-wrap -mx-3 mb-6">
@@ -141,7 +142,11 @@
                 </div>
             </div>
             <div class="flex flex-wrap justify-center items-start -mx-3 mb-2">
-              <button @click="handleSubmit()" class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">注文を確定する</button>
+              <button @click="handleSubmit()" class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">
+                  <router-link to="/OrderComp">
+                    ご注文を確定する                  
+                  </router-link>
+              </button>
             </div>
             </ValidationObserver>
             </form>
