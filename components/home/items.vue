@@ -162,10 +162,10 @@ export default Vue.extend({
         this.keywordNullFlg = false;
         this.resultNullFlg = false;
         this.itemsFromStore.forEach((item: itemType) => {
-          const searchItemName: any = item.name;
-
+          if(item.name===undefined)return;
+          
           // 該当結果あり
-          if (searchItemName.indexOf(this.keyWord) >= 0) {
+          if (item.name.indexOf(this.keyWord) >= 0) {
             this.searchedItems.push(item);
             console.log(item);
           }

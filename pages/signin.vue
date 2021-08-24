@@ -91,8 +91,14 @@ export default Vue.extend({
           )
           .then((authUser) => {
             console.log(authUser.user);
-            UserStore.loginAct(authUser.user).then(() =>
-              this.$router.push('/')
+            if (
+              authUser.user === null ||
+              authUser.user.email === null ||
+              authUser.user.uid === null
+            )
+              return;
+            UserStore.loginAct(authUser.user.email, authUser.user.uid).then(
+              () => this.$router.push('/')
             );
           });
       } else {

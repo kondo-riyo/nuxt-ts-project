@@ -3,4 +3,8 @@ export interface toppingType {
     name?:string;
     priceM?:number;
     priceL?:number;
+    size?:number;
+    price?:number;
+    isActiveM?:boolean;
+    isActiveL?:boolean;
 }
