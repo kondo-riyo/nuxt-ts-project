@@ -12,10 +12,9 @@ import { itemType } from '../types/itemType'
     //getters----------------------------------------------------
     // stateのitemsをid順に並び替え
     public get getItems(): itemType[]{
-        const sortItems = this.items.slice().sort((a,b)=>{
-            const comparisonIdA:any= a.id
-            const comparisonIdB:any =b.id
-                if(comparisonIdA > comparisonIdB){
+        const sortItems:itemType[] = this.items.slice().sort((a: itemType, b: itemType):number=>{
+            if(a.id===undefined||b.id===undefined) return 0;
+                if(a.id > b.id){
                     return 1
                 } else {
                     return -1

@@ -28,6 +28,7 @@ export default class itemInfoStore extends VuexModule {
     //action-------------------------------------------------
     @Action({rawError: true})
     public async fetchitemInfoAct(): Promise<void>{
+        console.log("アクション！！！")
             await db.collection(`users/a7SrZhtOmWS2Yol8J3LD/order/v2uIP282QlyEGpJeb7yV/itemInfo`).get().then(itemInfoAll =>{
             itemInfoAll.forEach(itemInfo=>{
                 const itemInfoFromDb:itemInfoType = itemInfo.data()

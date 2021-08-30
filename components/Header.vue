@@ -8,7 +8,7 @@
       <li class="block mb-3 text-center">
         <router-link to="/Cart">カート</router-link>
       </li>
-      <li class="block mb-3 text-center">
+      <li class="block mb-3 text-center" v-if="userInfoFromStore">
         <router-link to="/OrderLog">注文履歴</router-link>
       </li>
       <li class="block mb-3 text-center">
@@ -18,13 +18,13 @@
         <router-link to="/signin">ログイン</router-link>
       </li>
       <li class="block mb-3 text-center" v-if="userInfoFromStore">
-        <button @click="logout">ログアウト</button>
+        <router-link to="/"><button @click="logout">ログアウト</button></router-link>
       </li>
       <li
         v-if="userInfoFromStore"
         class="block mb-3 text-center font-bold text-yellow-700"
       >
-        {{ userInfoFromStore.email }}
+        {{userInfoFromStore.name }}
       </li>
     </ul>
   </nav>
@@ -45,6 +45,9 @@ export default Vue.extend({
     userInfoFromStore() {
       return UserStore.getUserInfo;
     },
+    uidFromStore(){
+      return UserStore.getUid;
+    }
   },
 });
 </script>
