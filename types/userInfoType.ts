@@ -5,11 +5,30 @@ export interface userInfoType {
     tel?:string;
     postalcode?:string;
     address?:string;
-    uid?:string
+    uid?:string|null
 }
 
 
 export interface userLoginType {
     email:string;
     password:string;
+}
+
+export interface orderInfoType {
+    userInfo?:userInfoType|null
+    name?: string,
+    email?: string,
+    postalcode?: string,
+    address?: string,
+    tel?: string,
+    deliveryDate: string,
+    deliveryTime: string,
+    payment: string,
+    creditCardNum: string,
+    selectPayment: boolean
+
+}
+
+export interface orderInfoDataType {
+    userInfo:orderInfoDataType
 }

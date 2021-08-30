@@ -145,7 +145,6 @@ export default Vue.extend({
     > {
       return db.collection(`users/${uid}/userInfo`).add({
         email: this.userInfo.email,
-        password: this.userInfo.password,
         name: this.userInfo.name,
         tel: this.userInfo.tel,
         postalcode: this.userInfo.postalcode,
