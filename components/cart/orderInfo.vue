@@ -205,7 +205,6 @@ export default Vue.extend({
         handleSubmit(){
             alert('ご注文ありがとうございます！')
         }
-
     }
 })
 </script>
