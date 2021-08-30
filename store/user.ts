@@ -43,7 +43,7 @@ export default class UserStore extends VuexModule {
         console.log("トークン"+token);
         const userInfo = {
             email: authUser.email,
-            uid: authUser.uid
+            uid: authUser.uid,
           }
         Cookies.set('access_token', token)  // ②-2 取得したJWTをCookieにセット
         await this.setUserMut(userInfo) // ②-3 userデータをストアstateに保存

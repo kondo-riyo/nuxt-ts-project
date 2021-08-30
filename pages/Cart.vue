@@ -1,6 +1,5 @@
 <template>
     <div class="grid justify-items-center">
-        <!-- <h1>カート(Cart.vue)</h1> -->
         <div class="p-8 ">
             <table  class="table-auto shadow-xl">
                 <thead class="bg-yellow-800 bg-opacity-25">
@@ -30,18 +29,23 @@
                 注文に進む
             </button>
         </div>
-        <!-- <div v-show="this.order=true"><CartOrderInfo/></div> -->
         <div class="p-3 shadow-xl">
         <client-only>
         <CartOrderInfo v-show="this.order==true"/>
         </client-only>
         </div>
-        <div>{{ userFromStore.uid }}</div>
+        <div>{{ itemInfoFromStore }}</div>
     </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { itemInfoStore, UserStore } from '../store'
+import { itemInfoStore } from '../store'
+
+interface itemInfoType {
+    id?:string,
+    itemId?:number,
+    itemNum?:string
+}
 
 export default Vue.extend({
     data(){
@@ -76,13 +80,19 @@ export default Vue.extend({
         OrderMove(){
             this.order=true
             console.log('move')
-            console.log('選ばれた= '+itemInfoStore)
+            console.log(itemInfoStore.getitemInfo)
         }
     },
     computed:{
-        userFromStore() {
-            return UserStore.getUserInfo
+        itemInfoFromStore():itemInfoType[]{
+            return itemInfoStore.getitemInfo
         }
+    },
+    async fetch() {
+    if (itemInfoStore.itemInfo.length === 0) {
+      const fetchitemInfoFromStore = itemInfoStore.fetchitemInfoAct();
+      await Promise.all([fetchitemInfoFromStore]);
     }
+  },
 })
 </script>
