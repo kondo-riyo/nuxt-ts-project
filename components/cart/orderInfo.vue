@@ -3,7 +3,7 @@
         <div class="">お届け先情報</div>
         <div class="p-3 bg-white">
             <form @submit.prevent class="grid justify-items-center w-full max-w-lg">
-            <ValidationObserver v-slot="{ handleSubmit }">
+            <ValidationObserver v-slot="{ invalid }">
             <div class="flex flex-wrap -mx-3 mb-6">
                 <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                 <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name">
@@ -142,7 +142,7 @@
                 </div>
             </div>
             <div class="flex flex-wrap justify-center items-start -mx-3 mb-2">
-              <button @click="handleSubmit()" class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">
+              <button @click="submit()" :disabled="invalid" class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">
                   <router-link to="/OrderComp">
                     ご注文を確定する                  
                   </router-link>
@@ -204,7 +204,14 @@ export default Vue.extend({
         },
         handleSubmit(){
             alert('ご注文ありがとうございます！')
-        }
+            console.log('hundleSbmit!!!')
+        },
+        submit () {
+        // this.$refs.observer.validate().then(result => {
+        //     console.log('submit', result);
+        // });
+        console.log('hundleSbmit!!')
+        },
     }
 })
 </script>
