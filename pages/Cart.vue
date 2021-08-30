@@ -64,7 +64,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import { itemInfoStore } from '~/store';
+import { itemInfoStore } from '../store';
 
 interface itemInfoType {
   id?: string;

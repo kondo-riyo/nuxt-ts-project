@@ -386,7 +386,7 @@
             </div>
             <div
               class="w-full md:w-1/2 px-3 mb-6 md:mb-0"
-              v-show="selectPayment == true"
+              v-if="selectPayment == true"
             >
               <label
                 class="
@@ -435,7 +435,7 @@
           <div class="flex flex-wrap justify-center items-start -mx-3 mb-2">
             <button
               @click="OrderSubmit()"
-               :disabled="invalid"
+              :disabled="invalid"
               class="
                 bg-green-500
                 hover:bg-green-400
@@ -461,8 +461,8 @@
 import Vue from 'vue';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 // import { Core as YubinBangoCore } from 'yubinbango-core';
-import { UserStore } from '~/store';
-import { orderInfoType } from '~/types/userInfoType';
+import { UserStore } from '../store';
+import { orderInfoType } from '../types/userInfoType';
 
 export default Vue.extend({
   data(): orderInfoType {
@@ -488,15 +488,7 @@ export default Vue.extend({
     OrderSubmit() {
       // cartの商品のstatusを1又は２に変更。
       // 入力したお届け先情報をcartのあったコレクション先に追加
-      console.log(
-        '注文' +
-          this.name +
-          this.email +
-          this.postalcode +
-          this.payment +
-          this.deliveryDate +
-          this.deliveryTime
-      );
+      console.log('注文');
     },
     creditPay() {
       this.selectPayment = true;
