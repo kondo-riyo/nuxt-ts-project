@@ -52,7 +52,7 @@
         </button>
       </div>
       <div class="p-3 shadow-xl"></div>
-      <div>{{ order }}</div>
+      <div>{{ itemInfoFromStore }}</div>
     </div>
     <!-- <div v-show="this.order=true"><CartOrderInfo/></div> -->
     <div class="p-3 shadow-xl">
@@ -64,13 +64,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import { itemInfoStore } from '~/store';
-
-interface itemInfoType {
-  id?: string;
-  itemId?: number;
-  itemNum?: string;
-}
+import { itemInfoStore } from '../store';
 
 export default Vue.extend({
   data() {
@@ -108,7 +102,7 @@ export default Vue.extend({
     },
   },
   computed: {
-    itemInfoFromStore(): itemInfoType[] {
+    itemInfoFromStore(){
       return itemInfoStore.getitemInfo;
     },
   },
