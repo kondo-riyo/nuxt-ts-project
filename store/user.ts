@@ -1,14 +1,15 @@
-import firebase , { auth } from '../plugins/firebase';
+import firebase , { auth, db } from '../plugins/firebase';
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators"
 import { Cookies } from '~/plugins/cookie'
 import { userInfoType } from '../types/userInfoType'
 @Module({ name: 'user', namespaced: true ,stateFactory: true})
 export default class UserStore extends VuexModule {
-    //state----------------------------
-    public userInfo:userInfoType|null=null;
-    //  public uid:string ="";
 
-    //getters--------------------------
+
+    //state-----------------------------------------------------------------------
+    public userInfo:userInfoType|null=null;
+
+    //getters----------------------------------------------------------------------
     public get getUserInfo():userInfoType|null{
         return this.userInfo
     }
@@ -18,48 +19,66 @@ export default class UserStore extends VuexModule {
         return this.userInfo && this.userInfo.uid
     }
 
-
-    //Mutations------------------------
+    //Mutations---------------------------------------------------------------------
     @Mutation
-    public setUserMut(userInfo:userInfoType):void{
+    private setUserMut(userInfo:userInfoType):void{
         this.userInfo = userInfo;
     }
 
     @Mutation
-    public setUserNullMut(userInfo:null):void{
+    private setUserNullMut(userInfo:null):void{
         this.userInfo = null;
     }
 
-    // private setUid(uid:string):void{
-    //     console.log('setUid')
-    //     this.uid = uid;
-    // }
+    @Mutation
+    private fetchSignupInfoMut(signupInfo:userInfoType):void{
+        this.userInfo = signupInfo;
+    }
 
-    //Action---------------------------
+
+    //Action--------------------------------------------------------------------------
     @Action({rawError: true})
     public async loginAct(email:string,uid:string): Promise<void>{
         if (auth.currentUser===null) return;
         const token = await auth.currentUser.getIdToken(true);
         console.log("トークン"+token);
+        console.log(auth.currentUser.uid)
+
+        // ログイン後、会員情報もユーザ情報に保存
+        db.collection(`users/${auth.currentUser.uid}/userInfo`).get().then(
+            userInfo=>this.fetchSignupInfoMut(userInfo.docs[0].data())
+        )
+
         const userInfo = {
             email: email,
-            uid: uid
+            uid: auth.currentUser.uid
           }
         Cookies.set('access_token', token)  // ②-2 取得したJWTをCookieにセット
-        await this.setUserMut(userInfo) // ②-3 userデータをストアstateに保存
-       // await this.setUid(userInfo.uid) // ②-3 userデータのuidをストアstateに保存
+        this.setUserMut(userInfo) // ②-3 userデータをストアstateに保存
+        //await this.setUidMut(userInfo.uid) // ②-3 userデータのuidをストアstateに保存
+    }
+
+    // ログインしている場合、dbから会員登録情報を取得しstate(userInfo)に保存
+     @Action({rawError: true})
+     public async fetchSignupInfoAct(): Promise<void>{
+             let uid:string|undefined|null 
+             if(this.userInfo===null)return
+             uid= this.userInfo.uid
+            await db.collection(`users/${uid}/userInfo`).get().then(
+                 signupInfo=>this.fetchSignupInfoMut(signupInfo.docs[0].data())
+             )
     }
 
     @Action({rawError: true})
-    public async setUserAct(userInfo:userInfoType):Promise<void>{
-       await this.setUserMut(userInfo)
+    public setUserAct(userInfo:userInfoType):void{
+        this.setUserMut(userInfo)
     }
 
     @Action({rawError: true})
     public async logout():Promise<void>{
         await auth.signOut();
         Cookies.remove('access_token');
-        await this.setUserNullMut(null);
+        this.setUserNullMut(null);
     }
 }
 

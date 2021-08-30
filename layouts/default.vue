@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { ItemsStore,ToppingsStore } from '../store'
+import { ItemsStore,ToppingsStore,UserStore } from '../store'
 
 export default Vue.extend({
   async fetch() {
@@ -19,7 +19,19 @@ export default Vue.extend({
       const fetchToppingsFromStore = ToppingsStore.fetchToppingsAct();
       await Promise.all([fetchItemsFromStore,fetchToppingsFromStore]);
     }
+        if(UserStore.userInfo){
+          console.log("会員情報をゲット")
+     await UserStore.fetchSignupInfoAct();
+    }else{
+      console.log("会員所法を保存できません")
+    }
   },
+  // created(){
+  //       // ログインしていればdbの会員情報をストアに保存
+  //   if(UserStore.userInfo){
+  //    UserStore.fetchSignupInfo();
+  //   }
+  // }
 
 })
 </script>

@@ -10,7 +10,7 @@
                     名前
                 </label>
                 <validation-provider v-slot="{ errors }" name="名前" rules="required|max:10">
-                <input v-model="name" name="名前" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="text" placeholder="例)田中太郎">
+                <input v-model="name" name="名前" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-name" type="text"  placeholder="例)田中太郎">
                     <span class="text-xs text-red-700">
                         {{errors[0]}}
                     </span>
@@ -36,7 +36,7 @@
                     郵便番号
                 </label>
                 <validation-provider v-slot="{ errors }" name="郵便番号" rules="required|yubin">
-                    <input v-model="zipcode" name="zip1" class="w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ad-number" type="text" placeholder="例)1234567">
+                    <input v-model="postalcode" name="zip1" class="w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ad-number" type="text" placeholder="例)1234567">
                     <!-- <input v-model="zipcode" name="zip2" class=" bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ad-number" type="text" placeholder=""> -->
                     <span class="text-xs text-red-700">
                         {{errors[0]}}
@@ -142,10 +142,10 @@
                 </div>
             </div>
             <div class="flex flex-wrap justify-center items-start -mx-3 mb-2">
-              <button @click="handleSubmit()" class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">
-                  <router-link to="/OrderComp">
+              <button @click="orderConfirmed" class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">
+                  <!-- <router-link to="/OrderComp"> -->
                     ご注文を確定する                  
-                  </router-link>
+                  <!-- </router-link> -->
               </button>
             </div>
             </ValidationObserver>
@@ -158,29 +158,31 @@
 import Vue from 'vue';
 import { ValidationProvider, ValidationObserver} from 'vee-validate';
 // import { Core as YubinBangoCore } from 'yubinbango-core';
+import { UserStore } from "~/store";
+import { orderInfoType } from '~/types/userInfoType';
 
-type userInfoType = {
-            name: string,
-            email: string,
-            zipcode: string,
-            address: string,
-            tel: string,
-            deliveryDate: string,
-            deliveryTime: string,
-            payment: string,
-            creditCardNum: string,
-            selectPayment: boolean
-}
+// type userInfoType = {
+//             name?: string,
+//             email: string,
+//             zipcode: string,
+//             address: string,
+//             tel: string,
+//             deliveryDate: string,
+//             deliveryTime: string,
+//             payment: string,
+//             creditCardNum: string,
+//             selectPayment: boolean
+// }
 
 export default Vue.extend({
-    data() :userInfoType{
+    data() :orderInfoType{
         return {
             // userInfo:{
-            name: '',
-            email: '',
-            zipcode: '',
-            address:'',
-            tel: '',
+            name:UserStore.getUserInfo!.name,
+            email: UserStore.getUserInfo!.email,
+            postalcode: UserStore.getUserInfo!.postalcode,
+            address:UserStore.getUserInfo!.address,
+            tel: UserStore.getUserInfo!.tel,
             deliveryDate: '',
             deliveryTime: '',
             payment:'',
@@ -202,10 +204,14 @@ export default Vue.extend({
         notcreditPay(){
             this.selectPayment=false
         },
-        handleSubmit(){
-            alert('ご注文ありがとうございます！')
+       orderConfirmed(){
+            console.log('注文'+this.name+this.email+this.postalcode+this.payment)
         }
-
+    },
+    computed:{
+        userInfoFromStore(){
+            return UserStore.getUserInfo
+        }
     }
 })
 </script>

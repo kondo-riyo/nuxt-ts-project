@@ -180,9 +180,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { ItemsStore, ToppingsStore } from '../../store';
+import { ItemsStore, ToppingsStore, CartStore, UserStore } from '../../store';
 import { itemType } from '~/types/itemType';
 import { toppingType } from '~/types/toppingType';
+import { cartItemType } from '~/types/cartItemType';
 
 type DataType = {
   isSelectedM: null | number;
@@ -213,7 +214,6 @@ export default Vue.extend({
     this.itemDetail = getItemDetail;
   },
   methods: {
-    
     // トッピング追加----------------------------------------------------
     selectToppingSize(
       selectedName: string,
@@ -235,7 +235,6 @@ export default Vue.extend({
       );
       // toppingの重複が無いとき
       if (duplicatedTopping < 0) {
-        console.log('topping追加');
         const pushTopping: toppingType = {
           name: selectedName,
           id: selecteId,
@@ -262,25 +261,32 @@ export default Vue.extend({
       }
       // topping価格の更新
       this.allToppingPrice = this.selectedTopping.reduce(
-        (sum:number, addTopping:any) =>  sum + addTopping.price ,
+        (sum: number, addTopping: any) => sum + addTopping.price,
         0
       );
     },
 
     // カートに追加-------------------------------------------------------------------
-    addCart(){
-      console.log("カートに追加する情報は下記です");
-      const addItemToCart = {
-        itemId:this.itemDetail?.id,
-        itemName:this.itemDetail?.name,
-        itemPrice:this.itemDetail?.price,
-        itemNum:this.selectedItemNum,
-        toppings:this.selectedTopping
-      }
-      console.log(addItemToCart) 
-    }
+    addCart() {
+      const addItemToCart:cartItemType = {
+        itemId: this.itemDetail?.id,
+        itemName: this.itemDetail?.name,
+        itemPrice: this.itemDetail?.price,
+        itemNum: this.selectedItemNum,
+        itemImg: this.itemDetail?.img,
+        toppings: this.selectedTopping,
+        status:0,
+        allToppingPrice:this.allToppingPrice,
+        totalPrice:this.calcTotalPrice
+      };
+      CartStore.addItemToCartAct(addItemToCart);
+      this.$router.push('/Cart')
+    },
   },
   computed: {
+    getCart(): cartItemType[] {
+      return CartStore.getCart;
+    },
     getToppings(): toppingType[] {
       return ToppingsStore.getToppings;
     },
