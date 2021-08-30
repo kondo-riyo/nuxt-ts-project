@@ -3,9 +3,9 @@ import { getModule } from 'vuex-module-decorators';
 import items from '~/store/items';
 import toppings from '~/store/toppings';
 import user from '~/store/user';
-import itemInfo from '~/store/order';
 import cart from '~/store/cart';
 import orderlog from '~/store/orderlog';
+import itemInfo from '~/store/itemInfo';
 
 // eslint-disable-next-line import/no-mutable-exports
 let ItemsStore: items;

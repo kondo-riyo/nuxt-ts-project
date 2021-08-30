@@ -3,7 +3,7 @@
     <div class="font-bold text-2xl text-gray-700">お届け先情報</div>
     <div class="p-3 bg-white">
       <form @submit.prevent class="grid justify-items-center w-full max-w-lg">
-        <ValidationObserver v-slot="{ handleSubmit }">
+        <ValidationObserver v-slot="{ invalid }">
           <div class="flex flex-wrap -mx-3 mb-6">
             <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
               <label
@@ -434,8 +434,8 @@
           </div>
           <div class="flex flex-wrap justify-center items-start -mx-3 mb-2">
             <button
-              @click="orderConfirmed(), handleSubmit()"
-              :disabled="handleSubmit.invalid || !handleSubmit.validated"
+              @click="OrderSubmit()"
+               :disabled="invalid"
               class="
                 bg-green-500
                 hover:bg-green-400
@@ -443,7 +443,6 @@
                 font-semibold
                 py-3
                 px-4
-                disabled:opacity-55
                 rounded
               "
             >
@@ -486,17 +485,9 @@ export default Vue.extend({
     ValidationObserver,
   },
   methods: {
-    creditPay() {
-      this.selectPayment = true;
-      // console.log('creditpay 発動！')
-    },
-    notcreditPay() {
-      this.selectPayment = false;
-    },
-    handleSubmit() {
-      console.log('ハンドルサブミット');
-    },
-    orderConfirmed() {
+    OrderSubmit() {
+      // cartの商品のstatusを1又は２に変更。
+      // 入力したお届け先情報をcartのあったコレクション先に追加
       console.log(
         '注文' +
           this.name +
@@ -506,8 +497,13 @@ export default Vue.extend({
           this.deliveryDate +
           this.deliveryTime
       );
-      // cartの商品のstatusを1又は２に変更。
-      // 入力したお届け先情報をcartのあったコレクション先に追加
+    },
+    creditPay() {
+      this.selectPayment = true;
+      // console.log('creditpay 発動！')
+    },
+    notcreditPay() {
+      this.selectPayment = false;
     },
   },
   //async fetchでcartの商品を取得する(cartStore)
