@@ -1,6 +1,6 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators"
 import { db } from "~/plugins/firebase";
-import { cartItemType } from "~/types/cartItemType";
+import { cartItemType,orderedItemType } from "~/types/cartItemType";
 import { UserStore,itemInfoStore,OrderlogStore } from "~/store";
 @Module({ name: 'cart', namespaced: true ,stateFactory: true})
 
@@ -47,11 +47,16 @@ import { UserStore,itemInfoStore,OrderlogStore } from "~/store";
                 console.log("既にカートがあるので既存のカートに商品追加")
                 let newCartitems =  {...itemInfoStore.getitemInfo};
                 console.log(newCartitems)
+                if(newCartitems[0].itemInfo===undefined)return
                 newCartitems[0].itemInfo.push(itemInfo);
                 console.log(newCartitems[0].itemInfo)
+                if(itemInfoStore.getitemInfo[0].orderId===null) return;
+
                 db.collection(`users/${UserStore.userInfo.uid}/order`).doc(itemInfoStore.getitemInfo[0].orderId).update({
                     itemInfo:[...newCartitems[0].itemInfo]
-                }).then(()=>this.addItemToCartMut(addItemToCart,itemInfoStore.getitemInfo[0].orderId))
+                }).then(()=>{
+                if (itemInfoStore.getitemInfo[0].orderId===undefined) return;
+                this.addItemToCartMut(addItemToCart,itemInfoStore.getitemInfo[0].orderId)})
             } else {
             // カートの中身が空だったらOrder/ordrtIdコレクションごと作成
             if(!UserStore.userInfo.uid) return
@@ -63,12 +68,14 @@ import { UserStore,itemInfoStore,OrderlogStore } from "~/store";
         }        
     }}
     @Action({rawError: true})
-    public updateOrderAct(orderInfoToDb){
+    public updateOrderAct(orderInfoToDb:orderedItemType){
+        if(orderInfoToDb.orderInfo===undefined)return
         orderInfoToDb.status= orderInfoToDb.orderInfo.payment
         console.log(orderInfoToDb);
         if(UserStore.userInfo){
             db.collection(`users/${UserStore.userInfo.uid}/order`).doc(orderInfoToDb.orderId).update(orderInfoToDb).then(()=>{
                 console.log("注文完了")
+                if(orderInfoToDb.orderId===undefined)return
                 itemInfoStore.updateOrderMut(orderInfoToDb,orderInfoToDb.orderId)
             })
         }

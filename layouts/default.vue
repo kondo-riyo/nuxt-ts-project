@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen w-full">
+  <div class="md:flex h-screen w-full">
     <Header class="flex-grow-0 w-2/12 h-full" />
     <Nuxt class="flex-grow w-11/12 h-full bg-gray-50" />
     <Footer class="flex-grow-0 w-1/12 h-full" />

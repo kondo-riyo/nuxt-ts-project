@@ -483,7 +483,7 @@ import Vue from 'vue';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 // import { Core as YubinBangoCore } from 'yubinbango-core';
 import { UserStore, CartStore, itemInfoStore } from '../store';
-import { orderInfoType } from '../types/userInfoType';
+import { orderInfoType } from '../types/cartItemType';
 
 export default Vue.extend({
   data(): orderInfoType {
@@ -547,9 +547,9 @@ export default Vue.extend({
     getCarts() {
       return CartStore.getCart;
     },
-    getOrderId() {
-      return itemInfoStore.getOrderId;
-    },
+    // getOrderId() {
+    //   return itemInfoStore.getOrderId;
+    // },
   },
 });
 </script>
