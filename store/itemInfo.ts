@@ -30,20 +30,31 @@ export default class itemInfoStore extends VuexModule {
     // private fetchuserUidMut(userUidFromDb:string):void{
     //     this.
     // }
-    
-
+    @Mutation
+    private deleteCartItemMut(id:string):void{
+        const index = this.itemInfo.findIndex(item => item.id ==id)
+        this.itemInfo.splice(index,1)
+    }
 
     //action-------------------------------------------------
     @Action({rawError: true})
     public async fetchitemInfoAct(): Promise<void>{
             await db.collection(`users/${UserStore.userInfo!.uid}/order`).get().then(itemInfoAll =>{
+            if(itemInfoAll.docs.length>this.itemInfo.length){
             itemInfoAll.forEach(itemInfo=>{
                 // itemInfo.forEach(el => {
                     const itemInfoFromDb:cartItemType = itemInfo.data()
                     this.fetchitemInfoMut(itemInfoFromDb)
                     // })
                 // }
-            })
+            })}
+        })
+    }
+
+    @Action({rawError: true})
+    public async deleteCartItemAct(id:string): Promise<void>{
+        await db.collection(`users/${UserStore.userInfo!.uid}/order`).doc(id).delete().then(()=> {
+            this.deleteCartItemMut(id)
         })
     }
 }

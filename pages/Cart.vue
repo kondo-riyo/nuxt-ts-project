@@ -4,32 +4,46 @@
       <div class="p-8">
         <table class="table-auto shadow-xl">
           <thead class="bg-yellow-800 bg-opacity-25">
-            <tr>
-              <th class="w-1/6"></th>
-              <th class="w-1/6">商品名</th>
-              <th class="w-1/6">価格(税抜)</th>
-              <th class="w-1/6">個数</th>
-              <th class="w-1/6">計(税抜)</th>
-              <th class="w-1/6"></th>
+            <tr class="text-right">
+              <th class="w-1/12"></th>
+              <th class="w-4/12">商品名</th>
+              <th class="w-2/12">価格(税抜)</th>
+              <th class="w-1/12">個数</th>
+              <th class="w-2/12">計(税抜)</th>
+              <th class="w-2/12"></th>
             </tr>
           </thead>
           <tbody class="">
             <tr
-              v-for="cartitem in carts"
-              :key="cartitem.id"
+              v-for="cartitem in itemInfoFromStore"
+              :key="cartitem.itemId"
               class="
                 shadow-inner
-                text-center
+                text-right
                 hover:bg-green-500 hover:bg-opacity-25 hover:shadow
+                space-y-6
               "
             >
-              <td class="w-1/6 shadow-md"><img :src="cartitem.img" /></td>
-              <td class="w-1/6">{{ cartitem.name }}</td>
-              <td class="w-1/6">{{ cartitem.price }} 円</td>
-              <td class="w-1/6">{{ cartitem.itemNum }} 個</td>
-              <td class="w-1/6">{{ cartitem.price * cartitem.itemNum }} 円</td>
-              <td class="w-1/6">
-                <img src="~/assets/img/trash.png" class="w-1/3" />
+              <td class="w-1/12 shadow-md"><p class=""><img :src="cartitem.itemImg" /></p></td>
+              <td class="w-4/12">
+                <div class="text-xl font-bold pb-5">{{ cartitem.itemName }}</div>
+                <div v-for="topping in cartitem.toppings" :key="topping.id" class="text-sm">
+                    {{ topping.name }} ({{toppingSize(topping.size)}})
+                </div>
+                <!-- <div>{{ toppings[0].name}}</div> -->
+              </td>
+              <td class="w-2/12">
+                <div class="pb-5 text-xl">{{ cartitem.itemPrice }} 円</div>
+                <div v-for="topping in cartitem.toppings" :key="topping.id" class="text-sm">
+                 + {{ topping.price }} 円
+                </div>
+              </td>
+              <td class="w-1/12">{{ cartitem.itemNum }} 個</td>
+              <td class="w-2/12">{{ cartitem.totalPrice }} 円</td>
+              <td class="w-2/12">
+               <button title="商品を削除" @click="deleteCartItem(cartitem.id)">
+                <img src="~/assets/img/trash.png" class="w-1/5 ml-10" />
+               </button>
               </td>
             </tr>
           </tbody>
@@ -51,14 +65,6 @@
           <router-link to="/OrderInfo"> 注文に進む </router-link>
         </button>
       </div>
-      <div class="p-3 shadow-xl"></div>
-      <div>{{ itemInfoFromStore }}</div>
-    </div>
-    <!-- <div v-show="this.order=true"><CartOrderInfo/></div> -->
-    <div class="p-3 shadow-xl">
-      <client-only>
-        <!-- <CartOrderInfo v-show="this.order==true"/> -->
-      </client-only>
     </div>
   </div>
 </template>
@@ -67,50 +73,38 @@ import Vue from 'vue';
 import { itemInfoStore } from '../store';
 
 export default Vue.extend({
-  data() {
-    return {
-      order: itemInfoStore.itemInfo,
-      carts: [
-        {
-          name: 'コーヒー',
-          price: 500,
-          img: 'https://firebasestorage.googleapis.com/v0/b/nuxt-ts-coffee-app.appspot.com/o/18.jpg?alt=media&token=400c837e-5542-4990-a656-af263a859111',
-          id: 15,
-          itemNum: 2,
-        },
-        {
-          name: 'コーヒー',
-          price: 500,
-          img: 'https://firebasestorage.googleapis.com/v0/b/nuxt-ts-coffee-app.appspot.com/o/18.jpg?alt=media&token=400c837e-5542-4990-a656-af263a859111',
-          id: 14,
-          itemNum: 2,
-        },
-        {
-          name: 'コーヒー',
-          price: 500,
-          img: 'https://firebasestorage.googleapis.com/v0/b/nuxt-ts-coffee-app.appspot.com/o/18.jpg?alt=media&token=400c837e-5542-4990-a656-af263a859111',
-          id: 13,
-          itemNum: 2,
-        },
-      ],
-    };
-  },
+//   data() {
+//     return {
+//     };
+//   },
   methods: {
     OrderMove() {
       console.log('move');
       console.log(itemInfoStore.getitemInfo);
     },
+    toppingSize(el:number){
+        if(el===1){
+            return '多'
+        }else if(el===2){
+            return '少'
+        }
+    },
+    deleteCartItem(id:string){
+        if(confirm("カートから商品を削除しますか？")){
+            itemInfoStore.deleteCartItemAct(id)
+        }
+    }
   },
   computed: {
     itemInfoFromStore(){
       return itemInfoStore.getitemInfo;
-    },
+    }
   },
   async fetch() {
-    if (itemInfoStore.itemInfo.length === 0) {
+    // if (itemInfoStore.itemInfo.length === 0) {
       const fetchitemInfoFromStore = itemInfoStore.fetchitemInfoAct();
       await Promise.all([fetchitemInfoFromStore]);
-    }
+    // }
   },
 });
 </script>
