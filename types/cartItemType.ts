@@ -9,5 +9,10 @@ export interface cartItemType {
     orderId?:string|null;
     status?:0,
     allToppingPrice?:number;
-    totalPrice?:number
+    totalPrice?:number;
+}
+
+export interface otderIemType {
+    itemInfo?:cartItemType[],
+    status?:number
 }

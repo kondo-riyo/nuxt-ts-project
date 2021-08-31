@@ -23,7 +23,7 @@ export interface orderInfoType {
     tel?: string,
     deliveryDate: string,
     deliveryTime: string,
-    payment: string,
+    payment: number,
     creditCardNum: string,
     selectPayment: boolean
 
