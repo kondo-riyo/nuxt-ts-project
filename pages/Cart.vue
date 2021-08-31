@@ -65,7 +65,7 @@
         >
           <router-link to="/OrderInfo"> 注文に進む </router-link>
         </button>
-      </div>
+      </div>{{itemInfoFromStore}}
     </div>
   </div>
 </template>
@@ -90,11 +90,11 @@ export default Vue.extend({
             return '少'
         }
     },
-    // deleteCartItem(id:string){
-    //     if(confirm("カートから商品を削除しますか？")){
-    //         itemInfoStore.deleteCartItemAct(id)
-    //     }
-    // }
+    deleteCartItem(id:string){
+        if(confirm("カートから商品を削除しますか？")){
+           // itemInfoStore.deleteCartItemAct(id)
+        }
+    }
   },
   computed: {
     itemInfoFromStore(){

@@ -275,7 +275,6 @@ export default Vue.extend({
         itemNum: this.selectedItemNum,
         itemImg: this.itemDetail?.img,
         toppings: this.selectedTopping,
-        status:0,
         allToppingPrice:this.allToppingPrice,
         totalPrice:this.calcTotalPrice
       };

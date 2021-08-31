@@ -2,6 +2,7 @@ import { Store } from 'vuex';
 import { initialiseStores } from '../utils/store-accsessor';
 import { Context } from "@nuxt/types";
 import {getUserFromCookie } from '~/helpers/index';
+export const strict = false
 export * from '../utils/store-accsessor';
 
 export const actions = {

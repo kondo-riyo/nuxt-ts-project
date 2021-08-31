@@ -14,21 +14,6 @@ export interface userLoginType {
     password:string;
 }
 
-export interface orderInfoType {
-    userInfo?:userInfoType|null
-    name?: string,
-    email?: string,
-    postalcode?: string,
-    address?: string,
-    tel?: string,
-    deliveryDate: string,
-    deliveryTime: string,
-    payment: string,
-    creditCardNum: string,
-    selectPayment: boolean
-
-}
-
 export interface orderInfoDataType {
     userInfo:orderInfoDataType
 }
