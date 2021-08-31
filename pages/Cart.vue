@@ -41,7 +41,8 @@
               <td class="w-1/12">{{ cartitem.itemNum }} 個</td>
               <td class="w-2/12">{{ cartitem.totalPrice }} 円</td>
               <td class="w-2/12">
-               <button title="商品を削除" @click="deleteCartItem(cartitem.id)">
+               <!-- <button title="商品を削除" @click="deleteCartItem(cartitem.id)"> -->
+               <button>
                 <img src="~/assets/img/trash.png" class="w-1/5 ml-10" />
                </button>
               </td>
@@ -89,11 +90,11 @@ export default Vue.extend({
             return '少'
         }
     },
-    deleteCartItem(id:string){
-        if(confirm("カートから商品を削除しますか？")){
-            itemInfoStore.deleteCartItemAct(id)
-        }
-    }
+    // deleteCartItem(id:string){
+    //     if(confirm("カートから商品を削除しますか？")){
+    //         itemInfoStore.deleteCartItemAct(id)
+    //     }
+    // }
   },
   computed: {
     itemInfoFromStore(){
