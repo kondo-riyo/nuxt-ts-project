@@ -17,8 +17,8 @@
           </thead>
           <tbody class="">
             <tr
-              v-for="logItem in logItems"
-              :key="logItem.itemId"
+              v-for="logItem in logItems[0].itemInfo"
+              :key="logItem.specialId"
               class="
                 shadow-inner
                 text-center
@@ -63,12 +63,13 @@
           </tbody>
         </table>
       </div>
+      {{logItems}}
     </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import { OrderlogStore, UserStore } from '../store';
+import { UserStore } from '../store';
 import { db } from '~/plugins/firebase';
 import { cartItemType } from '~/types/cartItemType';
 
