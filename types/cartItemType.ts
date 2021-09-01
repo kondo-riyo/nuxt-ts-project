@@ -11,6 +11,7 @@ export interface cartItemType {
     status?:0,
     allToppingPrice?:number;
     totalPrice?:number;
+    specialId?:string
 }
 
 export interface otderIemType {

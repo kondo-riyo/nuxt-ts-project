@@ -1,6 +1,12 @@
 <template>
   <div>
-    <div class="grid justify-items-center">
+    <div v-show="itemInfoFromStore[0].itemInfo.length===0" class="grid justify-items-center p-20">
+     <div class="text-red-400 font-bold text-2xl">現在カートに商品はありません</div>
+     <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full m-10">
+        <router-link to="/">商品を選ぶ</router-link>
+     </button>
+    </div>
+    <div v-show="itemInfoFromStore[0].itemInfo.length!=0" class="grid justify-items-center">
       <div class="p-8">
         <table class="table-auto shadow-xl">
           <thead class="bg-yellow-800 bg-opacity-25">
@@ -15,8 +21,8 @@
           </thead>
           <tbody class="">
             <tr
-              v-for="cartitem in itemInfoFromStore"
-              :key="cartitem.itemId"
+              v-for="cartitem in itemInfoFromStore[0].itemInfo"
+              :key="cartitem.specialId"
               class="
                 shadow-inner
                 text-right
@@ -41,7 +47,8 @@
               <td class="w-1/12">{{ cartitem.itemNum }} 個</td>
               <td class="w-2/12">{{ cartitem.totalPrice }} 円</td>
               <td class="w-2/12">
-               <button title="商品を削除" @click="deleteCartItem(cartitem.id)">
+               <button title="商品を削除" @click="deleteCartItem(cartitem.specialId)">
+               <!-- <button> -->
                 <img src="~/assets/img/trash.png" class="w-1/5 ml-10" />
                </button>
               </td>
@@ -64,7 +71,7 @@
         >
           <router-link to="/OrderInfo"> 注文に進む </router-link>
         </button>
-      </div>{{itemInfoFromStore}}
+      </div>
     </div>
   </div>
 </template>
@@ -91,7 +98,7 @@ export default Vue.extend({
     },
     deleteCartItem(id:string){
         if(confirm("カートから商品を削除しますか？")){
-           // itemInfoStore.deleteCartItemAct(id)
+           itemInfoStore.deleteCartItemAct(id)
         }
     }
   },
