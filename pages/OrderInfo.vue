@@ -375,7 +375,7 @@
                         v-model="payment"
                         type="radio"
                         name="代引き"
-                        value=1
+                        value="1"
                         @click="notcreditPay()"
                       />代金引換
                       <!-- <span>
@@ -391,7 +391,7 @@
                         v-model="payment"
                         type="radio"
                         name="クレジットカード払い"
-                        value=2
+                        value="2"
                         @click="creditPay()"
                       />クレジットカード
                       <!-- <span>
@@ -483,7 +483,12 @@ import Vue from 'vue';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 // import { Core as YubinBangoCore } from 'yubinbango-core';
 import { UserStore, CartStore, itemInfoStore } from '../store';
-import { orderInfoType,orderedItemType,otderIemType,cartItemType } from '../types/cartItemType';
+import {
+  orderInfoType,
+  orderedItemType,
+  otderIemType,
+  cartItemType,
+} from '../types/cartItemType';
 
 export default Vue.extend({
   data(): orderInfoType {
@@ -520,9 +525,9 @@ export default Vue.extend({
         creditCardNum: this.creditCardNum,
         selectPayment: this.selectPayment,
       };
-     let orderInfoToDb: orderedItemType
-     orderInfoToDb = {...this.itemInfoFromStore[0],orderInfo:orderInfo}
-     CartStore.updateOrderAct(orderInfoToDb)
+      let orderInfoToDb: any;
+      orderInfoToDb = { ...this.itemInfoFromStore[0], orderInfo: orderInfo };
+      CartStore.updateOrderAct(orderInfoToDb);
     },
     creditPay() {
       this.selectPayment = true;
@@ -542,7 +547,7 @@ export default Vue.extend({
     userInfoFromStore() {
       return UserStore.getUserInfo;
     },
-    itemInfoFromStore():otderIemType[] {
+    itemInfoFromStore(): otderIemType[] {
       return itemInfoStore.getitemInfo;
     },
     getCarts() {
