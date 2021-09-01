@@ -1,8 +1,8 @@
 <template>
   <div class="md:flex h-screen w-full">
-    <Header class="flex-grow-0 w-2/12 h-full" />
-    <Nuxt class="flex-grow w-11/12 h-full bg-gray-50" />
-    <Footer class="flex-grow-0 w-1/12 h-full" />
+    <Header class="md:flex-grow-0 md:w-2/12 h-screen" />
+    <Nuxt class="md:flex-grow md:w-11/12 h-screen bg-gray-100" style="background-image: url()" />
+    <Footer class="md:flex-grow-0 md:w-1/12 h-screen" />
   </div>
 </template>
 
