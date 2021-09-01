@@ -43,17 +43,17 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    // extend(config, { isDev, isClient, isServer }) {
-    //   if (isServer) {
-    //     config.externals = {
-    //       '@firebase/app': 'commonjs @firebase/app',
-    //       '@firebase/firestore': 'commonjs @firebase/firestore',
-    //       '@firebase/storage': 'commonjs @firebase/storage',
-    //       '@firebase/auth': 'commonjs @firebase/auth',
-    //       //etc...
-    //     };
-    //   }
-    // },
+    extend(config, { isDev, isClient, isServer }) {
+      if (isServer) {
+        config.externals = {
+          '@firebase/app': 'commonjs @firebase/app',
+          '@firebase/firestore': 'commonjs @firebase/firestore',
+          '@firebase/storage': 'commonjs @firebase/storage',
+          '@firebase/auth': 'commonjs @firebase/auth',
+          //etc...
+        };
+      }
+    },
     babel: {
       presets({ isServer }, [preset, options]) {
         options.loose = true;
