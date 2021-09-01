@@ -30,9 +30,7 @@ import { UserStore,itemInfoStore,OrderlogStore } from "~/store";
 
         //ランダムな文字列IDを作成
         let specialId = Math.random().toString(36).slice(-8);
-        console.log(specialId)
         let itemInfo={...addItemToCart,specialId:specialId}
-        console.log(itemInfo)
         let _order={itemInfo:[itemInfo],status:0}
 
         // ログインしていない場合カート商品はstoreにだけ追加
@@ -55,7 +53,7 @@ import { UserStore,itemInfoStore,OrderlogStore } from "~/store";
                 }).then(()=>{
                 if (itemInfoStore.getitemInfo[0].orderId===undefined) return;
                 this.addItemToCartMut(addItemToCart,itemInfoStore.getitemInfo[0].orderId)})
-            } else {
+            } else if(itemInfoStore.getitemInfo.length<=0) {
             // カートの中身が空だったらOrder/ordrtIdコレクションごと作成
             if(!UserStore.userInfo.uid) return
             console.log("カートが空なので新たなカートを作成")
