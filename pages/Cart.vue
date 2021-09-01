@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div v-show="itemInfoFromStore[0].itemInfo.length===0" class="grid justify-items-center p-20">
+    <div v-if="itemInfoFromStore[0].itemInfo.length===0" class="grid justify-items-center p-20">
      <div class="text-red-400 font-bold text-2xl">現在カートに商品はありません</div>
      <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full m-10">
         <router-link to="/">商品を選ぶ</router-link>
      </button>
     </div>
-    <div v-show="itemInfoFromStore[0].itemInfo.length!=0" class="grid justify-items-center">
+    <div v-if="itemInfoFromStore[0].itemInfo.length!=0" class="grid justify-items-center">
+    <!-- <div class="grid justify-items-center"> -->
       <div class="p-8">
         <table class="table-auto shadow-xl">
           <thead class="bg-yellow-800 bg-opacity-25">
@@ -73,17 +74,20 @@
         </button>
       </div>
     </div>
+    {{itemInfoFromStore[0].itemInfo}}
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue';
 import { itemInfoStore } from '../store';
+import {cartItemType} from '../types/cartItemType';
 
 export default Vue.extend({
-//   data() {
-//     return {
-//     };
-//   },
+  data() {
+    return {
+        // itemInfo_Cart :[]
+    };
+  },
   methods: {
     OrderMove() {
       console.log('move');
