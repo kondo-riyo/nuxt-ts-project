@@ -3,8 +3,8 @@
     <div v-if="logItems.length === 0">履歴はありません</div>
     <div class="grid justify-items-center" v-if="logItems.length > 0">
       <!-- <h1>カート(Cart.vue)</h1> -->
-      <div class="p-8">
-        <table class="table-auto shadow-xl">
+      <!-- <div class="p-8">
+        <table class="table-auto shadow-xl bg-gray-400">
           <thead class="bg-yellow-800 bg-opacity-25">
             <tr>
               <th class="w-1/6"></th>
@@ -62,8 +62,71 @@
             </tr>
           </tbody>
         </table>
+      </div> -->
+
+      <!-- table2 -->
+      <div class="">
+        <div class="bg-orange-100 m-1 border-solid border-2 border-gray-200 flex">
+          <div class="p-1 w-3/4 text-center">商品情報</div>
+          <div class="p-1 w-1/4">配達情報</div>
+        </div>
+        <div
+          v-for="logItem in logItems"
+          :key="logItem.orderId"
+          class="flex m-1 border-solid border-2 border-gray-200"
+        >
+          <div class="p-2">
+            <div
+              v-for="item in logItem.itemInfo"
+              :key="item.specialId"
+              class="m-1 p-1"
+            >
+              <!-- アイテム情報 -->
+              <div class="flex">
+                <div class="w-1/4"><img :src="item.itemImg" /></div>
+                <div class="flex flex-col w-2/4 border-solid border-b border-gyar-100">
+                  <div class="p-1 flex">
+                    <div class="w-3/4">
+                      <span class="font-bold text-xl">{{ item.itemName }}</span
+                      >× {{ item.itemNum }}
+                    </div>
+                    <div class="w-1/4">
+                      ￥{{ item.itemPrice * item.itemNum }}
+                    </div>
+                  </div>
+                  <div
+                    class="p-1 text-sm flex"
+                    v-for="(topping, index) in item.toppings"
+                    :key="index"
+                  >
+                    <div class="w-3/4">+{{ topping.name }}</div>
+                    <div class="w-1/4">￥{{ topping.price }}</div>
+                  </div>
+                  <div class="p-1 pt-5 flex">
+                    <div class="w-3/4">合計金額</div>
+                    <div class="w-1/4 text-xl font-bold">
+                      ￥{{
+                        item.itemPrice * item.itemNum + item.allToppingPrice
+                      }}
+                    </div>
+                  </div>
+                  <!-- <div class="p-1">￥{{ item.totalPrice }}</div> -->
+                  <div class="p-1"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="p-2 w-1/4 flex flex-col justify-center">
+            <!-- オーダー情報 -->
+            <p>注文者 : {{ logItem.orderInfo.name }}</p>
+            <p>配送先 : {{ logItem.orderInfo.address }}</p>
+            <p>
+              配送日時 : {{ logItem.orderInfo.deliveryDate }}
+              {{ logItem.orderInfo.deliveryTime }}時
+            </p>
+          </div>
+        </div>
       </div>
-      {{logItems}}
     </div>
   </div>
 </template>
@@ -71,10 +134,10 @@
 import Vue from 'vue';
 import { UserStore } from '../store';
 import { db } from '~/plugins/firebase';
-import { cartItemType } from '~/types/cartItemType';
+import { orderedItemType } from '~/types/cartItemType';
 
 type DataType = {
-  logItems: cartItemType[];
+  logItems: orderedItemType[];
 };
 export default Vue.extend({
   data(): DataType {
@@ -82,12 +145,6 @@ export default Vue.extend({
       logItems: [],
     };
   },
-  //   created() {
-  //     console.log('asyncフェッチ/OrdersLog.vue');
-  //      OrderlogStore.fetchLogItemsAct();
-  //     // await this.$set( OrderlogStore.getOrderLogItem)
-  //   },
-
   async fetch() {
     if (!UserStore.userInfo) {
       console.log('ログインしていません');
@@ -109,22 +166,21 @@ export default Vue.extend({
     }
   },
   methods: {
-    cancelOrder(logItem:cartItemType): void {
-      console.log('注文キャンセル'+JSON.stringify(logItem));
-      //クリックしたdata()内のorderのuidをdbで検索し、一致したもののstatusを9にする
-    },
+    // deleteItem(item_specialId:any, orderId:any) {
+    //   const deleteIndex = this.logItems.findIndex(logItem=>orderId===logItem.orderId)//削除対象のオーダーを特定(インデックスを特定)
+    //   const deleteItemIndex = this.logItems[deleteIndex].itemInfo.findIndex(item=>item.specialId===item_specialId)//オーダーの中から削除対象の商品を特定
+    //   console.log(deleteItemIndex)
+    //   console.log(this.logItems[deleteIndex].itemInfo[deleteItemIndex])
+    //   this.logItems[deleteIndex].itemInfo.splice(deleteItemIndex,1)//data()のlogItemから削除対象の商品を削除
+    //console.log(this.logItems[deleteIndex])
+    // db.collection(`users/${UserStore.userInfo.uid}/order`).doc(orderId).update({
+    //   itemInfo:this.logItems[deleteIndex].itemInfo //data()のlogItemと同じ状態に更新(削除)
+    // })
+    // },
+    // cancelOrder(logItem: cartItemType): void {
+    //   console.log('注文キャンセル' + JSON.stringify(logItem));
+    //   //クリックしたdata()内のorderのuidをdbで検索し、一致したもののstatusを9にする
+    // },
   },
-
-  //   computed: {
-  //     // ログインユーザを換えても前回のユーザの履歴のまま更新されない
-  //     //オブジェクトそのものの変化が無ければ、computedはキャッシュした値を返してしまう
-  //     //cacheをfalseにすることで、毎度値を更新する
-  //     getOrderLogItem: {
-  //       cache: false,
-  //       get() {
-  //         return OrderlogStore.getOrderLogItem;
-  //       },
-  //     },
-  //   },
 });
 </script>
