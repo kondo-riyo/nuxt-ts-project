@@ -10,8 +10,8 @@
     <!-- <div class="grid justify-items-center"> -->
       <div class="p-8">
         <table class="table-auto shadow-xl">
-          <thead class="bg-yellow-800 bg-opacity-25">
-            <tr class="text-right">
+          <thead class="bg-base_red">
+            <tr class="text-right text-base_cream">
               <th class="w-1/12"></th>
               <th class="w-4/12">商品名</th>
               <th class="w-2/12">価格(税抜)</th>
@@ -27,7 +27,7 @@
               class="
                 shadow-inner
                 text-right
-                hover:bg-green-500 hover:bg-opacity-25 hover:shadow
+                hover:bg-base_green hover:bg-opacity-25 hover:shadow
                 space-y-6
               "
             >
@@ -61,8 +61,8 @@
         <button
           @click="OrderMove()"
           class="
-            bg-green-500
-            hover:bg-green-700
+            bg-base_red
+            hover:bg-base_orange
             text-white
             font-bold
             py-2
