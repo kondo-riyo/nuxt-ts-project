@@ -483,7 +483,7 @@ import Vue from 'vue';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 // import { Core as YubinBangoCore } from 'yubinbango-core';
 import { UserStore, CartStore, itemInfoStore } from '../store';
-import { orderInfoType } from '../types/cartItemType';
+import { orderInfoType,orderedItemType,otderIemType,cartItemType } from '../types/cartItemType';
 
 export default Vue.extend({
   data(): orderInfoType {
@@ -520,7 +520,8 @@ export default Vue.extend({
         creditCardNum: this.creditCardNum,
         selectPayment: this.selectPayment,
       };
-     let orderInfoToDb = {...this.itemInfoFromStore[0],orderInfo:orderInfo}
+     let orderInfoToDb: orderedItemType
+     orderInfoToDb = {...this.itemInfoFromStore[0],orderInfo:orderInfo}
      CartStore.updateOrderAct(orderInfoToDb)
     },
     creditPay() {
@@ -541,7 +542,7 @@ export default Vue.extend({
     userInfoFromStore() {
       return UserStore.getUserInfo;
     },
-    itemInfoFromStore() {
+    itemInfoFromStore():otderIemType[] {
       return itemInfoStore.getitemInfo;
     },
     getCarts() {

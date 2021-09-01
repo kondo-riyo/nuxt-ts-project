@@ -20,11 +20,9 @@ import { UserStore,itemInfoStore,OrderlogStore } from "~/store";
     // mutation-------------------------------------
     @Mutation
     private  addItemToCartMut(addItemToCart:cartItemType, idFromDb:string|null):void{
+        if(idFromDb===null)return
     this.carts.push({...addItemToCart,orderId:idFromDb});
     }
-
-
-
 
     // action---------------------------------------
     @Action({rawError: true})
