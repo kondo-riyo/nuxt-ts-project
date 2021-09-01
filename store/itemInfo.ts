@@ -64,6 +64,7 @@ export default class itemInfoStore extends VuexModule {
     @Action({rawError: true})
     public async deleteCartItemAct(id:string): Promise<void>{
         let cartOrderId = this.getitemInfo[0].orderId
+        if(this.getitemInfo[0].itemInfo===undefined)return
         const deleteCartItemIndex:number = this.getitemInfo[0].itemInfo.findIndex(item=>item.specialId === id )
         this.getitemInfo[0].itemInfo.splice(deleteCartItemIndex,1)
         await db.collection(`users/${UserStore.userInfo!.uid}/order`).doc(`${cartOrderId}`).update({
