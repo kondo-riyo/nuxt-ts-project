@@ -20,7 +20,7 @@ export default class itemInfoStore extends VuexModule {
 
     //getters-----------------------------------------------
     public get getitemInfo():  otderIemType[]{
-        return this.itemInfo.filter(item=>item.status===0);
+        return this.itemInfo;
     }
     // public get getOrderId():string|null|undefined{
     //   return this.itemInfo.length>0?this.itemInfo[0].orderId:null
@@ -31,6 +31,7 @@ export default class itemInfoStore extends VuexModule {
     private fetchitemInfoMut(itemInfoFromDb:cartItemType):void{
        // let itemInfoFromDB = {...itemInfoFromDb}
         this.itemInfo.push(itemInfoFromDb)
+        console.log("push完了@fetchitemInfoMut")
         //this.order=itemInfoFromDb;
     }
 
@@ -51,12 +52,14 @@ export default class itemInfoStore extends VuexModule {
     //action-------------------------------------------------
     @Action({rawError: true})
     public async fetchitemInfoAct(): Promise<void>{
-            await db.collection(`users/${UserStore.userInfo!.uid}/order`).get().then(itemInfoAll =>{
+           await db.collection(`users/${UserStore.userInfo!.uid}/order`).get().then(itemInfoAll =>{
             if(itemInfoAll.docs.length>this.itemInfo.length){
             itemInfoAll.forEach(itemInfo=>{
-                    let itemInfoFromDb:cartItemType = itemInfo.data()
+                    let itemInfoFromDb:cartItemType =  itemInfo.data()
+                    if(itemInfoFromDb.status===0){
                     itemInfoFromDb = {...itemInfoFromDb,orderId:itemInfo.id}
                     this.fetchitemInfoMut(itemInfoFromDb)
+                    }
             })}
         })
     }
@@ -68,7 +71,7 @@ export default class itemInfoStore extends VuexModule {
         const deleteCartItemIndex:number = this.getitemInfo[0].itemInfo.findIndex(item=>item.specialId === id )
         this.getitemInfo[0].itemInfo.splice(deleteCartItemIndex,1)
         await db.collection(`users/${UserStore.userInfo!.uid}/order`).doc(`${cartOrderId}`).update({
-            itemInfo: this.getitemInfo[0].itemInfo
+            itemInfo: this.getitemInfo[0].itemInfo,
         })
     }
 }

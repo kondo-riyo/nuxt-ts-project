@@ -471,8 +471,6 @@
             </ValidationObserver>
           </form>
         </div>
-        <p>{{ itemInfoFromStore }}</p>
-        <p>{{ payment }}</p>
       </div>
       <!-- <script src="https://mao2009.github.io/zipToAddress/zipToAddress.js"></script> -->
     </div>
