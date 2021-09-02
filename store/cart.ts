@@ -53,13 +53,14 @@ import { UserStore,itemInfoStore,OrderlogStore } from "~/store";
                 }).then(()=>{
                 if (itemInfoStore.getitemInfo[0].orderId===undefined) return;
                 this.addItemToCartMut(addItemToCart,itemInfoStore.getitemInfo[0].orderId)})
-            } else if(itemInfoStore.getitemInfo.length<=0) {
+            } else if(itemInfoStore.getitemInfo.length===0) {
             // カートの中身が空だったらOrder/ordrtIdコレクションごと作成
             if(!UserStore.userInfo.uid) return
             console.log("カートが空なので新たなカートを作成")
             db.collection(`users/${UserStore.userInfo.uid}/order`).add(_order).then(cartItem=>{
                 console.log(cartItem.id);
                 this.addItemToCartMut(addItemToCart,cartItem.id)
+                itemInfoStore.addItemToNewCart(addItemToCart,cartItem.id)
             })
         }        
     }}

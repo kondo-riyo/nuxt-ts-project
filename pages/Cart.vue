@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      v-if="cartItem[0].itemInfo.length === 0"
+      v-if="cartItem.itemInfo.length===0"
       class="grid justify-items-center p-20"
     >
       <div class="text-red-400 font-bold text-2xl">
@@ -23,7 +23,7 @@
       </button>
     </div>
     <div
-      v-if="cartItem[0].itemInfo.length != 0"
+      v-if="cartItem.itemInfo.length>0"
       class="grid justify-items-center"
     >
       <div class="p-10">
@@ -40,7 +40,7 @@
           </thead>
           <tbody class="">
             <tr
-              v-for="cartitem in cartItem[0].itemInfo"
+              v-for="cartitem in cartItem.itemInfo"
               :key="cartitem.specialId"
               class="
                 shadow-inner
@@ -134,6 +134,7 @@ export default Vue.extend({
     deleteCartItem(id: string) {
       if (confirm('カートから商品を削除しますか？')) {
         itemInfoStore.deleteCartItemAct(id);
+        //asyncDataで作成したcartの中身も更新する必要がある！！
         this.$router.push("/")
       }
     },
@@ -145,20 +146,21 @@ export default Vue.extend({
   // },
 
   async asyncData() {
-    let cartItems: any = [];
+    let cartItems: any = {itemInfo:[]};
     await db
       .collection(`users/${UserStore.userInfo!.uid}/order`)
       .get()
       .then((itemInfoAll) => {
-        if (itemInfoAll.docs.length >= itemInfoStore.itemInfo.length) {
+            console.log("DB:"+itemInfoAll.docs.length+" / ストア:"+itemInfoStore.itemInfo.length)
+        if (itemInfoAll.docs.length > itemInfoStore.itemInfo.length) {
+          console.log("DBからのデータ取得を開始します")
           itemInfoAll.forEach((itemInfo) => {
             let itemInfoFromDb: cartItemType = itemInfo.data();
             if (itemInfoFromDb.status === 0) {
+              console.log("ステータスゼロのでーたあり")
               itemInfoFromDb = { ...itemInfoFromDb, orderId: itemInfo.id };
-              cartItems.push(itemInfoFromDb);
-            } else {
-              console.log('データなし');
-            }
+              cartItems=itemInfoFromDb;
+            } 
           });
         }
       });

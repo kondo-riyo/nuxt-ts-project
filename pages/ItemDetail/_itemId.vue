@@ -6,18 +6,19 @@
           <img :src="itemDetail.img" class="rounded-xl w-full" />
         </div>
 
-        <div class="flex flex-col justify-center">
+        <div class="flex flex-col justify-center m-10">
+          <div class="mb-10"><h1 class="block  text-3xl">商品情報</h1></div>
           <div>
-            <p class="text-gray-700 text-4xl">{{ itemDetail.name }}</p>
+            <p class="text-gray-700 text-4xl font-bold">{{ itemDetail.name }}</p>
           </div>
-          <div>
+          <div class="mt-5">
             <p>
-              <span class="text-2xl">￥{{ itemDetail.price }}</span
-              >税込
+              <span class="text-3xl">￥{{ itemDetail.price }}</span
+              > 税込
             </p>
           </div>
           <div>
-            <p class="block my-4">{{ itemDetail.description }}</p>
+            <p class="block my-4 text-xl">{{ itemDetail.description }}</p>
           </div>
 
           <div class="flex">
@@ -55,10 +56,10 @@
                     right-0
                     top-0
                     h-full
-                    w-10
                     text-center text-gray-600
                     pointer-events-none
                     flex
+                    w-4
                     items-center
                     justify-center
                   "
@@ -87,7 +88,7 @@
         </p>
         <div class="flex flex-wrap">
           <div
-            class="w-1/6 mb-4"
+            class="w-1/8 p-2 text-center"
             v-for="topping in getToppings"
             :key="topping.id"
           >
@@ -105,6 +106,7 @@
                 w-8
                 hover:border-transparent
                 rounded
+                bg-white
               "
               :class="{ 'bg-gray-400': isSelectedM === topping.id }"
               @click="
@@ -132,6 +134,7 @@
                 w-8
                 hover:border-transparent
                 rounded
+                bg-white
               "
               :class="{ 'bg-gray-400': isSelectedL === topping.id }"
               @click="
@@ -150,9 +153,9 @@
         </div>
       </div>
 
-      <div class="flex justify-end">
-        <div class="py-2 px-4">
-          <p class="text-gray-700 text-3xl">合計￥{{ calcTotalPrice }}</p>
+      <div class="flex justify-end mt-5">
+        <div class="py-3 px-4">
+          <p class="text-gray-700 text-4xl">合計 <span class="font-bold">￥{{ calcTotalPrice }}</span></p>
         </div>
         <div class="py-2 px-4">
           <button
@@ -160,7 +163,7 @@
               text-white
               font-semibold
               bg-green-500
-              py-2
+              py-3
               px-4
               rounded
               transition
@@ -267,7 +270,7 @@ export default Vue.extend({
     },
 
     // カートに追加-------------------------------------------------------------------
-    addCart() {
+   async addCart() {
       const addItemToCart:cartItemType = {
         itemId: this.itemDetail?.id,
         itemName: this.itemDetail?.name,
@@ -278,8 +281,10 @@ export default Vue.extend({
         allToppingPrice:this.allToppingPrice,
         totalPrice:this.calcTotalPrice
       };
-      CartStore.addItemToCartAct(addItemToCart);
-      this.$router.push('/Cart')
+      if(confirm('カートに商品を追加しますか？')){
+     CartStore.addItemToCartAct(addItemToCart);
+     await this.$router.push('/Cart')
+      }
     },
   },
   computed: {

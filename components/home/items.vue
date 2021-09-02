@@ -8,6 +8,7 @@
           py-2
           mr-2
           rounded-md
+          shadow-md
           border border-gray-300
           focus:outline-none
           mt-0 mb-0 ml-auto
@@ -17,7 +18,7 @@
       />
       <img
         src="../../assets/img/search.png"
-        class="block w-6 mr-auto"
+        class="block w-7 mr-auto"
         style=""
         @click="search"
       />
