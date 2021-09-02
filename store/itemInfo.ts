@@ -52,22 +52,16 @@ export default class itemInfoStore extends VuexModule {
     //action-------------------------------------------------
     @Action({rawError: true})
     public async fetchitemInfoAct(): Promise<void>{
-        console.log("オーダーfetchスタート"+UserStore.userInfo!.uid)
            await db.collection(`users/${UserStore.userInfo!.uid}/order`).get().then(itemInfoAll =>{
-                console.log("アイテムインフォフロムオール")
-                console.log("ステートのアイテム"+this.itemInfo)
             if(itemInfoAll.docs.length>this.itemInfo.length){
-                console.log("アイテムインフォフロムオール"+itemInfoAll)
             itemInfoAll.forEach(itemInfo=>{
                     let itemInfoFromDb:cartItemType =  itemInfo.data()
                     if(itemInfoFromDb.status===0){
-                        console.log(itemInfoFromDb+"fetch中")
                     itemInfoFromDb = {...itemInfoFromDb,orderId:itemInfo.id}
                     this.fetchitemInfoMut(itemInfoFromDb)
                     }
             })}
         })
-        console.log("オーダーfetch完了")
     }
 
     @Action({rawError: true})
@@ -77,7 +71,7 @@ export default class itemInfoStore extends VuexModule {
         const deleteCartItemIndex:number = this.getitemInfo[0].itemInfo.findIndex(item=>item.specialId === id )
         this.getitemInfo[0].itemInfo.splice(deleteCartItemIndex,1)
         await db.collection(`users/${UserStore.userInfo!.uid}/order`).doc(`${cartOrderId}`).update({
-            itemInfo: this.getitemInfo[0].itemInfo
+            itemInfo: this.getitemInfo[0].itemInfo,
         })
     }
 }
