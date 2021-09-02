@@ -15,8 +15,16 @@ module.exports = {
         base_green: '#3f582e',
         base_cream: '#f2e0ca',
         base_gray: '#998675'
-      }
+      },
+      // backgroundImage: theme => ({
+      //   'cafe-pattern': "url('./assets/img/cafe_background.jpeg')",
+      // })    
     },
+    // extend:{
+    //   backgroundImage: theme => ({
+    //     'cafe-pattern': "url('./assets/img/cafe_background.jpeg')",
+    //   })    
+    // }
   },
   variants: {
     extend: {},

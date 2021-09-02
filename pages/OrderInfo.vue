@@ -196,7 +196,7 @@
                   <validation-provider
                     v-slot="{ errors }"
                     name="住所"
-                    rules="required|max:7"
+                    rules="required"
                   >
                     <input
                       v-model="address"
