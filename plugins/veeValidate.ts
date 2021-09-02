@@ -2,7 +2,7 @@ import Vue from 'vue'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 // import * as rules from 'vee-validate/dist/rules'
 import {
-  required, min, max, email,
+  required, min, max, email, alpha_dash, confirmed
 } from 'vee-validate/dist/rules';
 // 全てのルールを利用
 // Object.keys(rules).forEach((rule) => {
@@ -30,6 +30,16 @@ extend('email', {
    ...email,
    message: '{_field_}の形式で入力してください' 
 });
+
+extend('alpha_dash', {
+  ...alpha_dash,
+  message: '英数字のみ'
+})
+
+extend('confirmed', {
+  ...confirmed,
+  message: 'パスワードが一致していません'
+})
 
 extend('yubin', {
   validate(value:string){

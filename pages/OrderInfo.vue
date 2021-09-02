@@ -1,6 +1,7 @@
 <template>
-  <div>
-    <p class="block m-10 font-bold text-2xl text-gray-700 text-center">
+  <div class="flex justify-center items-center">
+    <div class="bg-white w-1/2 p-8 rounded">
+    <p class="block m-10 font-bold text-3xl text-gray-700 text-center">
       お届け先情報
     </p>
 
@@ -114,7 +115,7 @@
                 </div>
               </div>
               <div class="flex flex-wrap items-start -mx-3 mb-6">
-                <div class="w-full md:w-2/6 px-3">
+                <div class="w-full md:w-3/6 px-3">
                   <label
                     class="
                       block
@@ -160,8 +161,8 @@
                     <button class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">検索</button>
                 </span>-->
                 </div>
-                <div class="w-full md:w-1/6 pt-6 px-3">
-                  <!-- <div class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name"></div> -->
+                <!-- <div class="w-full md:w-1/6 pt-6 px-3">
+                  <div class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name"></div>
                   <button
                     onclick='zipToAddress("[name=zip1]", "", "#address")'
                     class="
@@ -178,7 +179,7 @@
                   >
                     検索
                   </button>
-                </div>
+                </div> -->
                 <div class="w-full md:w-3/6 px-3">
                   <label
                     class="
@@ -196,7 +197,7 @@
                   <validation-provider
                     v-slot="{ errors }"
                     name="住所"
-                    rules="required|max:7"
+                    rules="required"
                   >
                     <input
                       v-model="address"
@@ -454,27 +455,25 @@
                   @click="OrderSubmit()"
                   :disabled="invalid"
                   class="
-                    bg-green-500
+                    bg-base_red
                     hover:bg-green-400
                     text-white
                     font-semibold
                     py-3
                     px-4
                     rounded
+                    mt-5
                   "
                 >
-                  <!-- <router-link to="/OrderComp"> -->
                   ご注文を確定する
-                  <!-- </router-link> -->
                 </button>
               </div>
             </ValidationObserver>
           </form>
         </div>
-        <p>{{ itemInfoFromStore }}</p>
-        <p>{{ payment }}</p>
       </div>
       <!-- <script src="https://mao2009.github.io/zipToAddress/zipToAddress.js"></script> -->
+    </div>
     </div>
   </div>
 </template>
@@ -527,11 +526,13 @@ export default Vue.extend({
       };
       let orderInfoToDb: any;
       orderInfoToDb = { ...this.itemInfoFromStore[0], orderInfo: orderInfo };
+      if(confirm('注文を確定してもよろしいですか？')){
       CartStore.updateOrderAct(orderInfoToDb);
+      this.$router.push('/OrderComp')
+      }
     },
     creditPay() {
       this.selectPayment = true;
-      // console.log('creditpay 発動！')
     },
     notcreditPay() {
       this.selectPayment = false;
@@ -553,9 +554,6 @@ export default Vue.extend({
     getCarts() {
       return CartStore.getCart;
     },
-    // getOrderId() {
-    //   return itemInfoStore.getOrderId;
-    // },
   },
 });
 </script>

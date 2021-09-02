@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex items-center container m-4">
+    <div class="flex items-center container m-6">
       <input
         class="
           w-3/6
@@ -8,6 +8,7 @@
           py-2
           mr-2
           rounded-md
+          shadow-md
           border border-gray-300
           focus:outline-none
           mt-0 mb-0 ml-auto
@@ -17,7 +18,7 @@
       />
       <img
         src="../../assets/img/search.png"
-        class="block w-6 mr-auto"
+        class="block w-7 mr-auto"
         style=""
         @click="search"
       />
@@ -26,24 +27,29 @@
       <p v-show="resultNullFlg">※該当する商品がありません</p>
       <p v-show="keywordNullFlg">※検索ワードを入力してください</p>
     </div>
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap justify-center">
       <div
-        class="
-          container
-          mx-auto
-          p-8
-          max-w-xs
-          rounded
-          overflow-hidden
-          shadow
-          hover:shadow-xl
-          transition
-          duration-300
-          m-3
-        "
         v-for="item in searchedItems"
         :key="item.id"
       >
+       <router-link
+         :to="{ name: 'ItemDetail', params: { itemid: item.id } }"
+       >
+        <div         
+          class="
+            flex-none
+            container
+            p-10
+            max-w-xs
+            rounded
+            overflow-hidden
+            shadow
+            hover:shadow-xl
+            transition
+            duration-300
+            m-3
+          "
+        >
         <img class="rounded-xl" :src="item.img" alt="" />
         <div class="flex justify-between items-center">
           <div>
@@ -51,80 +57,80 @@
             <p class="mt-2">{{ item.price }}円(税込)</p>
           </div>
           <div>
-            <router-link
-              :to="{ name: 'ItemDetail', params: { itemid: item.id } }"
-            >
               <button
                 class="
+                  bg-base_red
+                  hover:bg-base_orange
                   text-white
-                  font-semibold
-                  bg-green-500
+                  font-bold
                   py-2
-                  px-4
-                  rounded-lg
-                  shadow-md
-                  transition
-                  duration-200
-                  transform-gpu
-                  hover:scale-105
+                  px-6
+                  rounded-full
                 "
               >
                 詳細
               </button>
-            </router-link>
           </div>
         </div>
+        </div>
+        </router-link>
       </div>
     </div>
 
-    <div class="flex flex-wrap" v-show="searchedItems.length === 0">
+    <div class="flex flex-wrap justify-center" v-show="searchedItems.length === 0">
       <div
-        class="
-          container
-          p-10
-          w-2/5
-          max-w-xs
-          rounded
-          overflow-hidden
-          shadow
-          hover:shadow-xl
-          transition
-          duration-300
-          m-3
-        "
         v-for="item in itemsFromStore"
         :key="item.id"
       >
+        <router-link
+         　:to="{ name: 'ItemDetail-itemId', params: { itemId: item.id } }"
+        >
+        <div         
+          class="
+            flex-none
+            container
+            p-10
+            max-w-xs
+            rounded-xl
+            overflow-hidden
+            shadow
+            hover:shadow-xl
+            transition
+            duration-300
+            m-3
+            bg-white bg-opacity-50
+          "
+        >
         <img class="rounded-xl" :src="item.img" />
-        <div class="flex justify-between items-center">
+        <!-- <div class="flex justify-between items-center"> -->
+        <div class="">
           <div>
-            <h1 class="mt-5 text-xl font-semibold">{{ item.name }}</h1>
-            <p class="mt-2">{{ item.price }}円(税込)</p>
+            <h1 class="mt-5 text-lg font-semibold text-center">{{ item.name }}</h1>
+            <!-- <p class="mt-2">{{ item.price }}円(税込)</p> -->
           </div>
-          <div>
-            <router-link
-              :to="{ name: 'ItemDetail-itemId', params: { itemId: item.id } }"
-            >
+          <div class="text-center">
+            <span class="mt-2 mx-2">{{ item.price }}円(税込)</span>
+            <span>
               <button
                 class="
+                  bg-base_red
+                  hover:bg-base_orange
                   text-white
-                  font-semibold
-                  bg-green-500
+                  font-bold
                   py-2
-                  px-3
-                  rounded-lg
-                  shadow-md
-                  transition
-                  duration-200
-                  transform-gpu
-                  hover:scale-105
+                  px-6
+                  mx-2
+                  mt-2
+                  rounded-full
                 "
               >
                 詳細
               </button>
-            </router-link>
+            </span>
           </div>
         </div>
+        </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -156,7 +162,6 @@ export default Vue.extend({
       this.searchedItems = [];
       // 検索ワードなし
       if (this.keyWord === '') {
-        console.log(this.keyWord);
         this.keywordNullFlg = true;
         this.resultNullFlg = false;
       } else {
@@ -168,7 +173,6 @@ export default Vue.extend({
           // 該当結果あり
           if (item.name.indexOf(this.keyWord) >= 0) {
             this.searchedItems.push(item);
-            console.log(item);
           }
         });
         // 該当結果なし

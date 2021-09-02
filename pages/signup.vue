@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <div
       type="text"
       class="
@@ -7,6 +7,7 @@
         container
         mx-auto
         p-10
+        m-10
         max-w-xs
         rounded-lg
         overflow-hidden
@@ -14,93 +15,259 @@
         flex flex-col
       "
     >
-      <div><h1 class="font-bold text-xl text-gray-700">会員登録</h1></div>
+      <div><h1 class="font-bold text-xl text-gray-700 text-center">会員登録</h1></div>
+      <ValidationObserver v-slot="{ invalid }">
       <div>
-        <label for="email">メール</label
-        ><input
-          type="text"
-          v-model="userInfo.email"
-          class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
-        />
-      </div>
-      <div>
-        <label for="password">パスワード</label
-        ><input
-          type="text"
-          v-model="userInfo.password"
-          class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
-        />
-      </div>
-      <div>
-        <label for="name">名前</label
-        ><input
-          type="text"
+        <label for="name">名前</label>
+        <validation-provider
+          v-slot="{ errors }"
+          name="名前"
+          rules="required|max:10"
+        >
+        <input
           v-model="userInfo.name"
-          class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
-        />
+          name="名前"
+          class="
+          appearance-none
+          block
+          w-full
+          bg-gray-200
+          text-gray-700
+          border border-gray-200
+          rounded
+          py-3
+          px-4
+          leading-tight
+          focus:outline-none focus:bg-white focus:border-gray-500
+          "
+          type="text"
+          placeholder="例)田中 太朗"
+          />
+          <span class="text-xs text-red-700">
+            {{ errors[0] }}
+          </span>
+          </validation-provider>
       </div>
       <div>
-        <label for="tel">電話番号</label
-        ><input
+        <label for="email">メール</label>
+        <validation-provider
+          v-slot="{ errors }"
+          name="メールアドレス"
+          rules="required|email"
+        >
+        <input
+          v-model="userInfo.email"
+          name="メールアドレス"
+          class="
+          appearance-none
+          block
+          w-full
+          bg-gray-200
+          text-gray-700
+          border border-gray-200
+          rounded
+          py-3
+          px-4
+          leading-tight
+          focus:outline-none focus:bg-white focus:border-gray-500
+          "
           type="text"
+          placeholder="例)sample@gmail.com"
+          />
+        <span class="text-xs text-red-700">
+          {{ errors[0] }}
+        </span>
+        </validation-provider>
+      </div>
+      <div>
+        <label for="tel">電話番号</label>
+        <validation-provider
+         v-slot="{ errors }"
+         name="電話番号"
+         rules="required|min:10|max:11"
+        >
+        <input
           v-model="userInfo.tel"
-          class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
-        />
+          name="電話番号"
+          class="
+          appearance-none
+          block
+          w-full
+          bg-gray-200
+          text-gray-700
+          border border-gray-200
+          rounded
+          py-3
+          px-4
+          leading-tight
+          focus:outline-none focus:bg-white focus:border-gray-500
+          "
+          type="text"
+          placeholder="例)090XXXXXXXX"
+          />
+          <span class="text-xs text-red-700">
+            {{ errors[0] }}
+          </span>
+          </validation-provider>
       </div>
       <div>
-        <label for="postalcode">郵便番号</label
-        ><input
-          type="text"
+        <label for="postalcode">郵便番号</label>
+        <validation-provider
+          v-slot="{ errors }"
+          name="郵便番号"
+          rules="required|yubin"
+        >
+        <input
           v-model="userInfo.postalcode"
-          class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
-        />
+          name="郵便番号"
+          class="
+          appearance-none
+          block
+          w-full
+          bg-gray-200
+          text-gray-700
+          border border-gray-200
+          rounded
+          py-3
+          px-4
+          leading-tight
+          focus:outline-none focus:bg-white focus:border-gray-500
+          "
+          type="text"
+          placeholder=""
+          />
+          <span class="text-xs text-red-700">
+            {{ errors[0] }}
+          </span>
+          </validation-provider>
       </div>
 
       <div>
-        <label for="address">住所</label
-        ><input
-          type="text"
+        <label for="address">住所</label>
+        <validation-provider
+          v-slot="{ errors }"
+          name="住所"
+          rules="required"
+        >
+        <input
           v-model="userInfo.address"
-          class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
-        />
+          name="住所"
+          class="
+          appearance-none
+          block
+          w-full
+          bg-gray-200
+          text-gray-700
+          border border-gray-200
+          rounded
+          py-3
+          px-4
+          leading-tight
+          focus:outline-none focus:bg-white focus:border-gray-500
+          "
+          type="text"
+          placeholder="東京都新宿区"
+          />
+          <span class="text-xs text-red-700">
+            {{ errors[0] }}
+          </span>
+          </validation-provider>
       </div>
       <div>
+        <label for="password">パスワード(登録)</label>
+        <validation-provider
+            v-slot="{ errors }"
+            name="パスワード"
+            rules="required"
+        >
+        <input
+          v-model="userInfo.password"
+          class="
+          appearance-none
+          block
+          w-full
+          bg-gray-200
+          text-gray-700
+          border border-gray-200
+          rounded
+          py-3
+          px-4
+          leading-tight
+          focus:outline-none focus:bg-white focus:border-gray-500
+          "
+          type="password"
+          placeholder="例)*******"
+          />
+          <span class="text-xs text-red-700">
+            {{ errors[0] }}
+          </span>
+          </validation-provider>
+      </div>
+      <!-- <div>
+        <label for="password">パスワード(確認)</label>
+        <validation-provider
+            v-slot="{ errors }"
+            name="パスワードの確認"
+            rules="required"
+            vid="confirmation"
+        >
+        <input
+          name="パスワードの確認"
+          class="
+          appearance-none
+          block
+          w-full
+          bg-gray-200
+          text-gray-700
+          border border-gray-200
+          rounded
+          py-3
+          px-4
+          leading-tight
+          focus:outline-none focus:bg-white focus:border-gray-500
+          "
+          type="password"
+          placeholder="例)*******"
+          />
+          <span class="text-xs text-red-700">
+            {{ errors[0] }}
+          </span>
+          </validation-provider>
+      </div> -->
+      <div class="my-4 ml-16 self-center">
         <button
           @click="signup"
+          :disabled="invalid"
           class="
+            bg-base_red
+            hover:bg-base_orange
             text-white
-            font-semibold
-            bg-green-500
+            font-bold
             py-2
-            px-4
-            rounded-lg
-            shadow-md
-            transition
-            duration-200
-            transform-gpu
-            hover:scale-105
+            px-6
+            rounded-full
           "
         >
           登録
         </button>
       </div>
-      <div>
-        <nuxt-link to="/signin" class="text-blue-700 underline"
-          >Already a user? Sign-in</nuxt-link
-        >
+     </ValidationObserver>
+      <div class="self-center">
+        <nuxt-link to="/signin" class="text-blue-700">
+          会員登録済みの方はこちら
+        </nuxt-link>
       </div>
     </div>
   </div>
 </template>
-
 <script lang="ts">
 import Vue from 'vue';
-import firebase, { auth, db } from '~/plugins/firebase';
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
+import firebase, { auth, db } from '../plugins/firebase';
 import { userInfoType } from '../types/userInfoType';
 type DataType = {
   userInfo: userInfoType;
 };
-
 export default Vue.extend({
   data(): DataType {
     return {
@@ -114,6 +281,10 @@ export default Vue.extend({
         uid: '',
       },
     };
+  },
+  components: {
+    ValidationProvider,
+    ValidationObserver,
   },
   methods: {
     async signup(): Promise<void> {
