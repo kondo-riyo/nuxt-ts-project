@@ -1,7 +1,7 @@
 import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators"
 import { db } from "~/plugins/firebase";
 import { cartItemType,orderedItemType } from "~/types/cartItemType";
-import { UserStore,itemInfoStore,OrderlogStore } from "~/store";
+import { UserStore,itemInfoStore } from "~/store";
 @Module({ name: 'cart', namespaced: true ,stateFactory: true})
 
  export default class CartStore extends VuexModule {
@@ -53,13 +53,14 @@ import { UserStore,itemInfoStore,OrderlogStore } from "~/store";
                 }).then(()=>{
                 if (itemInfoStore.getitemInfo[0].orderId===undefined) return;
                 this.addItemToCartMut(addItemToCart,itemInfoStore.getitemInfo[0].orderId)})
-            } else if(itemInfoStore.getitemInfo.length<=0) {
+            } else if(itemInfoStore.getitemInfo.length===0) {
             // カートの中身が空だったらOrder/ordrtIdコレクションごと作成
             if(!UserStore.userInfo.uid) return
             console.log("カートが空なので新たなカートを作成")
             db.collection(`users/${UserStore.userInfo.uid}/order`).add(_order).then(cartItem=>{
                 console.log(cartItem.id);
                 this.addItemToCartMut(addItemToCart,cartItem.id)
+                itemInfoStore.addItemToNewCart(addItemToCart,cartItem.id)
             })
         }        
     }}

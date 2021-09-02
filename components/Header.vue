@@ -22,10 +22,9 @@
         <span class="relative inline-block">
           <router-link to="/Cart">
             <img src="~/assets/img/cart_icon.png" class="w-1/5 inline-block" />
-            <span class="absolute inline-flex px-2 py-1 text-xs font-bold leading-none text-red-100 bg-base_red rounded-full">
-              {{CartItemFromStore[0].itemInfo.length}}
-              <!-- 12 -->
-            </span>
+            <!-- <span v-if="ItemInfoFromStore.length&&ItemInfoFromStore[0].itemInfo.length" class="absolute inline-flex px-2 py-1 text-xs font-bold leading-none text-red-100 bg-base_red rounded-full">
+              {{ItemInfoFromStore[0].itemInfo.length}}
+            </span> -->
           </router-link>
         </span>
       </li>
@@ -71,8 +70,8 @@ export default Vue.extend({
     uidFromStore(){
       return UserStore.getUid;
     },
-    CartItemFromStore(){
-      return itemInfoStore.getitemInfo;
+    ItemInfoFromStore(){
+      return itemInfoStore.itemInfo;
     }
   },
 });

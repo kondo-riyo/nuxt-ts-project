@@ -8,6 +8,7 @@
           py-2
           mr-2
           rounded-md
+          shadow-md
           border border-gray-300
           focus:outline-none
           mt-0 mb-0 ml-auto
@@ -17,7 +18,7 @@
       />
       <img
         src="../../assets/img/search.png"
-        class="block w-6 mr-auto"
+        class="block w-7 mr-auto"
         style=""
         @click="search"
       />
@@ -161,7 +162,6 @@ export default Vue.extend({
       this.searchedItems = [];
       // 検索ワードなし
       if (this.keyWord === '') {
-        console.log(this.keyWord);
         this.keywordNullFlg = true;
         this.resultNullFlg = false;
       } else {
@@ -173,7 +173,6 @@ export default Vue.extend({
           // 該当結果あり
           if (item.name.indexOf(this.keyWord) >= 0) {
             this.searchedItems.push(item);
-            console.log(item);
           }
         });
         // 該当結果なし
