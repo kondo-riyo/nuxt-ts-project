@@ -1,7 +1,7 @@
 <template>
   <div class="md:flex h-screen w-full">
-    <Header class="md:flex-grow-0 md:w-2/12 h-screen  text-gray-800" />
-    <Nuxt class="md:flex-grow md:w-11/12 h-screen bg-gray-100  text-gray-800" style="background-image: url()" />
+    <Header class="md:flex-grow-0 md:w-2/12 h-screen" />
+    <Nuxt class="md:flex-grow md:w-11/12 bg-base_gray bg-opacity-25" />
     <!-- <Footer class="md:flex-grow-0 md:w-1/12 h-screen  text-gray-800" /> -->
   </div>
 </template>

@@ -156,11 +156,9 @@
           appearance-none
           block
           w-full
-          bg-base_cream
+          bg-gray-200
           text-gray-700
-          border-4 
-          border-dotted
-          hover:border-red-700
+          border border-gray-200
           rounded
           py-3
           px-4
@@ -176,7 +174,7 @@
           </validation-provider>
       </div>
       <div>
-        <label for="password">パスワード</label>
+        <label for="password">パスワード(登録)</label>
         <validation-provider
             v-slot="{ errors }"
             name="パスワード"
@@ -205,6 +203,37 @@
           </span>
           </validation-provider>
       </div>
+      <!-- <div>
+        <label for="password">パスワード(確認)</label>
+        <validation-provider
+            v-slot="{ errors }"
+            name="パスワードの確認"
+            rules="required"
+            vid="confirmation"
+        >
+        <input
+          name="パスワードの確認"
+          class="
+          appearance-none
+          block
+          w-full
+          bg-gray-200
+          text-gray-700
+          border border-gray-200
+          rounded
+          py-3
+          px-4
+          leading-tight
+          focus:outline-none focus:bg-white focus:border-gray-500
+          "
+          type="password"
+          placeholder="例)*******"
+          />
+          <span class="text-xs text-red-700">
+            {{ errors[0] }}
+          </span>
+          </validation-provider>
+      </div> -->
       <div class="my-4 ml-16 self-center">
         <button
           @click="signup"
