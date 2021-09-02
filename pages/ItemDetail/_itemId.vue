@@ -6,7 +6,7 @@
           <img :src="itemDetail.img" class="rounded-xl w-full" />
         </div>
 
-        <div class="flex flex-col justify-center m-10">
+        <div class="flex flex-col justify-center m-5 bg-white p-5 rounded-xl bg-opacity-50">
           <div class="mb-10"><h1 class="block  text-3xl">商品情報</h1></div>
           <div>
             <p class="text-gray-700 text-4xl font-bold">{{ itemDetail.name }}</p>
@@ -82,8 +82,8 @@
         </div>
       </div>
 
-      <div class="mt-5">
-        <p class="mb-3 text-xl">
+      <div class="mt-5 bg-white p-3 rounded-xl bg-opacity-50">
+        <p class="mb-3 pl-2 text-xl">
           トッピング<span class="font-bold"> 少:200円 多:300円</span>
         </p>
         <div class="flex flex-wrap">
@@ -162,7 +162,7 @@
             class="
               text-white
               font-semibold
-              bg-green-500
+              bg-base_red
               py-3
               px-4
               rounded
@@ -271,6 +271,9 @@ export default Vue.extend({
 
     // カートに追加-------------------------------------------------------------------
    async addCart() {
+     if(!UserStore.userInfo){
+       this.$router.push("/signin")
+     }else{
       const addItemToCart:cartItemType = {
         itemId: this.itemDetail?.id,
         itemName: this.itemDetail?.name,
@@ -285,6 +288,7 @@ export default Vue.extend({
      CartStore.addItemToCartAct(addItemToCart);
      await this.$router.push('/Cart')
       }
+     }
     },
   },
   computed: {

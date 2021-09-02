@@ -134,30 +134,20 @@ export default Vue.extend({
     deleteCartItem(id: string) {
       if (confirm('カートから商品を削除しますか？')) {
         itemInfoStore.deleteCartItemAct(id);
-        //asyncDataで作成したcartの中身も更新する必要がある！！
         this.$router.push("/")
       }
     },
   },
-  // computed: {
-  //   getCartInfoFromStore():cartItemType[] {
-  //     return this.cartItem;
-  //   },
-  // },
-
   async asyncData() {
     let cartItems: any = {itemInfo:[]};
     await db
       .collection(`users/${UserStore.userInfo!.uid}/order`)
       .get()
       .then((itemInfoAll) => {
-            console.log("DB:"+itemInfoAll.docs.length+" / ストア:"+itemInfoStore.itemInfo.length)
         if (itemInfoAll.docs.length > itemInfoStore.itemInfo.length) {
-          console.log("DBからのデータ取得を開始します")
           itemInfoAll.forEach((itemInfo) => {
             let itemInfoFromDb: cartItemType = itemInfo.data();
             if (itemInfoFromDb.status === 0) {
-              console.log("ステータスゼロのでーたあり")
               itemInfoFromDb = { ...itemInfoFromDb, orderId: itemInfo.id };
               cartItems=itemInfoFromDb;
             } 
@@ -166,34 +156,5 @@ export default Vue.extend({
       });
     return { cartItem: cartItems };
   },
-
-  //  async fetch() {
-  // if (itemInfoStore.itemInfo.length === 0) {
-  // console.log("cartの情報をフェッチ")
-  // const fetchitemInfoFromStore = itemInfoStore.fetchitemInfoAct();
-  // await Promise.all([fetchitemInfoFromStore]);
-  // console.log("cartの情報をフェッチ完了");
-  // }
-
-  //  await db.collection(`users/${UserStore.userInfo!.uid}/order`)
-  //     .get()
-  //     .then((itemInfoAll) => {
-  //       console.log('アイテムインフォフロムオール');
-  //       console.log('ステートのアイテム' + itemInfoStore.itemInfo);
-  //       if (itemInfoAll.docs.length > itemInfoStore.itemInfo.length) {
-  //         console.log('アイテムインフォフロムオール' + itemInfoAll);
-  //         itemInfoAll.forEach((itemInfo) => {
-  //           let itemInfoFromDb: cartItemType = itemInfo.data();
-  //           console.log(itemInfoFromDb + 'fetch中のなかみ');
-  //           if (itemInfoFromDb.status === 0) {
-  //             console.log(itemInfoFromDb + 'fetch中');
-  //             itemInfoFromDb = { ...itemInfoFromDb, orderId: itemInfo.id };
-
-  //             this.getItemInfoFromState.push(itemInfoFromDb);
-  //           }
-  //         });
-  //       }
-  //     });
-  //   },
 });
 </script>
