@@ -10,21 +10,23 @@
           rounded-md
           border border-gray-300
           focus:outline-none
-          mt-0 mb-0 ml-auto
+          hover:bg-base_cream
+          ring ring-base_red ring-offset-2 focus:ring-8 focus:ring-opacity-20
+          mt-10 mb-0 ml-auto
         "
         placeholder="Search"
         v-model="keyWord"
       />
       <img
         src="../../assets/img/search.png"
-        class="block w-6 mr-auto"
+        class="block w-6 mr-auto mt-10"
         style=""
         @click="search"
       />
     </div>
-    <div class="w-3/6 p-2 m-2 text-red-400 font-bold">
+    <div class="w-3/6 p-2 m-2 text-red-400 font-bold justify-center">
       <p v-show="resultNullFlg">※該当する商品がありません</p>
-      <p v-show="keywordNullFlg">※検索ワードを入力してください</p>
+      <p v-show="keywordNullFlg" class="">※検索ワードを入力してください</p>
     </div>
     <div class="flex flex-wrap justify-center">
       <div
