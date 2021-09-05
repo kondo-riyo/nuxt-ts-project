@@ -1,129 +1,165 @@
 <template>
   <div>
-    <div v-if="logItems.length === 0">履歴はありません</div>
-    <div class="grid justify-items-center" v-if="logItems.length > 0">
-      <!-- <h1>カート(Cart.vue)</h1> -->
-      <!-- <div class="p-8">
-        <table class="table-auto shadow-xl bg-gray-400">
-          <thead class="bg-yellow-800 bg-opacity-25">
-            <tr>
-              <th class="w-1/6"></th>
-              <th class="w-1/6">商品</th>
-              <th class="w-1/6">トッピング</th>
-              <th class="w-1/6">配送情報</th>
-              <th class="w-1/6">計(税抜)</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody class="">
-            <tr
-              v-for="logItem in logItems[0].itemInfo"
-              :key="logItem.specialId"
-              class="
-                shadow-inner
-                text-center
-                hover:bg-green-500 hover:bg-opacity-25 hover:shadow
-              "
-            >
-              <td class="w-1/6 shadow-md"><img :src="logItem.itemImg" /></td>
-              <td class="w-1/6">
-                <p class="font-bold">{{ logItem.itemName }}</p>
-                <p>×{{ logItem.itemNum }}</p>
-              </td>
-              <td>
-                <div v-if="logItem.toppings.length > 0">
-                  <div v-for="topping in logItem.toppings" :key="topping.id">
-                    {{ topping.name }}
-                  </div>
-                </div>
-                <div v-else>トッピングなし</div>
-              </td>
-              <td>配送情報</td>
-              <td class="w-1/6">{{ logItem.totalPrice }} 円</td>
-              <td>
-                <button
-                  class="
-                    text-white
-                    font-semibold
-                    bg-green-500
-                    py-2
-                    px-4
-                    rounded
-                    transition
-                    duration-200
-                    transform-gpu
-                    hover:scale-105
-                  "
-                  @click="cancelOrder(logItem)"
-                >
-                  注文キャンセル
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div> -->
-
-      <!-- table2 -->
-      <div class="">
-        <div class="bg-orange-100 m-1 border-solid border-2 border-gray-200 flex">
-          <div class="p-1 w-3/4 text-center">商品情報</div>
-          <div class="p-1 w-1/4">配達情報</div>
+    <div  v-if="logItems.length === 0" class="grid p-20">
+      <div
+        class="mr-auto ml-auto font-bold sm:text-2xl text-lg"
+      >
+        ※注文履歴はありません
+      </div>
+      <button
+        class="
+          bg-base_red
+          sm:w-1/3
+          hover:bg-base_orange
+          text-white
+          font-bold
+          py-2
+          px-4
+          rounded-full
+          m-10
+          mr-auto
+          ml-auto
+        "
+      >
+        <router-link to="/">商品を選ぶ</router-link>
+      </button>
+    </div>
+    <div
+      class="grid sm:m-5 m-1 justify-items-center"
+      v-if="logItems.length > 0"
+    >
+      <div class="bg-white bg-opacity-60 rounded-xl">
+        <div
+          class="
+            bg-base_red
+            text-base_cream
+            font-bold
+            text-xl
+            rounded
+            border-solid border-2
+            border-base_red
+            flex
+          "
+        >
+          <div class="p-1 sm:w-3/4 sm:text-center text-2xl">商品情報</div>
+          <div class="p-1 sm:w-1/4 text-2xl hidden sm:inline-block">
+            配達情報
+          </div>
         </div>
         <div
           v-for="logItem in logItems"
           :key="logItem.orderId"
-          class="flex m-1 border-solid border-2 border-gray-200"
+          class="
+            sm:flex
+            border-solid
+            rounded
+            border-b-2 border-r-2 border-l-2
+            border-base_red
+          "
         >
-          <div class="p-2">
+          <div class="p-2 sm:w-600">
             <div
               v-for="item in logItem.itemInfo"
               :key="item.specialId"
               class="m-1 p-1"
             >
               <!-- アイテム情報 -->
-              <div class="flex">
-                <div class="w-1/4"><img :src="item.itemImg" /></div>
-                <div class="flex flex-col w-2/4 border-solid border-b border-gyar-100">
+              <div class="flex items-center justify-center">
+                <div class="sm:w-1/4 w-2/5">
+                  <img class="rounded shadow-xl" :src="item.itemImg" />
+                </div>
+                <div class="flex flex-col ml-2 w-96 w-2/4">
                   <div class="p-1 flex">
                     <div class="w-3/4">
-                      <span class="font-bold text-xl">{{ item.itemName }}</span
-                      >× {{ item.itemNum }}
+                      <span class="font-bold sm:text-xl">{{
+                        item.itemName
+                      }}</span
+                      >×{{ item.itemNum }}
                     </div>
-                    <div class="w-1/4">
-                      ￥{{ item.itemPrice * item.itemNum }}
+                    <div class="w-1/4 sm:text-base text-xs">
+                      {{ item.itemPrice * item.itemNum }}円
                     </div>
                   </div>
                   <div
-                    class="p-1 text-sm flex"
+                    class="p-1 sm:text-base text-xs flex"
                     v-for="(topping, index) in item.toppings"
                     :key="index"
                   >
                     <div class="w-3/4">+{{ topping.name }}</div>
-                    <div class="w-1/4">￥{{ topping.price }}</div>
-                  </div>
-                  <div class="p-1 pt-5 flex">
-                    <div class="w-3/4">合計金額</div>
-                    <div class="w-1/4 text-xl font-bold">
-                      ￥{{
-                        item.itemPrice * item.itemNum + item.allToppingPrice
-                      }}
+                    <div class="w-1/4 sm:text-base text-xs">
+                      {{ topping.price }}円
                     </div>
                   </div>
-                  <!-- <div class="p-1">￥{{ item.totalPrice }}</div> -->
-                  <div class="p-1"></div>
+                  <div class="p-1 pt-5 flex">
+                    <div class="w-3/4 sm:text-base text-xs">合計</div>
+                    <div class="w-1/4 sm:text-base text-xs">
+                      {{
+                        item.itemPrice * item.itemNum + item.allToppingPrice
+                      }}円
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <div
+              class="
+                flex
+                items-center
+                border-solid border-t-2
+                border-base_gray
+                border-opacity-20
+                mt-3
+                pt-3
+                pb-3
+              "
+            >
+              <div class="w-16"></div>
+              <div class="sm:text-2xl text-xl sm:pr-0 pr-2 sm:w-2/6">
+                合計金額
+              </div>
+              <div class="sm:text-3xl text-xl font-bold w-1/4">
+                {{ logItem.orderInfo.allPrice }}円
+              </div>
+            </div>
           </div>
-          <div class="p-2 w-1/4 flex flex-col justify-center">
-            <!-- オーダー情報 -->
-            <p>注文者 : {{ logItem.orderInfo.name }}</p>
-            <p>配送先 : {{ logItem.orderInfo.address }}</p>
-            <p>
-              配送日時 : {{ logItem.orderInfo.deliveryDate }}
-              {{ logItem.orderInfo.deliveryTime }}時
-            </p>
+          <div
+            class="
+              w-80
+              bg-base_gray
+              bg-opacity-20
+              text-lg
+              flex flex-col
+              justify-center
+              items-center
+              pl-2
+              pb-3
+              sm:w-1/3
+              w-full
+            "
+          >
+            <div>
+              <div
+                class="
+                  sm:hidden
+                  text-xl
+                  border-solid
+                  border-base_red
+                  border-b-2 border-opacity-20
+                  pt-2
+                  pb-1
+                  mb-2
+                "
+              >
+                配達情報
+              </div>
+              <!-- オーダー情報 -->
+              <div>注文者 : {{ logItem.orderInfo.name }}</div>
+              <div>配送先 : {{ logItem.orderInfo.address }}</div>
+              <div>
+                配送日時 : {{ logItem.orderInfo.deliveryDate }}
+                {{ logItem.orderInfo.deliveryTime }}時
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -140,10 +176,26 @@ type DataType = {
   logItems: orderedItemType[];
 };
 export default Vue.extend({
+  head() {
+    return {
+      title: '注文履歴',
+    };
+  },
   data(): DataType {
     return {
       logItems: [],
     };
+  },
+  computed: {
+    totalItemPrice() {
+      let totalPrice: number = 0;
+      this.logItems.forEach((item) => {
+        item.itemInfo!.forEach((price) => {
+          totalPrice = totalPrice + price.totalPrice!;
+        });
+      });
+      return totalPrice;
+    },
   },
   async fetch() {
     if (!UserStore.userInfo) {

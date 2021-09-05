@@ -1,9 +1,10 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Nuxt-Ts-Project',
+    title: 'FUJI COFFE',
+    titleTemplate: "%s| FUJI COFFE",
     htmlAttrs: {
-      lang: 'en',
+      lang: 'ja',
     },
     meta: [
       { charset: 'utf-8' },
@@ -61,4 +62,7 @@ export default {
     },
   },
   vuex: false,
+  // render: {
+  //   injectScripts: false,
+  // },
 };
