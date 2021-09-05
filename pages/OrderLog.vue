@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-screen">
     <div v-if="logItems.length === 0">履歴はありません</div>
     <div class="grid justify-items-center" v-if="logItems.length > 0">
       <!-- <h1>カート(Cart.vue)</h1> -->
@@ -164,23 +164,6 @@ export default Vue.extend({
           });
         });
     }
-  },
-  methods: {
-    // deleteItem(item_specialId:any, orderId:any) {
-    //   const deleteIndex = this.logItems.findIndex(logItem=>orderId===logItem.orderId)//削除対象のオーダーを特定(インデックスを特定)
-    //   const deleteItemIndex = this.logItems[deleteIndex].itemInfo.findIndex(item=>item.specialId===item_specialId)//オーダーの中から削除対象の商品を特定
-    //   console.log(deleteItemIndex)
-    //   console.log(this.logItems[deleteIndex].itemInfo[deleteItemIndex])
-    //   this.logItems[deleteIndex].itemInfo.splice(deleteItemIndex,1)//data()のlogItemから削除対象の商品を削除
-    //console.log(this.logItems[deleteIndex])
-    // db.collection(`users/${UserStore.userInfo.uid}/order`).doc(orderId).update({
-    //   itemInfo:this.logItems[deleteIndex].itemInfo //data()のlogItemと同じ状態に更新(削除)
-    // })
-    // },
-    // cancelOrder(logItem: cartItemType): void {
-    //   console.log('注文キャンセル' + JSON.stringify(logItem));
-    //   //クリックしたdata()内のorderのuidをdbで検索し、一致したもののstatusを9にする
-    // },
   },
 });
 </script>

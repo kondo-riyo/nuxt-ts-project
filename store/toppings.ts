@@ -11,7 +11,6 @@ import { toppingType } from "../types/toppingType";
 
     // getters--------------------------------------
     public get getToppings(): toppingType[] {
-        console.log("トッピングストア！！")
         let toppingsFromState:toppingType[] =[] 
         this.toppings.forEach(topping=>{
             topping = {...topping,isActiveM:false,isActiveL:false}

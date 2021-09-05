@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <p class="block m-10 font-bold text-2xl text-gray-700 text-center">
-      お届け先情報
-    </p>
+  <div class="flex justify-center items-center">
+    <div class="bg-white sm:w-3/4 m-3 p-8 rounded">
+    <div class="flex m-10 font-bold text-3xl text-base_red justify-center">
+      <p><img src="~/assets/img/coffeebeans_icon.png" class="m-2 w-6"/></p>
+      <p>お届け先情報</p>
+      <p><img src="~/assets/img/coffeebeans_icon.png" class="m-2 w-6"/></p>
+    </div>
 
     <div class="flex justify-center items-center">
       <div>
@@ -28,9 +31,10 @@
                       block
                       uppercase
                       tracking-wide
-                      text-gray-700 text-xs
+                      text-base_green text-xs
                       font-bold
-                      mb-2
+                      my-2
+                      ml-4
                     "
                     for="grid-first-name"
                   >
@@ -73,9 +77,10 @@
                       block
                       uppercase
                       tracking-wide
-                      text-gray-700 text-xs
+                      text-base_green text-xs
                       font-bold
-                      mb-2
+                      my-2
+                      ml-4
                     "
                     for="grid-last-name"
                   >
@@ -114,15 +119,16 @@
                 </div>
               </div>
               <div class="flex flex-wrap items-start -mx-3 mb-6">
-                <div class="w-full md:w-2/6 px-3">
+                <div class="w-full md:w-1/3 px-3">
                   <label
                     class="
                       block
                       uppercase
                       tracking-wide
-                      text-gray-700 text-xs
+                      text-base_green text-xs
                       font-bold
-                      mb-2
+                      my-2
+                      ml-4
                     "
                     for="grid-last-name"
                   >
@@ -160,8 +166,8 @@
                     <button class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">検索</button>
                 </span>-->
                 </div>
-                <div class="w-full md:w-1/6 pt-6 px-3">
-                  <!-- <div class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name"></div> -->
+                <!-- <div class="w-full md:w-1/6 pt-6 px-3">
+                  <div class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name"></div>
                   <button
                     onclick='zipToAddress("[name=zip1]", "", "#address")'
                     class="
@@ -178,16 +184,17 @@
                   >
                     検索
                   </button>
-                </div>
-                <div class="w-full md:w-3/6 px-3">
+                </div> -->
+                <div class="w-full md:w-2/3 px-3">
                   <label
                     class="
                       block
                       uppercase
                       tracking-wide
-                      text-gray-700 text-xs
+                      text-base_green text-xs
                       font-bold
-                      mb-2
+                      my-2
+                      ml-4
                     "
                     for="grid-last-name"
                   >
@@ -225,15 +232,16 @@
                 </div>
               </div>
               <div class="flex flex-wrap -mx-3 mb-6">
-                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                <div class="w-full md:w-4/12 px-3 mb-6 md:mb-0">
                   <label
                     class="
                       block
                       uppercase
                       tracking-wide
-                      text-gray-700 text-xs
+                      text-base_green text-xs
                       font-bold
-                      mb-2
+                      my-2
+                      ml-4
                     "
                     for="grid-first-name"
                   >
@@ -269,15 +277,16 @@
                     </span>
                   </validation-provider>
                 </div>
-                <div class="w-full md:w-1/3 px-3">
+                <div class="w-2/3 md:w-5/12 px-3">
                   <label
                     class="
                       block
                       uppercase
                       tracking-wide
-                      text-gray-700 text-xs
+                      text-base_green text-xs
                       font-bold
-                      mb-2
+                      my-2
+                      ml-4
                     "
                     for="grid-last-name"
                   >
@@ -313,15 +322,16 @@
                     </span>
                   </validation-provider>
                 </div>
-                <div class="w-full md:w-1/3 px-3">
+                <div class="w-1/3 md:w-3/12 px-3">
                   <label
                     class="
                       block
                       uppercase
                       tracking-wide
-                      text-gray-700 text-xs
+                      text-base_green text-xs
                       font-bold
-                      mb-2
+                      my-2
+                      ml-4
                     "
                     for="grid-last-name"
                   >
@@ -368,8 +378,20 @@
               </div>
               <div class="flex flex-wrap items-start -mx-3 mb-2">
                 <div class="w-full md:w-1/2 pt-6 px-3 mb-6 md:mb-0">
+                  <validation-provider
+                    v-slot="{ errors }"
+                    name="pay"
+                    rules="oneOf:1,2"
+                  >
                   <div>
-                    <label>
+                    <label
+                    class="
+                      tracking-wide
+                      text-gray-500
+                      font-bold
+                      mb-2
+                    "
+                    >
                       <!-- <validation-provider v-slot="{ errors }" name="代引き" rules="required|max:7"> -->
                       <input
                         v-model="payment"
@@ -385,7 +407,14 @@
                     </label>
                   </div>
                   <div>
-                    <label>
+                    <label
+                    class="
+                      tracking-wide
+                      text-gray-500
+                      font-bold
+                      mb-2
+                    "
+                    >
                       <!-- <validation-provider v-slot="{ errors }" name="クレジットカード払い" rules="required|max:7"> -->
                       <input
                         v-model="payment"
@@ -400,6 +429,10 @@
                 </validation-provider> -->
                     </label>
                   </div>
+                    <span class="text-xs text-red-700">
+                      {{ errors[0] }}
+                    </span>
+                  </validation-provider>
                 </div>
                 <div
                   class="w-full md:w-1/2 px-3 mb-6 md:mb-0"
@@ -450,22 +483,25 @@
                 </div>
               </div>
               <div class="flex flex-wrap justify-center items-start -mx-3 mb-2">
+                <div v-if="invalid" class="font-semibold text-base_red bg-base_cream py-3 px-4 mt-5 rounded-full">
+                  ※入力内容が不足しています
+                </div>
                 <button
                   @click="OrderSubmit()"
                   :disabled="invalid"
+                  v-if="!invalid"
                   class="
-                    bg-green-500
-                    hover:bg-green-400
+                    bg-base_red
+                    hover:bg-base_red hover:bg-opacity-50 hover:text-black
                     text-white
                     font-semibold
                     py-3
                     px-4
                     rounded
+                    mt-5
                   "
                 >
-                  <!-- <router-link to="/OrderComp"> -->
                   ご注文を確定する
-                  <!-- </router-link> -->
                 </button>
               </div>
             </ValidationObserver>
@@ -473,6 +509,7 @@
         </div>
       </div>
       <!-- <script src="https://mao2009.github.io/zipToAddress/zipToAddress.js"></script> -->
+    </div>
     </div>
   </div>
 </template>
@@ -525,11 +562,13 @@ export default Vue.extend({
       };
       let orderInfoToDb: any;
       orderInfoToDb = { ...this.itemInfoFromStore[0], orderInfo: orderInfo };
+      if(confirm('注文を確定してもよろしいですか？')){
       CartStore.updateOrderAct(orderInfoToDb);
+      this.$router.push('/OrderComp')
+      }
     },
     creditPay() {
       this.selectPayment = true;
-      // console.log('creditpay 発動！')
     },
     notcreditPay() {
       this.selectPayment = false;
@@ -551,9 +590,11 @@ export default Vue.extend({
     getCarts() {
       return CartStore.getCart;
     },
-    // getOrderId() {
-    //   return itemInfoStore.getOrderId;
-    // },
   },
+  head(){
+    return {
+      title: 'お届け先情報入力'
+    }
+  }
 });
 </script>

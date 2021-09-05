@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="flex items-center container m-6">
+  <div class="">
+    <div class="flex items-center container mx-6 sm:mt-0">
       <input
         class="
           w-3/6
@@ -8,6 +8,7 @@
           py-2
           mr-2
           rounded-md
+          shadow-md
           border border-gray-300
           focus:outline-none
           hover:bg-base_cream
@@ -163,7 +164,6 @@ export default Vue.extend({
       this.searchedItems = [];
       // 検索ワードなし
       if (this.keyWord === '') {
-        console.log(this.keyWord);
         this.keywordNullFlg = true;
         this.resultNullFlg = false;
       } else {
@@ -175,7 +175,6 @@ export default Vue.extend({
           // 該当結果あり
           if (item.name.indexOf(this.keyWord) >= 0) {
             this.searchedItems.push(item);
-            console.log(item);
           }
         });
         // 該当結果なし

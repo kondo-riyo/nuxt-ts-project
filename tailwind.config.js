@@ -14,7 +14,8 @@ module.exports = {
         base_orange: '#bd5c47',
         base_green: '#3f582e',
         base_cream: '#f2e0ca',
-        base_gray: '#998675'
+        base_gray: '#998675',
+        base_of: '#f6f5f1',
       },
       // backgroundImage: theme => ({
       //   'cafe-pattern': "url('./assets/img/cafe_background.jpeg')",
