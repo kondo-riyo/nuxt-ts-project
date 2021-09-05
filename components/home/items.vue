@@ -1,9 +1,9 @@
 <template>
   <div class="">
-    <div class="flex items-center container mx-6 sm:mt-0">
+    <div class="flex items-center container mx-6 sm:mt-0 sm:fixed">
       <input
         class="
-          w-3/6
+          w-1/2 sm:w-1/3
           p-2
           py-2
           mr-2
@@ -29,6 +29,7 @@
       <p v-show="resultNullFlg">※該当する商品がありません</p>
       <p v-show="keywordNullFlg" class="">※検索ワードを入力してください</p>
     </div>
+
     <div class="flex flex-wrap justify-center">
       <div
         v-for="item in searchedItems"
@@ -39,21 +40,52 @@
        >
         <div         
           class="
-            flex-none
+            flex
+            flex-row
+            sm:flex-col
             container
-            p-10
+            p-2 sm:p-10
             max-w-xs
-            rounded
+            rounded-xl
             overflow-hidden
             shadow
             hover:shadow-xl
             transition
             duration-300
-            m-3
+            m-1 sm:m-3
+            bg-white bg-opacity-50
           "
         >
+        <div class="w-1/2 sm:w-full">
         <img class="rounded-xl" :src="item.img" alt="" />
-        <div class="flex justify-between items-center">
+        </div>
+        <div class="">
+          <div>
+            <h1 class="mt-5 sm:text-lg font-semibold text-center">{{ item.name }}</h1>
+            <!-- <p class="mt-2">{{ item.price }}円(税込)</p> -->
+          </div>
+          <div class="text-center">
+            <span class="mt-2 mx-2">{{ item.price }}円(税込)</span>
+            <span>
+              <button
+                class="
+                  bg-base_red
+                  hover:bg-base_orange
+                  text-white
+                  font-bold
+                  py-2
+                  px-6
+                  mx-2
+                  mt-2
+                  rounded-full
+                "
+              >
+                詳細
+              </button>
+            </span>
+          </div>
+        </div>
+        <!-- <div class="flex justify-between items-center">
           <div>
             <h1 class="mt-5 text-xl font-semibold">{{ item.name }}</h1>
             <p class="mt-2">{{ item.price }}円(税込)</p>
@@ -73,7 +105,7 @@
                 詳細
               </button>
           </div>
-        </div>
+        </div> -->
         </div>
         </router-link>
       </div>
@@ -89,9 +121,11 @@
         >
         <div         
           class="
-            flex-none
+            flex
+            flex-row
+            sm:flex-col
             container
-            p-10
+            p-2 sm:p-10
             max-w-xs
             rounded-xl
             overflow-hidden
@@ -99,15 +133,17 @@
             hover:shadow-xl
             transition
             duration-300
-            m-3
+            m-1 sm:m-3
             bg-white bg-opacity-50
           "
         >
-        <img class="rounded-xl" :src="item.img" />
+        <div class="w-1/2 sm:w-full">
+          <img class="rounded-xl" :src="item.img" />
+        </div>
         <!-- <div class="flex justify-between items-center"> -->
         <div class="">
           <div>
-            <h1 class="mt-5 text-lg font-semibold text-center">{{ item.name }}</h1>
+            <h1 class="mt-5 sm:text-lg font-semibold text-center">{{ item.name }}</h1>
             <!-- <p class="mt-2">{{ item.price }}円(税込)</p> -->
           </div>
           <div class="text-center">

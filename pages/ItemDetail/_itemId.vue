@@ -1,24 +1,23 @@
 <template>
   <div class="p-5 flex">
     <div>
-      <div class="flex">
+      <div class="mb-5"><h1 class="block ml-2 text-4xl">商品詳細</h1></div>
+      <div class="sm:flex">
         <div class="m-2">
           <img :src="itemDetail.img" class="rounded-xl w-full" />
         </div>
-
-        <div class="flex flex-col justify-center m-5 bg-white p-5 rounded-xl bg-opacity-50">
-          <div class="mb-10"><h1 class="block  text-3xl">商品情報</h1></div>
+        <div class="flex flex-col justify-center sm:m-5 bg-white p-3 sm:p-5 rounded-xl">
           <div>
-            <p class="text-gray-700 text-4xl font-bold">{{ itemDetail.name }}</p>
+            <p class="text-gray-700 text-2xl sm:text-4xl font-bold">{{ itemDetail.name }}</p>
           </div>
           <div class="mt-5">
             <p>
-              <span class="text-3xl">￥{{ itemDetail.price }}</span
+              <span class="text-xl sm:text-3xl">￥{{ itemDetail.price }}</span
               > 税込
             </p>
           </div>
           <div>
-            <p class="block my-4 text-xl">{{ itemDetail.description }}</p>
+            <p class="block my-2 sm:my-4 sm:text-xl">{{ itemDetail.description }}</p>
           </div>
 
           <div class="flex">
@@ -38,8 +37,8 @@
                     py-2
                     focus:outline-none
                     focus:ring-2
-                    focus:ring-green-500
-                    focus:border-green-500
+                    focus:ring-base_orange
+                    focus:border-base_orange
                     text-base
                     pl-3
                     pr-10
@@ -82,13 +81,13 @@
         </div>
       </div>
 
-      <div class="mt-5 bg-white p-3 rounded-xl bg-opacity-50">
+      <div class="sm:mt-5 mt-2 bg-white p-3 rounded-xl">
         <p class="mb-3 pl-2 text-xl">
           トッピング<span class="font-bold"> 少:200円 多:300円</span>
         </p>
         <div class="flex flex-wrap">
           <div
-            class="w-1/8 p-2 text-center"
+            class="sm:w-1/6 w-1/2 p-2 text-center"
             v-for="topping in getToppings"
             :key="topping.id"
           >
@@ -154,26 +153,29 @@
       </div>
 
       <div class="flex justify-end mt-5">
-        <div class="py-3 px-4">
-          <p class="text-gray-700 text-4xl">合計 <span class="font-bold">￥{{ calcTotalPrice }}</span></p>
+        <div class="px-4 sm:py-3 py-1 sm:px-4 ">
+          <p class="text-gray-700 sm:text-4xl text-xl">合計 <span class="font-bold sm:text-4xl text-2xl">￥{{ calcTotalPrice }}</span></p>
         </div>
-        <div class="py-2 px-4">
+        <div class="py-1 px-6 sm:py-2 sm:px-8">
           <button
             class="
               text-white
               font-semibold
               bg-base_red
-              py-3
+              sm:py-3
+              sm:px-4
+              py-1
               px-4
               rounded
               transition
               duration-200
               transform-gpu
               hover:scale-105
+              text-xm
             "
             @click="addCart"
           >
-            Add to Cart
+            追加
           </button>
         </div>
       </div>
@@ -199,6 +201,11 @@ type DataType = {
 };
 
 export default Vue.extend({
+  head(){
+    return{
+      title:"商品詳細"
+    }
+  },
   data(): DataType {
     return {
       isSelectedM: null,
