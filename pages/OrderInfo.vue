@@ -472,7 +472,6 @@
           </form>
         </div>
       </div>
-      <!-- <script src="https://mao2009.github.io/zipToAddress/zipToAddress.js"></script> -->
     </div>
     </div>
   </div>
@@ -480,7 +479,6 @@
 <script lang="ts">
 import Vue from 'vue';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
-// import { Core as YubinBangoCore } from 'yubinbango-core';
 import { UserStore, CartStore, itemInfoStore } from '../store';
 import {
   orderInfoType,
@@ -523,6 +521,7 @@ export default Vue.extend({
         payment: Number(this.payment),
         creditCardNum: this.creditCardNum,
         selectPayment: this.selectPayment,
+        allPrice:this.getAllPrice,
       };
       let orderInfoToDb: any;
       orderInfoToDb = { ...this.itemInfoFromStore[0], orderInfo: orderInfo };
@@ -554,6 +553,13 @@ export default Vue.extend({
     getCarts() {
       return CartStore.getCart;
     },
+    getAllPrice(){
+      let allPrice:number = 0;
+      itemInfoStore.getitemInfo[0].itemInfo!.forEach(item=>{
+       allPrice = allPrice + item.totalPrice!
+      })
+      return allPrice;
+    }
   },
 });
 </script>

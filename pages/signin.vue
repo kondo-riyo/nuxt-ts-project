@@ -1,115 +1,118 @@
 <template>
-  <div>
-    <div
-      type="text"
-      class="
-        bg-white
-        container
-        mx-auto
-        p-10
-        m-10
-        max-w-xs
-        rounded-lg
-        overflow-hidden
-        shadow
-        flex flex-col
-      "
-    >
-      <div>
-        <h1 class="font-bold text-xl text-gray-700 text-center">ログイン</h1>
-      </div>
-      <ValidationObserver v-slot="{ invalid }">
+  <div class="flex justify-center">
+    <div class="sm:bg-starbucks w-full flex items-center">
+      <div
+        type="text"
+        class="
+          sm:h-5/7
+          bg-white
+          container
+          mx-auto
+          p-10
+          m-10
+          max-w-xs
+          rounded-lg
+          overflow-hidden
+          shadow
+          flex flex-col
+        "
+      >
         <div>
-          <label for="email">メール</label>
-          <!-- <input
+          <h1 class="font-bold text-xl text-gray-700 text-center">ログイン</h1>
+        </div>
+        <ValidationObserver v-slot="{ invalid }">
+          <div>
+            <label for="email">メール</label>
+            <!-- <input
           type="text"
           class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
         /> -->
-          <validation-provider
-            v-slot="{ errors }"
-            name="メールアドレス"
-            rules="required|email"
-          >
-            <input
-              v-model="userInfo.email"
+            <validation-provider
+              v-slot="{ errors }"
               name="メールアドレス"
-              class="
-                appearance-none
-                block
-                w-full
-                bg-gray-200
-                text-gray-700
-                border border-gray-200
-                rounded
-                py-3
-                px-4
-                leading-tight
-                focus:outline-none focus:bg-white focus:border-gray-500
-              "
-              type="text"
-            />
-            <span class="text-xs text-red-700">
-              {{ errors[0] }}
-            </span>
-          </validation-provider>
-        </div>
-        <div>
-          <label for="password">パスワード</label>
-          <!-- <input
+              rules="required|email"
+            >
+              <input
+                v-model="userInfo.email"
+                name="メールアドレス"
+                class="
+                  appearance-none
+                  block
+                  w-full
+                  bg-gray-200
+                  text-gray-700
+                  border border-gray-200
+                  rounded
+                  py-3
+                  px-4
+                  leading-tight
+                  focus:outline-none focus:bg-white focus:border-gray-500
+                "
+                type="text"
+              />
+              <span class="text-xs text-red-700">
+                {{ errors[0] }}
+              </span>
+            </validation-provider>
+          </div>
+          <div>
+            <label for="password">パスワード</label>
+            <!-- <input
           type="text"
           v-model="userInfo.password"
           class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
         /> -->
-          <validation-provider
-            v-slot="{ errors }"
-            name="パスワード"
-            rules="required"
-          >
-            <input
-              v-model="userInfo.password"
+            <validation-provider
+              v-slot="{ errors }"
+              name="パスワード"
+              rules="required"
+            >
+              <input
+                v-model="userInfo.password"
+                class="
+                  appearance-none
+                  block
+                  w-full
+                  bg-gray-200
+                  text-gray-700
+                  border border-gray-200
+                  rounded
+                  py-3
+                  px-4
+                  leading-tight
+                  focus:outline-none focus:bg-white focus:border-gray-500
+                "
+                type="password"
+                placeholder="*******"
+              />
+              <span class="text-xs text-red-700">
+                {{ errors[0] }}
+              </span>
+            </validation-provider>
+          </div>
+          <div class="block ml-16 m-4 self-center">
+            <button
+              @click="login"
+              :disabled="invalid"
               class="
-                appearance-none
-                block
-                w-full
-                bg-gray-200
-                text-gray-700
-                border border-gray-200
-                rounded
-                py-3
-                px-4
-                leading-tight
-                focus:outline-none focus:bg-white focus:border-gray-500
+                bg-base_red
+                hover:bg-base_orange
+                text-white
+                font-bold
+                py-2
+                px-6
+                rounded-full
               "
-              type="password"
-              placeholder="*******"
-            />
-            <span class="text-xs text-red-700">
-              {{ errors[0] }}
-            </span>
-          </validation-provider>
+            >
+              ログイン
+            </button>
+          </div>
+        </ValidationObserver>
+        <div class="self-center">
+          <nuxt-link to="/signup" class="text-blue-700">
+            新規会員登録はこちら
+          </nuxt-link>
         </div>
-        <div class="block ml-16 m-4 self-center">
-          <button
-            @click="login"
-            :disabled="invalid"
-            class="
-              bg-base_red
-              hover:bg-base_orange
-              text-white
-              font-bold
-              py-2
-              px-6
-              rounded-full
-            "
-          >
-            ログイン
-          </button>
-        </div>
-      </ValidationObserver>
-      <div class="self-center">
-        <nuxt-link to="/signup" class="text-blue-700">
-          新規会員登録はこちら
-        </nuxt-link>
       </div>
     </div>
   </div>
