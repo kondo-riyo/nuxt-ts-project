@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="sm:bg-starbucks sm:w-full flex items-center">
+    <div class="sm:bg-starbucks bg-center bg-no-repeat sm:w-full flex items-center">
       <div
         type="text"
         class="
@@ -206,37 +206,6 @@
               </span>
             </validation-provider>
           </div>
-          <!-- <div>
-        <label for="password">パスワード(確認)</label>
-        <validation-provider
-            v-slot="{ errors }"
-            name="パスワードの確認"
-            rules="required"
-            vid="confirmation"
-        >
-        <input
-          name="パスワードの確認"
-          class="
-          appearance-none
-          block
-          w-full
-          bg-gray-200
-          text-gray-700
-          border border-gray-200
-          rounded
-          py-3
-          px-4
-          leading-tight
-          focus:outline-none focus:bg-white focus:border-gray-500
-          "
-          type="password"
-          placeholder="例)*******"
-          />
-          <span class="text-xs text-red-700">
-            {{ errors[0] }}
-          </span>
-          </validation-provider>
-      </div> -->
           <div class="my-4 ml-16 self-center">
             <button
               @click="signup"
@@ -310,7 +279,7 @@ export default Vue.extend({
         //会員登録後、ログイン画面に遷移
         this.$router.push('/signin');
       } catch (error) {
-        console.log(error.message + 'サインインエラー');
+        console.log(error.message);
       }
     },
     addAuthUserToDb(

@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen">
+  <div class="">
     <div
       v-if="cartItem.itemInfo.length === 0"
       class="grid p-20"
@@ -70,7 +70,7 @@
                 flex
                 shadow-inner
                 text-center
-                hover:bg-base_green hover:bg-opacity-25 hover:shadow
+                hover:bg-base_cream hover:bg-opacity-50 hover:shadow
                 items-center
                 p-1
               "
@@ -157,7 +157,7 @@
 import Vue from 'vue';
 import { itemInfoStore, UserStore } from '../store';
 import { cartItemType, orderedItemType } from '../types/cartItemType';
-import { db } from '~/plugins/firebase';
+import { db } from '../plugins/firebase';
 
 type headType = {
   title: string;
@@ -184,7 +184,7 @@ export default Vue.extend({
       }
     },
   },
-  async asyncData() {
+  async asyncData(): Promise<void | object> {
     let cartItems: orderedItemType = { itemInfo: [] };
     await db
       .collection(`users/${UserStore.userInfo!.uid}/order`)

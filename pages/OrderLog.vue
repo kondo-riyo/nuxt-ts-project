@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen">
+  <div class="p-1">
     <div  v-if="logItems.length === 0" class="grid p-20">
       <div
         class="mr-auto ml-auto font-bold sm:text-2xl text-lg"
@@ -187,7 +187,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    totalItemPrice() {
+    totalItemPrice():number {
       let totalPrice: number = 0;
       this.logItems.forEach((item) => {
         item.itemInfo!.forEach((price) => {
@@ -197,7 +197,7 @@ export default Vue.extend({
       return totalPrice;
     },
   },
-  async fetch() {
+  async fetch(): Promise<void> {
     if (!UserStore.userInfo) {
       console.log('ログインしていません');
     } else {
@@ -210,7 +210,6 @@ export default Vue.extend({
         .then((orders) => {
           orders.forEach((order) => {
             if (order.data().status === 1 || order.data().status === 2) {
-              // ifDBの履歴情報(orderId)がstateのorederLogの情報と重複していなかったら下記を実行
               this.logItems.push(order.data());
             }
           });
