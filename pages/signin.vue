@@ -1,6 +1,6 @@
 <template>
   <div class="flex justify-center">
-    <div class="sm:bg-starbucks w-full flex items-center">
+    <div class="sm:bg-starbucks bg-center bg-no-repeat w-full flex items-center">
       <div
         type="text"
         class="
@@ -23,10 +23,6 @@
         <ValidationObserver v-slot="{ invalid }">
           <div>
             <label for="email">メール</label>
-            <!-- <input
-          type="text"
-          class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
-        /> -->
             <validation-provider
               v-slot="{ errors }"
               name="メールアドレス"
@@ -57,11 +53,6 @@
           </div>
           <div>
             <label for="password">パスワード</label>
-            <!-- <input
-          type="text"
-          v-model="userInfo.password"
-          class="w-3/6 m-1 rounded-md border border-gray-300 focus:outline-none"
-        /> -->
             <validation-provider
               v-slot="{ errors }"
               name="パスワード"
@@ -152,7 +143,7 @@ export default Vue.extend({
             this.userInfo.email,
             this.userInfo.password
           )
-          .then((authUser) => {
+          .then((authUser):void => {
             console.log(authUser.user);
             if (
               authUser.user === null ||

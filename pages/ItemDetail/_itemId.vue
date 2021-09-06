@@ -1,23 +1,37 @@
 <template>
-  <div class="p-5 flex">
+  <div class="sm:pl-10 p-1 flex">
     <div>
       <div class="mb-5"><h1 class="block ml-2 text-4xl">商品詳細</h1></div>
       <div class="sm:flex">
         <div class="m-2">
           <img :src="itemDetail.img" class="rounded-xl w-full" />
         </div>
-        <div class="flex flex-col justify-center sm:m-5 bg-white p-3 sm:p-5 rounded-xl">
+        <div
+          class="
+            flex flex-col
+            justify-center
+            sm:m-5
+            bg-white
+            p-3
+            sm:p-5
+            rounded-xl
+          "
+        >
           <div>
-            <p class="text-gray-700 text-2xl sm:text-4xl font-bold">{{ itemDetail.name }}</p>
+            <p class="text-gray-700 text-2xl sm:text-4xl font-bold">
+              {{ itemDetail.name }}
+            </p>
           </div>
           <div class="mt-5">
             <p>
-              <span class="text-xl sm:text-3xl">￥{{ itemDetail.price }}</span
-              > 税込
+              <span class="text-xl sm:text-3xl">￥{{ itemDetail.price }}</span>
+              税込
             </p>
           </div>
           <div>
-            <p class="block my-2 sm:my-4 sm:text-xl">{{ itemDetail.description }}</p>
+            <p class="block my-2 sm:my-4 sm:text-xl">
+              {{ itemDetail.description }}
+            </p>
           </div>
 
           <div class="flex">
@@ -87,27 +101,26 @@
         </p>
         <div class="flex flex-wrap">
           <div
-            class="sm:w-1/6 w-1/2 p-2 text-center"
+            class="sm:w-1/6 w-1/2 p-2 text-center font-bold"
             v-for="topping in getToppings"
             :key="topping.id"
           >
+          <div class="bg-base_cream bg-opacity-60 rounded p-1">
             <p>{{ topping.name }}</p>
-            <button
+            <input
+              type="checkbox"
               class="
                 hover:bg-gray-400
                 text-gray-700
                 font-semibold
                 hover:text-white
                 text-sm
-                py-1
-                px-2
                 border border-gray-400
-                w-8
+                w-4
                 hover:border-transparent
                 rounded
                 bg-white
               "
-              :class="{ 'bg-gray-400': isSelectedM === topping.id }"
               @click="
                 selectToppingSize(
                   topping.name,
@@ -117,25 +130,23 @@
                   topping.isActiveM
                 )
               "
-            >
-              少
-            </button>
-            <button
+            />
+            <span class="font-normal">少</span>
+            <input
+              type="checkbox"
               class="
+                ml-4
                 hover:bg-gray-400
                 text-gray-700
                 font-semibold
                 hover:text-white
                 text-sm
-                py-1
-                px-2
                 border border-gray-400
-                w-8
+                w-4
                 hover:border-transparent
                 rounded
                 bg-white
               "
-              :class="{ 'bg-gray-400': isSelectedL === topping.id }"
               @click="
                 selectToppingSize(
                   topping.name,
@@ -145,16 +156,21 @@
                   topping.isActiveL
                 )
               "
-            >
-              多
-            </button>
+            />
+            <span class="font-normal">多</span>
+          </div>
           </div>
         </div>
       </div>
 
       <div class="flex justify-end mt-5">
-        <div class="px-4 sm:py-3 py-1 sm:px-4 ">
-          <p class="text-gray-700 sm:text-4xl text-xl">合計 <span class="font-bold sm:text-4xl text-2xl">￥{{ calcTotalPrice }}</span></p>
+        <div class="px-4 sm:py-3 py-1 sm:px-4">
+          <p class="text-gray-700 sm:text-4xl text-xl">
+            合計
+            <span class="font-bold sm:text-4xl text-2xl"
+              >￥{{ calcTotalPrice }}</span
+            >
+          </p>
         </div>
         <div class="py-1 px-6 sm:py-2 sm:px-8">
           <button
@@ -162,8 +178,7 @@
               text-white
               font-semibold
               bg-base_red
-              sm:py-3
-              sm:px-4
+              sm:py-3 sm:px-4
               py-1
               px-4
               rounded
@@ -201,10 +216,10 @@ type DataType = {
 };
 
 export default Vue.extend({
-  head(){
-    return{
-      title:"商品詳細"
-    }
+  head() {
+    return {
+      title: '商品詳細',
+    };
   },
   data(): DataType {
     return {
@@ -217,10 +232,10 @@ export default Vue.extend({
       selectedTopping: [],
     };
   },
-  created() {
+  created():void {
     const params: number = Number(this.$route.params.itemId);
     const getItemDetail: itemType | undefined =
-      ItemsStore.getItemDetail(params);
+    ItemsStore.getItemDetail(params);
     this.itemDetail = getItemDetail;
   },
   methods: {
@@ -230,14 +245,7 @@ export default Vue.extend({
       selecteId: number,
       toppingPrice: number,
       toppingSize: number,
-      isActive: boolean
-    ) {
-      // style変更
-      // if (this.isSelectedM === selecteId) {
-      //   this.isSelectedM = null;
-      // } else {
-      //   this.isSelectedM = selecteId;
-      // }
+    ):void {
 
       // 同じトッピングを選択していないかチェック
       const duplicatedTopping = this.selectedTopping.findIndex(
@@ -257,12 +265,10 @@ export default Vue.extend({
       else if (duplicatedTopping >= 0) {
         // サイズを変更したとき
         if (this.selectedTopping[duplicatedTopping].size !== toppingSize) {
-          console.log('更新');
           this.selectedTopping[duplicatedTopping].size = toppingSize;
           this.selectedTopping[duplicatedTopping].price = toppingPrice;
         } // 取り消したいとき(同じトッピング・サイズを選んだとき)
         else {
-          console.log('取り消し');
           this.selectedTopping[duplicatedTopping].size = 0;
           this.selectedTopping = this.selectedTopping.filter(
             (topping) => topping.size !== 0
@@ -277,25 +283,25 @@ export default Vue.extend({
     },
 
     // カートに追加-------------------------------------------------------------------
-   async addCart() {
-     if(!UserStore.userInfo){
-       this.$router.push("/signin")
-     }else{
-      const addItemToCart:cartItemType = {
-        itemId: this.itemDetail?.id,
-        itemName: this.itemDetail?.name,
-        itemPrice: this.itemDetail?.price,
-        itemNum: this.selectedItemNum,
-        itemImg: this.itemDetail?.img,
-        toppings: this.selectedTopping,
-        allToppingPrice:this.allToppingPrice,
-        totalPrice:this.calcTotalPrice
-      };
-      if(confirm('カートに商品を追加しますか？')){
-     CartStore.addItemToCartAct(addItemToCart);
-     await this.$router.push('/Cart')
+    async addCart():Promise<void> {
+      if (!UserStore.userInfo) {
+        this.$router.push('/signin');
+      } else {
+        const addItemToCart: cartItemType = {
+          itemId: this.itemDetail?.id,
+          itemName: this.itemDetail?.name,
+          itemPrice: this.itemDetail?.price,
+          itemNum: this.selectedItemNum,
+          itemImg: this.itemDetail?.img,
+          toppings: this.selectedTopping,
+          allToppingPrice: this.allToppingPrice,
+          totalPrice: this.calcTotalPrice,
+        };
+        if (confirm('カートに商品を追加しますか？')) {
+          CartStore.addItemToCartAct(addItemToCart);
+          await this.$router.push('/Cart');
+        }
       }
-     }
     },
   },
   computed: {
@@ -318,10 +324,4 @@ export default Vue.extend({
     },
   },
 });
-// async asyncData({ params }) {
-//   console.log(" ASYNCデータ");
-//   const detailParamsId: number = Number(params.itemId);
-//   const detailItemFromStore = await ItemsStore.getItemDetail(detailParamsId);
-//   return {itemDetail:detailItemFromStore}
-// },
 </script>
