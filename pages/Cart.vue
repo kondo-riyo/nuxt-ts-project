@@ -157,7 +157,7 @@
 import Vue from 'vue';
 import { itemInfoStore, UserStore } from '../store';
 import { cartItemType, orderedItemType } from '../types/cartItemType';
-import { db } from '~/plugins/firebase';
+import { db } from '../plugins/firebase';
 
 type headType = {
   title: string;
