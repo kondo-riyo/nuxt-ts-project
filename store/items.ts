@@ -24,7 +24,7 @@ import { itemType } from '../types/itemType'
     }
 
     // 商品詳細画面の商品情報を抽出
-    public get getItemDetail() {
+    public get getItemDetail(): (detailParamsId: number) => itemType | undefined {
         return (detailParamsId:number) => {
             return this.items.find(item => item.id === detailParamsId)
         }
@@ -48,15 +48,4 @@ import { itemType } from '../types/itemType'
             })
         })
         }
-
-    // Storageから画像を全部取得し、URLに変更する------------------------
-    //   @Action({rawError: true})
-    //  public getImgListAct(): void{
-    //       const storageRef = Storage.ref();
-    //       // 全画像を取得
-    //       storageRef.listAll().then(pictures=>pictures.items.forEach(picture=>
-    //       // URLに変換 picture.name「2.jpg、11.jpg」
-    //         storageRef.child(picture.name).getDownloadURL().then(pic_URL=>{this.getImgListMut(pic_URL)})
-    //       ))
-    //   }
 }

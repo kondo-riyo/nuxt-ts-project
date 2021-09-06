@@ -81,13 +81,3 @@ export default class UserStore extends VuexModule {
         this.setUserNullMut(null);
     }
 }
-
-
-// async logout({commit}) {
-//     console.log('[STORE ACTIONS] - logout')
-//     await firebase.auth().signOut()
-
-//     Cookies.remove('access_token');
-//     commit('setUSER', null)
-//     commit('saveUID', null)
-//   },
