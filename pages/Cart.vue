@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-screen">
     <div
       v-if="cartItem.itemInfo.length === 0"
       class="grid p-20"

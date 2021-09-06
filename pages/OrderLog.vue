@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-screen">
     <div  v-if="logItems.length === 0" class="grid p-20">
       <div
         class="mr-auto ml-auto font-bold sm:text-2xl text-lg"

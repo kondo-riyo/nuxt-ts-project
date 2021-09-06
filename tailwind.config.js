@@ -25,6 +25,7 @@ module.exports = {
         base_green: '#3f582e',
         base_cream: '#f2e0ca',
         base_gray: '#998675',
+        base_of: '#f6f5f1',
       },
       width: {
         600: '600px',
