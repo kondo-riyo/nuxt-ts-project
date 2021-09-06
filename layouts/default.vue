@@ -1,11 +1,10 @@
 <template>
-  <div class="md:flex w-full">
-    <Header class="md:flex-grow-0 md:w-2/12  text-gray-800 h-screen"  />
-    <Nuxt class="md:flex-grow md:w-11/12 bg-base_gray bg-opacity-25 text-gray-800" />
+  <div class="sm:flex w-full">
+    <Header class="sm:flex-grow-0 w-full sm:w-1/12  text-gray-800 sm:h-screen sm:fixed"  />
+    <Nuxt class="sm:flex-grow sm:w-11/12 bg-base_gray bg-opacity-25 text-gray-800 sm:ml-20" />
     <!-- <Footer class="md:flex-grow-0 md:w-1/12 h-screen  text-gray-800" /> -->
   </div>
 </template>
-
 <script lang="ts">
 import Vue from 'vue';
 import { ItemsStore, ToppingsStore, UserStore, itemInfoStore } from '../store';
