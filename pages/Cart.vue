@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen">
+  <div class="">
     <div
       v-if="cartItem.itemInfo.length === 0"
       class="grid p-20"
@@ -157,7 +157,7 @@
 import Vue from 'vue';
 import { itemInfoStore, UserStore } from '../store';
 import { cartItemType, orderedItemType } from '../types/cartItemType';
-import { db } from '~/plugins/firebase';
+import { db } from '../plugins/firebase';
 
 type headType = {
   title: string;
