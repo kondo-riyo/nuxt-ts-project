@@ -99,7 +99,7 @@ export default Vue.extend({
     },
   },
   computed: {
-    userInfoFromStore():userInfoType{
+    userInfoFromStore():userInfoType|null{
       return UserStore.getUserInfo;
     },
   },
