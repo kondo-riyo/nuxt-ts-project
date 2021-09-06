@@ -9,24 +9,23 @@ import { UserStore,itemInfoStore } from "~/store";
     // state----------------------------------------
     public carts: cartItemType[]=[];
     public cartWithUser = [];
-    //public userInfo:string | null =null
 
     // getters--------------------------------------
-    public get getCart(){
+    public get getCart(): cartItemType[]{
         return this.carts.filter(cart=>cart.status===0)
     }
     
 
     // mutation-------------------------------------
     @Mutation
-    private  addItemToCartMut(addItemToCart:cartItemType, idFromDb:string|null):void{
+    private addItemToCartMut(addItemToCart:cartItemType, idFromDb:string|null):void{
         if(idFromDb===null)return
     this.carts.push({...addItemToCart,orderId:idFromDb});
     }
 
     // action---------------------------------------
     @Action({rawError: true})
-    public addItemToCartAct(addItemToCart:cartItemType){
+    public addItemToCartAct(addItemToCart:cartItemType):void{
 
         //ランダムな文字列IDを作成
         let specialId = Math.random().toString(36).slice(-8);
@@ -65,13 +64,12 @@ import { UserStore,itemInfoStore } from "~/store";
         }        
     }}
     @Action({rawError: true})
-    public updateOrderAct(orderInfoToDb:orderedItemType){
+    public updateOrderAct(orderInfoToDb:orderedItemType):void{
         if(orderInfoToDb.orderInfo===undefined)return
         orderInfoToDb.status= orderInfoToDb.orderInfo.payment
         console.log(orderInfoToDb);
         if(UserStore.userInfo){
             db.collection(`users/${UserStore.userInfo.uid}/order`).doc(orderInfoToDb.orderId).update(orderInfoToDb).then(()=>{
-                console.log("注文完了")
                 if(orderInfoToDb.orderId===undefined)return
                 itemInfoStore.updateOrderMut(orderInfoToDb,orderInfoToDb.orderId)
             })

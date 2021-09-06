@@ -69,7 +69,6 @@
                       {{ errors[0] }}
                     </span>
                   </validation-provider>
-                  <!-- <p class="text-red-500 text-xs italic"></p> -->
                 </div>
                 <div class="w-full md:w-1/2 px-3">
                   <label
@@ -111,7 +110,6 @@
                       type="text"
                       placeholder="例)sample@gmail.com"
                     />
-                    <!-- <span v-show="errors.length" v-for="(error, i) in errors" :key="`errors${i}`"> -->
                     <span class="text-xs text-red-700">
                       {{ errors[0] }}
                     </span>
@@ -157,34 +155,11 @@
                       type="text"
                       placeholder="例)1234567"
                     />
-                    <!-- <input v-model="zipcode" name="zip2" class=" bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-ad-number" type="text" placeholder=""> -->
                     <span class="text-xs text-red-700">
                       {{ errors[0] }}
                     </span>
                   </validation-provider>
-                  <!-- <span class="w-full md:w-1/4 px-3">
-                    <button class="bg-blue-500 hover:bg-blue-400 text-white font-semibold py-3 px-4 border-blue-700 hover:border-blue-500 rounded">検索</button>
-                </span>-->
                 </div>
-                <!-- <div class="w-full md:w-1/6 pt-6 px-3">
-                  <div class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name"></div>
-                  <button
-                    onclick='zipToAddress("[name=zip1]", "", "#address")'
-                    class="
-                      bg-green-500
-                      hover:bg-green-400
-                      text-white
-                      font-semibold
-                      py-3
-                      px-4
-                      border-green-700
-                      hover:border-green-500
-                      rounded
-                    "
-                  >
-                    検索
-                  </button>
-                </div> -->
                 <div class="w-full md:w-2/3 px-3">
                   <label
                     class="
@@ -392,7 +367,6 @@
                       mb-2
                     "
                     >
-                      <!-- <validation-provider v-slot="{ errors }" name="代引き" rules="required|max:7"> -->
                       <input
                         v-model="payment"
                         type="radio"
@@ -400,10 +374,6 @@
                         value="1"
                         @click="notcreditPay()"
                       />代金引換
-                      <!-- <span>
-                        {{errors[0]}}
-                    </span>
-                </validation-provider> -->
                     </label>
                   </div>
                   <div>
@@ -415,7 +385,6 @@
                       mb-2
                     "
                     >
-                      <!-- <validation-provider v-slot="{ errors }" name="クレジットカード払い" rules="required|max:7"> -->
                       <input
                         v-model="payment"
                         type="radio"
@@ -423,10 +392,6 @@
                         value="2"
                         @click="creditPay()"
                       />クレジットカード
-                      <!-- <span>
-                        {{errors[0]}}
-                    </span>
-                </validation-provider> -->
                     </label>
                   </div>
                     <span class="text-xs text-red-700">
@@ -522,7 +487,7 @@ import {
   otderIemType,
   cartItemType,
 } from '../types/cartItemType';
-
+import { userInfoType } from '../types/userInfoType';
 export default Vue.extend({
   data(): orderInfoType {
     return {
@@ -544,7 +509,7 @@ export default Vue.extend({
     ValidationObserver,
   },
   methods: {
-    OrderSubmit() {
+    OrderSubmit():void {
       // cartの商品のstatusを1又は２に変更。
       let orderInfo = {
         name: this.name,
@@ -566,30 +531,30 @@ export default Vue.extend({
       this.$router.push('/OrderComp')
       }
     },
-    creditPay() {
+    creditPay():void {
       this.selectPayment = true;
     },
-    notcreditPay() {
+    notcreditPay():void {
       this.selectPayment = false;
     },
   },
-  async fetch() {
+  async fetch():Promise<void> {
     const fetchitemInfoFromStore = itemInfoStore.fetchitemInfoAct();
     await Promise.all([fetchitemInfoFromStore]);
   },
 
   //async fetchでcartの商品を取得する(cartStore)
   computed: {
-    userInfoFromStore() {
+    userInfoFromStore(): userInfoType | null {
       return UserStore.getUserInfo;
     },
     itemInfoFromStore(): otderIemType[] {
       return itemInfoStore.getitemInfo;
     },
-    getCarts() {
+    getCarts(): cartItemType[] {
       return CartStore.getCart;
     },
-    getAllPrice(){
+    getAllPrice():number{
       let allPrice:number = 0;
       itemInfoStore.getitemInfo[0].itemInfo!.forEach(item=>{
        allPrice = allPrice + item.totalPrice!

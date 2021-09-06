@@ -24,13 +24,13 @@ export default class itemInfoStore extends VuexModule {
     }
 
     @Mutation
-    public addItemToNewCart(addItemToCart:cartItemType,idFromDb:string|null){
+    public addItemToNewCart(addItemToCart:cartItemType,idFromDb:string|null):void{
         this.itemInfo.push({...addItemToCart,orderId:idFromDb})
     }
 
 
     @Mutation
-    public updateOrderMut(orderInfoToDb:orderedItemType,orderId:string){
+    public updateOrderMut(orderInfoToDb:orderedItemType,orderId:string):void{
         this.itemInfo=[]
     }
 
