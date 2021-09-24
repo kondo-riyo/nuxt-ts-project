@@ -101,64 +101,91 @@
         </p>
         <div class="flex flex-wrap">
           <div
-            class="sm:w-1/6 w-1/2 p-2 text-center font-bold"
-            v-for="topping in getToppings"
+            class="sm:w-1/5 w-1/2 p-2 text-center font-bold"
+            v-for="(topping, index) in getToppings"
             :key="topping.id"
           >
-          <div class="bg-base_cream bg-opacity-60 rounded p-1">
-            <p>{{ topping.name }}</p>
-            <input
-              type="checkbox"
-              class="
-                hover:bg-gray-400
-                text-gray-700
-                font-semibold
-                hover:text-white
-                text-sm
-                border border-gray-400
-                w-4
-                hover:border-transparent
-                rounded
-                bg-white
-              "
-              @click="
-                selectToppingSize(
-                  topping.name,
-                  topping.id,
-                  topping.priceM,
-                  1,
-                  topping.isActiveM
-                )
-              "
-            />
-            <span class="font-normal">少</span>
-            <input
-              type="checkbox"
-              class="
-                ml-4
-                hover:bg-gray-400
-                text-gray-700
-                font-semibold
-                hover:text-white
-                text-sm
-                border border-gray-400
-                w-4
-                hover:border-transparent
-                rounded
-                bg-white
-              "
-              @click="
-                selectToppingSize(
-                  topping.name,
-                  topping.id,
-                  topping.priceL,
-                  2,
-                  topping.isActiveL
-                )
-              "
-            />
-            <span class="font-normal">多</span>
-          </div>
+            <div class="bg-base_cream bg-opacity-60 rounded p-1">
+              <p>{{ topping.name }}</p>
+              <input
+                type="radio"
+                :name="'radio' + index"
+                class="
+                  hover:bg-gray-400
+                  text-gray-700
+                  font-semibold
+                  hover:text-white
+                  text-sm
+                  border border-gray-400
+                  sm:w-4
+                  w-3
+                  hover:border-transparent
+                  rounded
+                  bg-white
+                "
+                @change="
+                  selectToppingSize(
+                    topping.name,
+                    topping.id,
+                    topping.priceM,
+                    1,
+                    topping.isActiveM
+                  )
+                "
+              />
+              <span class="font-normal text-sm">少</span>
+              <input
+                type="radio"
+                :name="'radio' + index"
+                class="
+                  sm:ml-2
+                  hover:bg-gray-400
+                  text-gray-700
+                  font-semibold
+                  hover:text-white
+                  text-sm
+                  border border-gray-400
+                  sm:w-4
+                  w-3
+                  hover:border-transparent
+                  rounded
+                  bg-white
+                "
+                @change="
+                  selectToppingSize(
+                    topping.name,
+                    topping.id,
+                    topping.priceL,
+                    2,
+                    topping.isActiveL
+                  )
+                "
+              />
+              <span class="font-normal text-sm">多</span>
+              <input
+                type="radio"
+                :checked="true"
+                :name="'radio' + index"
+                class="
+                  sm:ml-2
+                  text-gray-700
+                  font-semibold
+                  hover:text-white
+                  text-sm
+                  border border-gray-400
+                  sm:w-4
+                  w-3
+                  hover:border-transparent
+                  rounded
+                  checked:bg-red-600
+                "
+                @change="
+                  selectToppingSize(topping.name, topping.id, 0, 0),
+                    clearTopping(topping.id)
+                "
+              />
+              <span class="font-normal text-sm">なし</span>
+            </div>
           </div>
         </div>
       </div>
@@ -232,10 +259,10 @@ export default Vue.extend({
       selectedTopping: [],
     };
   },
-  created():void {
+  created(): void {
     const params: number = Number(this.$route.params.itemId);
     const getItemDetail: itemType | undefined =
-    ItemsStore.getItemDetail(params);
+      ItemsStore.getItemDetail(params);
     this.itemDetail = getItemDetail;
   },
   methods: {
@@ -244,9 +271,8 @@ export default Vue.extend({
       selectedName: string,
       selecteId: number,
       toppingPrice: number,
-      toppingSize: number,
-    ):void {
-
+      toppingSize: number
+    ): void {
       // 同じトッピングを選択していないかチェック
       const duplicatedTopping = this.selectedTopping.findIndex(
         (topping) => topping.id === selecteId
@@ -282,8 +308,16 @@ export default Vue.extend({
       );
     },
 
+    //トッピングを未選択に戻す
+    clearTopping(selecteId: number): void {
+      const deleteToppigIndex = this.selectedTopping.findIndex(
+        (topping) => topping.id === selecteId
+      );
+      this.selectedTopping.splice(deleteToppigIndex, 1);
+    },
+
     // カートに追加-------------------------------------------------------------------
-    async addCart():Promise<void> {
+    async addCart(): Promise<void> {
       if (!UserStore.userInfo) {
         this.$router.push('/signin');
       } else {
@@ -305,9 +339,9 @@ export default Vue.extend({
     },
   },
   computed: {
-    getCart(): cartItemType[] {
-      return CartStore.getCart;
-    },
+    // getCart(): cartItemType[] {
+    //   return CartStore.getCart;
+    // },
     getToppings(): toppingType[] {
       return ToppingsStore.getToppings;
     },

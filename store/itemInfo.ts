@@ -20,11 +20,12 @@ export default class itemInfoStore extends VuexModule {
     //mutation-----------------------------------------------
     @Mutation
     private fetchitemInfoMut(itemInfoFromDb:cartItemType):void{
+        console.log('fetchitemInfoMut')
         this.itemInfo.push(itemInfoFromDb)
     }
 
     @Mutation
-    public addItemToNewCart(addItemToCart:cartItemType,idFromDb:string|null):void{
+    public addItemToNewCart(addItemToCart:orderedItemType,idFromDb:string|null):void{
         this.itemInfo.push({...addItemToCart,orderId:idFromDb})
     }
 
@@ -57,6 +58,6 @@ export default class itemInfoStore extends VuexModule {
         this.getitemInfo[0].itemInfo.splice(deleteCartItemIndex,1)
         await db.collection(`users/${UserStore.userInfo!.uid}/order`).doc(`${cartOrderId}`).update({
            itemInfo: this.getitemInfo[0].itemInfo,
-        })
+        }).then
     }
 }

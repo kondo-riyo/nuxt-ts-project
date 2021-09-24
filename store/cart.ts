@@ -7,20 +7,26 @@ import { UserStore,itemInfoStore } from "~/store";
  export default class CartStore extends VuexModule {
      
     // state----------------------------------------
-    public carts: cartItemType[]=[];
+    public carts: orderedItemType[]=[];
     public cartWithUser = [];
 
     // getters--------------------------------------
-    public get getCart(): cartItemType[]{
-        return this.carts.filter(cart=>cart.status===0)
+    public get getCart(): orderedItemType[]{
+        return this.carts
     }
     
 
     // mutation-------------------------------------
     @Mutation
-    private addItemToCartMut(addItemToCart:cartItemType, idFromDb:string|null):void{
+    private addItemToCartMut(addItemToCart:orderedItemType, idFromDb:string|null):void{
         if(idFromDb===null)return
     this.carts.push({...addItemToCart,orderId:idFromDb});
+    }
+
+    //カートの商品を取得
+    @Mutation
+    private fetchCartMut(cartItems:orderedItemType):void{
+        this.carts.push(cartItems);
     }
 
     // action---------------------------------------
@@ -57,9 +63,8 @@ import { UserStore,itemInfoStore } from "~/store";
             if(!UserStore.userInfo.uid) return
             console.log("カートが空なので新たなカートを作成")
             db.collection(`users/${UserStore.userInfo.uid}/order`).add(_order).then(cartItem=>{
-                console.log(cartItem.id);
-                this.addItemToCartMut(addItemToCart,cartItem.id)
-                itemInfoStore.addItemToNewCart(addItemToCart,cartItem.id)
+                this.addItemToCartMut(_order,cartItem.id)
+                itemInfoStore.addItemToNewCart(_order,cartItem.id)
             })
         }        
     }}

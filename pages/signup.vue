@@ -238,6 +238,7 @@ import Vue from 'vue';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import firebase, { auth, db } from '../plugins/firebase';
 import { userInfoType } from '../types/userInfoType';
+
 type DataType = {
   userInfo: userInfoType;
 };
@@ -282,6 +283,11 @@ export default Vue.extend({
         console.log(error.message);
       }
     },
+
+
+
+
+
     addAuthUserToDb(
       uid: string
     ): Promise<
