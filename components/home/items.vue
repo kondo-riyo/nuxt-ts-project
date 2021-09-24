@@ -38,7 +38,7 @@
 
     <div class="flex flex-wrap justify-center">
       <div v-for="item in searchedItems" :key="item.id">
-        <router-link :to="{ name: 'ItemDetail', params: { itemid: item.id } }">
+        <router-link :to="{ name: 'ItemDetail-itemId', params: { itemId: item.id } }">
           <div
             class="
               flex flex-row

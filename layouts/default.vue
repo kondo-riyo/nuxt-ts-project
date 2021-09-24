@@ -6,7 +6,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import { ItemsStore, ToppingsStore, UserStore, itemInfoStore } from '../store';
+import { ItemsStore, ToppingsStore, UserStore, itemInfoStore, CartStore } from '../store';
 
 export default Vue.extend({
   async fetch(): Promise<void> {
@@ -19,6 +19,7 @@ export default Vue.extend({
     if (UserStore.userInfo) {
      const fetchSignupInfo = UserStore.fetchSignupInfoAct();
      const fetchitemInfo = itemInfoStore.fetchitemInfoAct();
+     //const cartitemInfo = CartStore.fetchCartAct()
      await Promise.all([fetchSignupInfo,fetchitemInfo])
     } 
   },

@@ -49,6 +49,7 @@
         w-3/12 sm:w-full
         font-bold 
         text-center
+        text-base_red
         ">
         <router-link to="/signup">会員登録</router-link>
       </div>

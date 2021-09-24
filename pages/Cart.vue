@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <!-- <div class="">
     <div
       v-if="cartItem.itemInfo.length === 0"
       class="grid p-20"
@@ -64,7 +64,7 @@
             "
           >
             <div
-              v-for="cartitem in cartItem.itemInfo"
+              v-for="cartitem in moniterCarts.itemInfo"
               :key="cartitem.specialId"
               class="
                 flex
@@ -151,16 +151,23 @@
         </div>
       </div>
     </div>
+  </div> -->
+  <div>
+  <CartTable :cartItemFromStore="cartItemFromStore[0]" />
+  <!-- <div>{{cartItemFromStore[0]}}</div> -->
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import { itemInfoStore, UserStore } from '../store';
-import { cartItemType, orderedItemType } from '../types/cartItemType';
+import { itemInfoStore, UserStore, CartStore } from '../store';
+import { cartItemType, orderedItemType, otderIemType } from '../types/cartItemType';
 import { db } from '../plugins/firebase';
 
 type headType = {
   title: string;
+};
+type DataType = {
+  cartItemFromStore: otderIemType[],
 };
 
 export default Vue.extend({
@@ -169,48 +176,59 @@ export default Vue.extend({
       title: 'カート',
     };
   },
-  methods: {
-    toppingSize(el: number): string | undefined {
-      if (el === 1) {
-        return '多';
-      } else if (el === 2) {
-        return '少';
-      }
-    },
-    deleteCartItem(id: string): void {
-      if (confirm('カートから商品を削除しますか？')) {
-        itemInfoStore.deleteCartItemAct(id);
-        this.$router.push('/');
-      }
-    },
+  data(): DataType {
+    return { cartItemFromStore: itemInfoStore.getitemInfo };
   },
-  async asyncData(): Promise<void | object> {
-    let cartItems: orderedItemType = { itemInfo: [] };
-    await db
-      .collection(`users/${UserStore.userInfo!.uid}/order`)
-      .get()
-      .then((itemInfoAll) => {
-        if (itemInfoAll.docs.length > itemInfoStore.itemInfo.length) {
-          itemInfoAll.forEach((itemInfo) => {
-            let itemInfoFromDb: cartItemType = itemInfo.data();
-            if (itemInfoFromDb.status === 0) {
-              itemInfoFromDb = { ...itemInfoFromDb, orderId: itemInfo.id };
-              cartItems = itemInfoFromDb;
-            }
-          });
-        }
-      });
-    return { cartItem: cartItems };
+  components: {
+    CartTable: () => import('~/components/cart/cartTable.vue'),
   },
-  computed: {
-    allItemsPrice(): number {
-      let price = 0;
-      // @ts-ignore
-      this.cartItem.itemInfo.forEach((item) => {
-        price = price + item.totalPrice;
-      });
-      return price;
-    },
-  },
+  // methods: {
+  //   toppingSize(el: number): string | undefined {
+  //     if (el === 1) {
+  //       return '多';
+  //     } else if (el === 2) {
+  //       return '少';
+  //     }
+  //   },
+  //   deleteCartItem(id: string): void {
+  //     if (confirm('カートから商品を削除しますか？')) {
+  //       itemInfoStore.deleteCartItemAct(id);
+  //      // this.$router.push('/');
+  //     }
+  //   },
+  // },
+  // async asyncData(): Promise<void | object> {
+  //   let cartItems: orderedItemType = { itemInfo: [] };
+  //   await db
+  //     .collection(`users/${UserStore.userInfo!.uid}/order`)
+  //     .get()
+  //     .then((itemInfoAll) => {
+  //       if (itemInfoAll.docs.length > itemInfoStore.itemInfo.length) {
+  //         itemInfoAll.forEach((itemInfo) => {
+  //           let itemInfoFromDb: cartItemType = itemInfo.data();
+  //           if (itemInfoFromDb.status === 0) {
+  //             itemInfoFromDb = { ...itemInfoFromDb, orderId: itemInfo.id };
+  //             cartItems = itemInfoFromDb;
+  //           }
+  //         });
+  //       }
+  //     });
+  //   return { cartItem: cartItems };
+  // },
+  // computed: {
+  //   allItemsPrice(): number {
+  //     let price = 0;
+  //     // @ts-ignore
+  //     this.cartItem.itemInfo.forEach((item) => {
+  //       price = price + item.totalPrice;
+  //     });
+  //     return price;
+  //   },
+  //   moniterCarts(){
+  //     console.log('cartの商品を監視')
+  //     // @ts-ignore
+  //     return this.cartItem;
+  //   }
+  // },
 });
 </script>
