@@ -163,9 +163,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { itemInfoStore, UserStore } from '../../store';
-import { cartItemType, orderedItemType } from '../../types/cartItemType';
-
+//import { itemInfoStore } from '../../store';
+import { CartStore } from '../../store';
 export default Vue.extend({
   props: {
     cartItemFromStore: {
@@ -179,8 +178,7 @@ export default Vue.extend({
   },
   async fetch() {
     if (!this.moniterCarts.orderId) {
-      console.log('新しいカート');
-      const fetchitemInfo = itemInfoStore.fetchitemInfoAct();
+      const fetchitemInfo = CartStore.fetchitemInfoAct();
       await Promise.all([fetchitemInfo]);
     }
   },
@@ -190,12 +188,13 @@ export default Vue.extend({
         return '多';
       } else if (el === 2) {
         return '少';
+      } else {
+        return;
       }
     },
     deleteCartItem(id: string): void {
       if (confirm('カートから商品を削除しますか？')) {
-        itemInfoStore.deleteCartItemAct(id);
-        // this.$router.push('/');
+        CartStore.deleteCartItemAct(id);
       }
     },
   },
@@ -209,8 +208,6 @@ export default Vue.extend({
       return price;
     },
     moniterCarts() {
-      console.log('cartの商品を監視');
-      console.log(this.cartItemFromStore);
       // @ts-ignore
       return this.cartItemFromStore;
     },

@@ -155,9 +155,7 @@ export default Vue.extend({
               () => this.$router.push('/')
             );
           });
-      } else {
-        console.log('undefined');
-      }
+      } 
     },
   },
 });

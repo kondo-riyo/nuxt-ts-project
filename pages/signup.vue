@@ -263,7 +263,6 @@ export default Vue.extend({
   methods: {
     async signup(): Promise<void> {
       try {
-        // メールとパスワードで会員登録
         if (
           this.userInfo.email === undefined ||
           this.userInfo.password === undefined
@@ -274,10 +273,8 @@ export default Vue.extend({
             this.userInfo.email,
             this.userInfo.password
           );
-        // dbに会員情報を保存
         if (authUser.user === null) return;
         await this.addAuthUserToDb(authUser.user.uid);
-        //会員登録後、ログイン画面に遷移
         this.$router.push('/signin');
       } catch (error) {
         console.log(error.message);

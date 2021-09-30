@@ -169,8 +169,8 @@
 <script lang="ts">
 import Vue from 'vue';
 import { UserStore } from '../store';
-import { db } from '~/plugins/firebase';
-import { orderedItemType } from '~/types/cartItemType';
+import { db } from '../plugins/firebase';
+import { orderedItemType } from '../types/cartItemType';
 
 type DataType = {
   logItems: orderedItemType[];

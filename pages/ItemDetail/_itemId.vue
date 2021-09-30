@@ -228,9 +228,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import { ItemsStore, ToppingsStore, CartStore, UserStore } from '../../store';
-import { itemType } from '~/types/itemType';
-import { toppingType } from '~/types/toppingType';
-import { cartItemType } from '~/types/cartItemType';
+import { itemType } from '../../types/itemType';
+import { toppingType } from '../../types/toppingType';
+import { cartItemType } from '../../types/cartItemType';
 
 type DataType = {
   isSelectedM: null | number;
@@ -339,9 +339,6 @@ export default Vue.extend({
     },
   },
   computed: {
-    // getCart(): cartItemType[] {
-    //   return CartStore.getCart;
-    // },
     getToppings(): toppingType[] {
       return ToppingsStore.getToppings;
     },
@@ -351,7 +348,7 @@ export default Vue.extend({
         this.itemDetail.price === undefined
       ) {
         return 0;
-      } // 0はfalse
+      } // 0:false
       return (
         this.selectedItemNum * this.itemDetail.price + this.allToppingPrice
       );
