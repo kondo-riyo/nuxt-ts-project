@@ -42,8 +42,6 @@ export default class UserStore extends VuexModule {
     public async loginAct(email:string,uid:string): Promise<void>{
         if (auth.currentUser===null) return;
         const token = await auth.currentUser.getIdToken(true);
-        console.log("トークン"+token);
-        console.log(auth.currentUser.uid)
 
         // ログイン後、会員情報もユーザ情報に保存
         db.collection(`users/${auth.currentUser.uid}/userInfo`).get().then(
@@ -54,7 +52,9 @@ export default class UserStore extends VuexModule {
             email: email,
             uid: auth.currentUser.uid
           }
-        Cookies.set('access_token', token)  // ②-2 取得したJWTをCookieにセット
+        // universal-cookie
+        const cookies = new Cookies();
+        cookies.set('access_token', token)  // ②-2 取得したJWTをCookieにセット
         this.setUserMut(userInfo) // ②-3 userデータをストアstateに保存
         //await this.setUidMut(userInfo.uid) // ②-3 userデータのuidをストアstateに保存
     }
@@ -78,7 +78,8 @@ export default class UserStore extends VuexModule {
     @Action({rawError: true})
     public async logout():Promise<void>{
         await auth.signOut();
-        Cookies.remove('access_token');
+        const cookies = new Cookies();
+        cookies.remove('access_token');
         this.setUserNullMut(null);
     }
 }

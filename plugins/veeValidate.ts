@@ -1,13 +1,8 @@
 import Vue from 'vue'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
-// import * as rules from 'vee-validate/dist/rules'
 import {
   required, min, max, email, alpha_dash, confirmed, oneOf
 } from 'vee-validate/dist/rules';
-// 全てのルールを利用
-// Object.keys(rules).forEach((rule) => {
-//   extend(rule, rules[rule])
-// })
 
 extend('required', {
     ...required,
@@ -64,7 +59,6 @@ extend('delivary_validation', {
     let a = String(target)
     if(currentMonth<=9){
       let today = `${currentyear}-0${currentMonth}-${currentDate}`
-          // console.log('validate move' + value+' '+currentHour+' '+target+'/'+today)
       return !((value < currentHour)&&(a===today))
     }else{
       let today = `${currentyear}-0${currentMonth}-${currentDate}`
@@ -80,13 +74,6 @@ extend('creditNum',{
   },
   message: '16桁の数字で入力して下さい'
 })
-
-// extend('pay', {
-//   params: ['target'],
-//   validate(value:number, {target}:any):boolean {
-//     if()
-//   }
-// })
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)

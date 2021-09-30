@@ -14,7 +14,7 @@ export interface cartItemType {
     specialId?:string
 }
 
-export interface otderIemType {
+export interface orderItemType {
     itemInfo?:cartItemType[],
     status?:number,
     orderId?:string | null | undefined

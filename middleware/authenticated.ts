@@ -5,11 +5,8 @@
 import { Context } from "@nuxt/types";
 
 const authenticated = ({store,redirect}:Context) => {
-    console.log("middleware/authenticatedログイン認証スタート")
     if (!store.getters['user/isAuthenticated']) {
-      console.log("ログインしてません");
     }else{
-      console.log("ログインしています")
       return redirect('/')
     }
   }

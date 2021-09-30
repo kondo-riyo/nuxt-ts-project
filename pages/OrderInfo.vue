@@ -480,14 +480,13 @@
 <script lang="ts">
 import Vue from 'vue';
 import { ValidationProvider, ValidationObserver } from 'vee-validate';
-import { UserStore, CartStore, itemInfoStore } from '../store';
+import { UserStore, CartStore } from '../store';
 import {
   orderInfoType,
-  orderedItemType,
-  otderIemType,
-  cartItemType,
+  orderItemType,
 } from '../types/cartItemType';
 import { userInfoType } from '../types/userInfoType';
+
 export default Vue.extend({
   data(): orderInfoType {
     return {
@@ -506,7 +505,7 @@ export default Vue.extend({
   components: {
     // Field,
     ValidationProvider,
-    ValidationObserver,
+    ValidationObserver
   },
   methods: {
     OrderSubmit():void {
@@ -538,25 +537,23 @@ export default Vue.extend({
       this.selectPayment = false;
     },
   },
-  async fetch():Promise<void> {
-    const fetchitemInfoFromStore = itemInfoStore.fetchitemInfoAct();
-    await Promise.all([fetchitemInfoFromStore]);
-  },
+  // async fetch():Promise<void> {
+  //   const fetchitemInfoFromStore = CartStore.fetchitemInfoAct();
+  //   await Promise.all([fetchitemInfoFromStore]);
+  // },
 
   //async fetchでcartの商品を取得する(cartStore)
   computed: {
     userInfoFromStore(): userInfoType | null {
       return UserStore.getUserInfo;
     },
-    itemInfoFromStore(): otderIemType[] {
-      return itemInfoStore.getitemInfo;
-    },
-    getCarts(): any {
-      return CartStore.getCart;
+    itemInfoFromStore(): orderItemType[] {
+      return CartStore.getitemInfo;
     },
     getAllPrice():number{
       let allPrice:number = 0;
-      itemInfoStore.getitemInfo[0].itemInfo!.forEach(item=>{
+      //@ts-ignore
+      CartStore.getitemInfo[0].itemInfo!.forEach(item=>{
        allPrice = allPrice + item.totalPrice!
       })
       return allPrice;

@@ -6,11 +6,11 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import { ItemsStore, ToppingsStore, UserStore, itemInfoStore, CartStore } from '../store';
+import { ItemsStore, ToppingsStore, UserStore, CartStore } from '../store';
 
 export default Vue.extend({
   async fetch(): Promise<void> {
-    // stateの中身が空だったらdbから商品とトッピングのデータを取得
+    // dbから商品とトッピングのデータを取得
     if (ItemsStore.items.length === 0 && ToppingsStore.toppings.length === 0) {
       const fetchItemsFromStore = ItemsStore.fetchItemsAct();
       const fetchToppingsFromStore = ToppingsStore.fetchToppingsAct();
@@ -18,7 +18,7 @@ export default Vue.extend({
     }
     if (UserStore.userInfo) {
      const fetchSignupInfo = UserStore.fetchSignupInfoAct();
-     const fetchitemInfo = itemInfoStore.fetchitemInfoAct();
+     const fetchitemInfo = CartStore.fetchitemInfoAct();
      //const cartitemInfo = CartStore.fetchCartAct()
      await Promise.all([fetchSignupInfo,fetchitemInfo])
     } 

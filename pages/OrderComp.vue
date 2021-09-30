@@ -1,7 +1,5 @@
 <template>
   <div class="grid justify-items-center w-full">
-    <!-- <h1>決済完了(OrderComp.vue)</h1> -->
-    <!-- <div class=""><img src="~/assets/img/ordercomp.png" /></div> -->
     <div
       class="
         max-w-2xl
@@ -23,7 +21,6 @@
         </div>
         <p class="text-base sm:text-lg font-semibold mt-2">
           ご購入いただいた商品は、<br />注文履歴よりご確認いただけます。<br />
-          <!-- <img src="~/assets/img/yajirusi_icon.png" class="animate-bounce w-5"> -->
         </p>
         <p class="animate-bounce text-2xl font-bold mt-1 font-base_gray">↓</p>
       </div>

@@ -11,9 +11,6 @@ export const actions = {
       if (userFromCookie) {
         await dispatch('user/setUserAct', { email: userFromCookie.email, uid: userFromCookie.user_id})
       }
-      if(!userFromCookie) {
-        console.log("ユーザーなし")
-      }
     }
   }
 
