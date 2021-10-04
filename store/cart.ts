@@ -28,15 +28,13 @@ import { UserStore } from "~/store";
 
     // mutation-------------------------------------
     @Mutation
-    private addItemToCartMut(addItemToCart:orderedItemType, idFromDb:string|null):void{
-        if(idFromDb===null)return
-    this.itemInfo.push({...addItemToCart,orderId:idFromDb});
+    private addItemToCartMut(addItemToCart:orderedItemType):void{
+    this.itemInfo.push(addItemToCart);
     }
 
         //******fromIteminfoStore
     @Mutation
     private fetchitemInfoMut(itemInfoFromDb:cartItemType):void{
-        console.log('fetchitemInfoMut')
         this.itemInfo.push(itemInfoFromDb)
     }
 
@@ -63,7 +61,7 @@ import { UserStore } from "~/store";
 
         // ログインしていない場合storeにだけ追加
         if(!UserStore.userInfo){
-            this.addItemToCartMut(addItemToCart,null);
+            this.addItemToCartMut(addItemToCart);
         }// ログインしてたらdbとstoreに商品追加
         else {
             // 既にカートがあったらOrder/orderInfoコレクション内のitemInfo配列に追加
@@ -78,13 +76,15 @@ import { UserStore } from "~/store";
                     itemInfo:[...newCartitems[0].itemInfo]
                 }).then(()=>{
                 if (this.getitemInfo[0].orderId===undefined) return;
-                this.addItemToCartMut(addItemToCart,this.getitemInfo[0].orderId)})
+                this.addItemToCartMut(addItemToCart)})
             } else if(this.getitemInfo.length===0) {
             // カートの中身が空だったらOrder/ordrtIdコレクションごと作成
             if(!UserStore.userInfo.uid) return
            // console.log("カートが空なので新たなカートを作成")
             db.collection(`users/${UserStore.userInfo.uid}/order`).add(_order).then(cartItem=>{
-                this.addItemToCartMut(_order,cartItem.id)
+                let addItemToCart = {..._order,orderId:cartItem.id}
+                // this.addItemToCartMut(_order,cartItem.id)
+                this.addItemToCartMut(addItemToCart)
                 this.addItemToNewCart(_order,cartItem.id)
             })
         }        
